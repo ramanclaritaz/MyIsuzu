@@ -1,11 +1,11 @@
 import { DeepLinkConfig } from 'ionic-angular';
 
 
-import { loginPage } from '../pages/login/login';
-import { DashboardPage } from '../pages/dashboard/dashboard';
-import { ApprovalList } from "../pages/approval/approvalList";
-import { leaveApply } from "../pages/apply/leaveApply";
-import { compOffApply } from "../pages/apply/compOffApply";
+import { loginPage } from './pages/login/login';
+import { DashboardPage } from './pages/dashboard/dashboard';
+import { ApprovalList } from "./pages/approval/approvalList";
+import { leaveApply } from "./pages/apply/leaveApply";
+import { compOffApply } from "./pages/apply/compOffApply";
 
 export const deepLinkConfig: DeepLinkConfig = {
   links: [

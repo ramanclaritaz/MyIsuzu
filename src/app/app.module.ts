@@ -6,11 +6,11 @@ import { StatusBar } from '@ionic-native/status-bar';
 
 import { deepLinkConfig } from './app.route'
 import { MyApp } from "./app.component";
-import { loginPage } from '../pages/login/login';
-import { DashboardPage } from '../pages/dashboard/dashboard';
-import { ApprovalList } from "../pages/approval/approvalList";
-import { leaveApply } from "../pages/apply/leaveApply";
-import { compOffApply } from "../pages/apply/compOffApply";
+import { loginPage } from './pages/login/login';
+import { DashboardPage } from './pages/dashboard/dashboard';
+import { ApprovalList } from "./pages/approval/approvalList";
+import { leaveApply } from "./pages/apply/leaveApply";
+import { compOffApply } from "./pages/apply/compOffApply";
 
 @NgModule({
   declarations: [
