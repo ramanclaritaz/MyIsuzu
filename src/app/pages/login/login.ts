@@ -17,6 +17,7 @@ export class loginPage {
  
   public login() {
    let _Log= this.loginService.getUser(this.registerCredentials.userName,this.registerCredentials.password)
+   console.log(_Log);
     this.nav.setRoot('dash');
   }
  

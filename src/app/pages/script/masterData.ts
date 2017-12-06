@@ -1,11 +1,11 @@
 import { Injectable,Inject } from '@angular/core';
-import 'rxjs/Rx';
+import { Observable } from 'rxjs';
 import { Http, RequestOptions, Response ,Headers} from '@angular/http';
 import { envitonment } from "./app.environment";
 import 'rxjs/add/operator/map';
 
 @Injectable()
-export class LoginService {
+export class masterService {
   private apiUrl = envitonment.apiUrl; 
   
   list:any;
@@ -16,8 +16,11 @@ export class LoginService {
   }
 
  public getUser(userName,passWord) {
-  var data = "grant_type=password&username=" + userName + "&password=" + passWord;
-    this.http.post(this.apiUrl+'token', data) .map(
+    let body = new FormData();
+    body.append('grant_type', 'password');
+    body.append('username', userName);
+    body.append('password', passWord);
+    this.http.post(this.apiUrl, body) .map(
       (res:Response) => res.json()
       
     ).do(data=>console.log(JSON.stringify(data)));
