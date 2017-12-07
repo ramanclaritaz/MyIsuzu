@@ -3,11 +3,14 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
-import {LoginService} from './pages/script/getLogin'
 import { HttpModule } from '@angular/http';
-// import { HttpClientModule } from '@angular/common/http';
+import { LocalStorageModule } from "angular-2-local-storage";
 
+
+import {LoginService} from './pages/services/getLogin'
+import {httpService} from './pages/services/httpProvider'
 import { deepLinkConfig } from './app.route'
+
 import { MyApp } from "./app.component";
 import { loginPage } from './pages/login/login';
 import { DashboardPage } from './pages/dashboard/dashboard';
@@ -23,7 +26,11 @@ import { compOffApply } from "./pages/apply/compOffApply";
   ],
   imports: [
     BrowserModule,HttpModule,
-    IonicModule.forRoot(MyApp,null,deepLinkConfig)
+    IonicModule.forRoot(MyApp,null,deepLinkConfig),
+    LocalStorageModule.withConfig({
+      prefix: 'iManage',
+      storageType: 'localStorage'
+  })
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -37,8 +44,11 @@ import { compOffApply } from "./pages/apply/compOffApply";
   providers: [
     StatusBar,
     SplashScreen,
-    LoginService,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    LoginService,httpService,
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+  // { provide: Http,
+  //   useFactory: httpFactory,
+  //   deps: [XHRBackend, RequestOptions]}
   ]
  
 })
