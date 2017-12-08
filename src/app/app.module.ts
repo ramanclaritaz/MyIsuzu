@@ -6,7 +6,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { HttpModule } from '@angular/http';
 import { LocalStorageModule } from "angular-2-local-storage";
 
-
+import { approvalService } from "./pages/services/approvalServices";
 import {LoginService} from './pages/services/getLogin'
 import {httpService} from './pages/services/httpProvider'
 import { deepLinkConfig } from './app.route'
@@ -17,7 +17,7 @@ import { DashboardPage } from './pages/dashboard/dashboard';
 import { ApprovalList } from "./pages/approval/approvalList";
 import { leaveApply } from "./pages/apply/leaveApply";
 import { compOffApply } from "./pages/apply/compOffApply";
-
+import { CommonModule } from '@angular/common/src/common_module';
 @NgModule({
   declarations: [
     MyApp,loginPage,
@@ -44,7 +44,7 @@ import { compOffApply } from "./pages/apply/compOffApply";
   providers: [
     StatusBar,
     SplashScreen,
-    LoginService,httpService,
+    LoginService,httpService,approvalService,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
   // { provide: Http,
   //   useFactory: httpFactory,

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
 @Component({
@@ -8,7 +8,7 @@ import { NavController } from 'ionic-angular';
 
 
 export class DashboardPage {
-  
+  // @ViewChild(ChildComponent) child;
   constructor(private nav: NavController) {
   }
   loadPage(val) { 

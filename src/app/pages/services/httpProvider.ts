@@ -24,8 +24,8 @@ private handleError(error: any): Promise<any> {
   return Promise.reject(error.message || error);
 }
 
-public request(url: string | Request, options?: RequestOptionsArgs): Promise<any> {
-  return this.http.request(url, this.getRequestOptionArgs(options)).toPromise().then(this.extractData ).catch(this.handleError);
+public request(url: string | Request, options?: RequestOptionsArgs) {
+  return this.http.request(url, this.getRequestOptionArgs(options)).map(this.extractData ).catch(this.handleError);
 }
 
 public get(url: string, options?: RequestOptionsArgs):  Promise<Response>  {

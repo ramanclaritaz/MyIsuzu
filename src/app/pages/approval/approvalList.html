@@ -18,33 +18,17 @@
         <form id="list-form4">
           <ion-searchbar placeholder="" name="" id="list-search2"></ion-searchbar>
         </form>
-        <ion-infinite-scroll>
-          <ion-list id="list-list19">
-            <ion-item color="none" id="list-list-item20">
-             <a>
-               <h3>Ramanathan - (IMI00087)</h3>
-               <p>Request date : 11-Aug-2017</p>
-               <p>OD applied</p>
+        <!-- <ion-infinite-scroll (onInfinite)="loadMoreData()">
+          <ion-list id="list-list19" *ngFor="item in pendingList">
+            <ion-item >
+             <span >
+               <h3>{{item.employeeName}} - {{item.employeeNumber}}</h3>
+               <p>Request date : {{item.createdDate}}</p>
+               <p>{{item}}</p>
                <p>Reason : xxxxxxx</p>
-             </a>
-            </ion-item>
-            <ion-item color="none" id="list-list-item21">
-                <a>
-                    <h3>Sathish kumar</h3>
-                    <p>Request date : 11-Aug-2017</p>
-                    <p>PL applied</p>
-                    <p>Reason : xxxxxxx</p>
-                  </a>
-            </ion-item>
-            <ion-item color="none" id="list-list-item22">
-                <a>
-                    <h3>Dinesh kumar</h3>
-                    <p>Request date : 11-Aug-2017</p>
-                    <p>SL applied</p>
-                    <p>Reason : xxxxxxx</p>
-                  </a>
+             </span>
             </ion-item>
         </ion-list>
-      </ion-infinite-scroll>
+      </ion-infinite-scroll> -->
       </ion-content>
       
