@@ -11,17 +11,17 @@ import { searchPagination } from '../services/common';
 
 export class ApprovalList {
   pendingList:any=[];
-  pagenation:any;
+  searchDataPagination:any;
   constructor(private approval:approvalService) {
-    this.pagenation= {page:0,reverse:false,itemsPerPage:10,sortBy:'id',totalItems:64}
+    this.searchDataPagination= {page:null,reverse:false,itemsPerPage:null,sortBy:null,totalItems:64}
     this.Oninit();
   }
 
   Oninit()  {
-    var result = this.approval.getAllLeavePendingApproval(this.pagenation,true);
-    console.log(result);
-    this.pendingList.push(result);
-  }
+    var result = this.approval.getAllLeavePendingApproval(this.searchDataPagination,false);
+
+    console.log("Called");
+     }
 
   // loadMoreData(){
   //   this.com.searchPagination.page++;

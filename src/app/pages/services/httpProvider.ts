@@ -14,38 +14,38 @@ export class httpService {
     constructor(@Inject(Http) private http: Http) {
   }
 
-private extractData(res: Response):Promise<any> {
+private extractData(res: Response):Observable<any> {
   let body = res.json();
   return body;
 }
 
-private handleError(error: any): Promise<any> {
+private handleError(error: any): Observable<any> {
   console.error('An error occurred', error);
-  return Promise.reject(error.message || error);
+  return Observable.throw(error.message || error);
 }
 
-public request(url: string | Request, options?: RequestOptionsArgs) {
+public request(url: string | Request, options?: RequestOptionsArgs):Observable<any> {
   return this.http.request(url, this.getRequestOptionArgs(options)).map(this.extractData ).catch(this.handleError);
 }
 
-public get(url: string, options?: RequestOptionsArgs):  Promise<Response>  {
+public get(url: string, options?: RequestOptionsArgs):  Observable<any>  {
   url = this.updateUrl(url);
-  return this.http.get(url, this.getRequestOptionArgs(options)).toPromise().then(this.extractData).catch(this.handleError);
+  return this.http.get(url, this.getRequestOptionArgs(options)).map(this.extractData).catch(this.handleError);
 }
 
-public post(url: string, body: string, options?: RequestOptionsArgs):  Promise<Response>  {
+public post(url: string, body: string, options?: RequestOptionsArgs):  Observable<any>  {
   url = this.updateUrl(url);
-  return this.http.post(url,body, this.getRequestOptionArgs(options)).toPromise().then(this.extractData).catch(this.handleError);
+  return this.http.post(url,body, this.getRequestOptionArgs(options)).map(this.extractData).catch(this.handleError);
 }
 
-public put(url: string, body: string, options?: RequestOptionsArgs):  Promise<Response>  {
+public put(url: string, body: string, options?: RequestOptionsArgs):  Observable<any>  {
   url = this.updateUrl(url);
-  return this.http.put(url, this.getRequestOptionArgs(options)).toPromise().then(this.extractData).catch(this.handleError);
+  return this.http.put(url, this.getRequestOptionArgs(options)).map(this.extractData).catch(this.handleError);
 }
 
-public delete(url: string, options?: RequestOptionsArgs):  Promise<Response>  {
+public delete(url: string, options?: RequestOptionsArgs):  Observable<any>  {
   url = this.updateUrl(url);
-  return this.http.delete(url, this.getRequestOptionArgs(options)).toPromise().then(this.extractData).catch(this.handleError);
+  return this.http.delete(url, this.getRequestOptionArgs(options)).map(this.extractData).catch(this.handleError);
 }
 
 private updateUrl(req: string) {
@@ -60,11 +60,15 @@ private getRequestOptionArgs(options?: RequestOptionsArgs) : RequestOptionsArgs 
       options.headers = new Headers();
   }
 var token= localStorage.getItem('token');
-options.headers.append('Content-Type', 'application/json');
-options.headers.append('Content-Type','application/x-www-form-urlencoded' );
+
+
 if(token!=undefined){
   options.headers.append('Authorization', 'Bearer ' + token);
 }
+// options.headers.append('Content-Type','application/x-www-form-urlencoded' );
+// options.headers.append('Content-Type', 'application/json; charset=UTF-8');
+// options.headers.append('Content-Type', 'application/text');
+// options.headers.append('Content-Type','application/octet-stream' );
   return options;
 }
 
