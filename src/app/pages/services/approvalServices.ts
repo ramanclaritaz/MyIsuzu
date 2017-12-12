@@ -1,58 +1,59 @@
-import { Injectable,Inject } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
+
 import { httpService } from "./httpProvider";
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class approvalService {
-  res:any;
-  url:string="";
-    constructor(@Inject(httpService) private http: httpService) {
-        
+    res: any;
+    url: string = "";
+
+    constructor( @Inject(httpService) private http: httpService) {
+
+    }
+    getAllLeavePendingApproval(searchDataPagination, isPlant: boolean): Observable<any> {
+
+        this.url = this.updateLeaveURL(isPlant);
+        if (!isPlant) {
+            return this.http.post(this.url + 'GetAuthorityRequest', searchDataPagination);
         }
-   
-    
-    getAllLeavePendingApproval(searchDataPagination,isPlant:boolean):any {
-        
-        this.url=this.updateLeaveURL(isPlant);
-        if(!isPlant){
-            this.http.post(this.url+'GetAuthorityRequest',searchDataPagination).subscribe(result=>{return result;});
-        }
-        else{
-            this.http.post(this.url+'GetAuthorityRequestForPlant',searchDataPagination).subscribe(result=>{return result;});
+        else {
+            return this.http.post(this.url + 'GetAuthorityRequestForPlant', searchDataPagination);
         }
     }
 
-    getEditLeaveDetail(Id:any,isPlant:false):any {
-        this.url=this.updateLeaveURL(isPlant);
-        this.http.get(this.url+'GetEditForApplyleave?modelId='+Id).subscribe(result=>{return result;});
+    getEditLeaveDetail(Id: any, isPlant): Observable<any> {
+        this.url = this.updateLeaveURL(isPlant);
+        return this.http.get(this.url + 'GetEditForApplyleave?modelId=' + Id);
     }
 
-    updateMultiApprovalforLeave(data:any,isPlant:false):any{
-        this.url=this.updateLeaveURL(isPlant);
-        this.http.post(this.url+'UpdateMultiApprovedStatus',data).subscribe(result=>{return result;});
-            
+    EditLeaveApply(data: any, isPlant): Observable<any> {
+        this.url = this.updateLeaveURL(isPlant);
+        return this.http.post(this.url + 'EditLeaveApply', data);//.subscribe(result=>{return result;});
+
     }
 
-    getAllCompoffPendingApproval(searchDataPagination,isPlant?:false) {
-        this.url=this.updateCompoffURL(isPlant);
-        this.http.post(this.url+'GetCompOffAuthorityRequest',searchDataPagination).subscribe(result=>{return result;});
+    getAllCompoffPendingApproval(searchDataPagination, isPlant): Observable<any> {
+        this.url = this.updateCompoffURL(isPlant);
+        return this.http.post(this.url + 'GetCompOffAuthorityRequest', searchDataPagination);//.subscribe(result=>{return result;});
     }
 
-    getEditCompoffDetail(Id:any,isPlant?:false) { 
-        this.url=this.updateCompoffURL(isPlant);
-            this.http.get(this.url+'GetCompOFFDetailsForEdit?modelId='+Id).subscribe(result=>{return result;});
+    getEditCompoffDetail(Id: any, isPlant): Observable<any> {
+        this.url = this.updateCompoffURL(isPlant);
+        return this.http.get(this.url + 'GetCompOFFDetailsForEdit?modelId=' + Id);
     }
 
-    updateMultiApprovalforCompoff(data:any,isPlant?:false){
-        this.url=this.updateCompoffURL(isPlant);
-        this.http.post(this.url+'UpdateMultiApprovedStatus',data).subscribe(result=>{return result;});
+    updateMultiApprovalforCompoff(data: any, isPlant): Observable<any> {
+        this.url = this.updateCompoffURL(isPlant);
+        return this.http.post(this.url + 'UpdateMultiApprovedStatus', data);
     }
 
-    updateLeaveURL(isPlant:boolean):string{
-        return this.url='/api'+((isPlant)?'/LeaveApplyingPlant/':'/LeaveApplying/');
+    private updateLeaveURL(isPlant: boolean): string {
+        return this.url = '/api' + ((isPlant) ? '/LeaveApplyingPlant/' : '/LeaveApplying/');
     }
 
-    updateCompoffURL(isPlant:boolean):string{
-        return this.url='/api'+((isPlant)?'/CompensatoryOFFPlant/':'/CompensatoryOFF/');
+    private updateCompoffURL(isPlant: boolean): string {
+        return this.url = '/api' + ((isPlant) ? '/CompensatoryOFFPlant/' : '/CompensatoryOFF/');
     }
 
 }

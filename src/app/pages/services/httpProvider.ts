@@ -15,13 +15,12 @@ export class httpService {
   }
 
 private extractData(res: Response):Observable<any> {
-  let body = res.json();
-  return body;
+  return res.json();
 }
 
 private handleError(error: any): Observable<any> {
-  console.error('An error occurred', error);
-  return Observable.throw(error.message || error);
+  console.error('An error occured...!')
+  return Observable.throw(error.message | error);
 }
 
 public request(url: string | Request, options?: RequestOptionsArgs):Observable<any> {

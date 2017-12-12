@@ -41,7 +41,7 @@ page-approval
          font-weight: 600;
      }
          .title{
-           text-align: center;
+           text-align: left;
            
          }
          .logout{
@@ -52,21 +52,47 @@ page-approval
          {
            text-decoration: none;
          }
-         
-/*
- * https://docs.angularjs.org/api/ng/directive/ngShow#usage_animations
- */
-.list .item.item-accordion {
-  line-height: 38px;
-  padding-top: 0;
-  padding-bottom: 0;
-  transition: 0.09s all linear;
-}
-.list .item.item-accordion.ng-hide {
-  line-height: 0px;
-}
-.list .item.item-accordion.ng-hide-add,
-.list .item.item-accordion.ng-hide-remove {
-  display: block !important;
-}
+         .detail_title
+         {
+         padding-left: 5px;
+         font-weight: bold;
+         color: gray;
+         font-size: 16px;
+         }
+        
+         .result
+         {
+          font-weight: 600;
+      }
+      
+.approvallist
+         {
+          // padding: 2px;
+          line-height: 4;
+          list-style: 0;
+          list-style-type: none;
+      }
+      
+      .button_action
+      {
+        text-align: center;
+      }
+      
+      .button_action button
+      {
+      margin: 10px 10px;
+      padding: 5px;
+      font-weight: bold;
+      }
+      
+      .comments
+      {
+        border: 1px solid gray;
+        border-radius: 5px;
+        margin: 10px auto;
+        padding: 5px;
+        width: 90%;
+        height: 60px;
+      }
+
 }

@@ -1,34 +1,74 @@
 <ion-header>
-        <ion-navbar>
-          <ion-buttons left>
-            <a ion-button icon-only href="#/dash" >
-              <ion-icon name="arrow-back"></ion-icon></a>
-            </ion-buttons>
-            <ion-title>
-              Approval List
-            </ion-title>
-            <ion-buttons end>
-              <button ion-button icon-only (click)="openModal()">
-                <ion-icon name="log-out"></ion-icon>
-              </button>
-            </ion-buttons>
-        </ion-navbar>
-      </ion-header>
-      <ion-content padding id="page4">
+  <ion-navbar>
+    <ion-buttons left>
+      <a ion-button icon-only href="#/dash">
+        <ion-icon name="arrow-back"></ion-icon>
+      </a>
+    </ion-buttons>
+    <ion-title>
+      Approval List
+    </ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="openModal()">
+        <ion-icon name="log-out"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content padding id="page4">
+  <ion-tabs class="tabs-top">
+
+    <!-- Tab 1 -->
+    <ion-tab title="HO" href="#">
+      <ion-content>
         <form id="list-form4">
           <ion-searchbar placeholder="" name="" id="list-search2"></ion-searchbar>
         </form>
-        <!-- <ion-infinite-scroll (onInfinite)="loadMoreData()">
-          <ion-list id="list-list19" *ngFor="item in pendingList">
-            <ion-item >
-             <span >
-               <h3>{{item.employeeName}} - {{item.employeeNumber}}</h3>
-               <p>Request date : {{item.createdDate}}</p>
-               <p>{{item}}</p>
-               <p>Reason : xxxxxxx</p>
-             </span>
+
+
+        <ion-list>
+          <div *ngFor="let item of pendingList;let i=index">
+            <ion-item>
+
+              <span (click)="editDetail($event, item)">
+                <h3>{{item.appliedforName}} - {{item.appliedforNumber}}</h3>
+                <p>Request date : {{item.createdDate}}</p>
+                <p>{{item.leaveCodeDescription}}</p>
+                <p>Reason :{{item.appliedReason}}</p>
+              </span>
+
             </ion-item>
+          </div>
+
         </ion-list>
-      </ion-infinite-scroll> -->
       </ion-content>
-      
+    </ion-tab>
+
+
+    <!-- Tab 2 -->
+    <ion-tab title="Plant" href="#/tab/tab2">
+      <ion-content>
+        <form id="list-form4">
+          <ion-searchbar placeholder="" name="" id="list-search2"></ion-searchbar>
+        </form>
+
+
+        <ion-list>
+          <div *ngFor="let item of pendingList;let i=index">
+            <ion-item>
+
+              <span (click)="editDetail($event, item)">
+                <h3>{{item.appliedforName}} - {{item.appliedforNumber}}</h3>
+                <p>Request date : {{item.createdDate}}</p>
+                <p>{{item.leaveCodeDescription}}</p>
+                <p>Reason :{{item.appliedReason}}</p>
+              </span>
+
+            </ion-item>
+          </div>
+
+        </ion-list>
+      </ion-content>
+    </ion-tab>
+  </ion-tabs>
+</ion-content>

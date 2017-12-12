@@ -1,16 +1,92 @@
 <ion-header>
-    <ion-navbar>
-      <ion-buttons left>
-        <a ion-button icon-only href="#/dash" >
-          <ion-icon name="arrow-back"></ion-icon></a>
-        </ion-buttons>
-        <ion-title>
-          Dashboard
-        </ion-title>
-        <ion-buttons end>
-          <button ion-button icon-only (click)="openModal()">
-            <ion-icon name="log-out"></ion-icon>
-          </button>
-        </ion-buttons>
-    </ion-navbar>
-  </ion-header>
+  <ion-navbar>
+    <ion-buttons left>
+      <a ion-button icon-only href="#/approval">
+        <ion-icon name="arrow-back"></ion-icon>
+      </a>
+    </ion-buttons>
+    <ion-title>
+      Approval
+    </ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="openModal()">
+        <ion-icon name="log-out"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content has-header="true" padding="true">
+  <div>
+    <ion-item>
+      <ion-title>
+        <h4 class='detail_title'>Approval status</h4>
+      </ion-title>
+      <ul class="approvallist">
+        <li>
+          <span>Approval </span>
+          <span>
+            <select class='action_select' [(ngModel)]="Item.approvalStatus">
+
+              <option selected="selected" value="0">Pending</option>
+              <option value="1">Approved</option>
+              <option value="2">Disapproved</option>
+            </select>
+
+          </span>
+        </li>
+      </ul>
+    </ion-item>
+
+    <ion-item>
+      <ion-title>
+        <h4 class='detail_title'>General Information</h4>
+      </ion-title>
+      <ul class="approvallist">
+        <li>
+          <span>Applied for :</span>
+          <span class="result">{{Item.appliedforName}}</span>
+        </li>
+        <li>
+          <span>Employee Number :</span>
+          <span class="result">{{Item.appliedforNumber}}</span>
+        </li>
+        <li>
+          <span>Department :</span>
+          <span class="result">{{Item.appliedforDepartment}}</span>
+        </li>
+        <li>
+          <span>Description :</span>
+          <span class="result"> {{Item.leaveCodeDescription}}</span>
+        </li>
+        <li>
+          <span>From :</span>
+          <span class="result"> {{Item.fromDate | date:'dd-MMM-yyyy'}}</span>
+        </li>
+        <li>
+          <span>To :</span>
+          <span class="result"> {{Item.toDate | date:'dd-MMM-yyyy'}}</span>
+        </li>
+        <li>
+          <span>TotalDays :</span>
+          <span class="result"> {{Item.totaldays}}</span>
+        </li>
+        <li>
+          <span>Applied Reason :</span>
+          <span class="result"> {{Item.appliedReason}}</span>
+        </li>
+      </ul>
+      <div>
+        <textarea class='comments' [(ngModel)]="Item.comments" placeholder='Comments'></textarea>
+      </div>
+      <div class='button_action'>
+        <button (click)='update($event,Item)' class="button icon-left ion-checkmark-round button-small button-balanced">
+          Update
+        </button>
+        <button (click)="cancel($event)" class="button icon-left ion-close-round button-small button-assertive">
+          Cancel
+        </button>
+      </div>
+    </ion-item>
+  </div>
+
+</ion-content>

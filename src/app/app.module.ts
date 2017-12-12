@@ -17,15 +17,16 @@ import { DashboardPage } from './pages/dashboard/dashboard';
 import { ApprovalList } from "./pages/approval/approvalList";
 import { leaveApply } from "./pages/apply/leaveApply";
 import { compOffApply } from "./pages/apply/compOffApply";
-import { CommonModule } from '@angular/common/src/common_module';
+import { CommonModule } from '@angular/common';
+import { ApprovalPage } from './pages/approval/approvalPage';
 @NgModule({
   declarations: [
     MyApp,loginPage,
     DashboardPage,
-    ApprovalList,leaveApply,compOffApply
+    ApprovalList,leaveApply,compOffApply,ApprovalPage
   ],
   imports: [
-    BrowserModule,HttpModule,
+    BrowserModule,HttpModule,CommonModule,
     IonicModule.forRoot(MyApp,null,deepLinkConfig),
     LocalStorageModule.withConfig({
       prefix: 'iManage',
@@ -39,7 +40,7 @@ import { CommonModule } from '@angular/common/src/common_module';
     DashboardPage,
     ApprovalList,
     leaveApply,
-    compOffApply
+    compOffApply,ApprovalPage
   ],
   providers: [
     StatusBar,
