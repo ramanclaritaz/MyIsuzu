@@ -16,54 +16,56 @@
   </ion-navbar>
 </ion-header>
 <ion-content>
-  <ion-tabs class="tabs-top">
-
-    <!-- Tab 1 -->
-    <ion-tab title="HO" href="#">
-
-      <form id="list-form4">
-        <ion-searchbar placeholder="" name="" id="list-search2"></ion-searchbar>
-      </form>
-
-
+  <!-- <ion-tabs selectedIndex="1">
+    <ion-tab   tabTitle="Show Modal">
       <ion-list>
         <div *ngFor="let item of pendingList;let i=index">
           <ion-item>
-
+    
             <span (click)="editDetail($event, item)">
               <h3>{{item.appliedforName}} - {{item.appliedforNumber}}</h3>
               <p>Request date : {{item.createdDate}}</p>
               <p>{{item.leaveCodeDescription}}</p>
               <p>Reason :{{item.appliedReason}}</p>
             </span>
-
+    
           </ion-item>
         </div>
-
+    
       </ion-list>
     </ion-tab>
-    <!-- Tab 2 -->
-    <ion-tab title="Plant" href="#">
-      <form id="list-form4">
-        <ion-searchbar placeholder="" name="" id="list-search2"></ion-searchbar>
-      </form>
-
-
+    <ion-tab  tabTitle="Show Modal">
       <ion-list>
         <div *ngFor="let item of pendingList;let i=index">
           <ion-item>
-
+    
             <span (click)="editDetail($event, item)">
               <h3>{{item.appliedforName}} - {{item.appliedforNumber}}</h3>
               <p>Request date : {{item.createdDate}}</p>
               <p>{{item.leaveCodeDescription}}</p>
               <p>Reason :{{item.appliedReason}}</p>
             </span>
-
+    
           </ion-item>
         </div>
-
+    
       </ion-list>
     </ion-tab>
-  </ion-tabs>
+  </ion-tabs> -->
+  <form id="list-form4">
+    <ion-searchbar placeholder="" name="" id="list-search2"></ion-searchbar>
+  </form>
+  <ion-list>
+    <div *ngFor="let item of pendingList;let i=index">
+      <ion-item>
+
+        <span (click)="editDetail($event, item)">
+          <h3>{{item.appliedforName}} - {{item.appliedforNumber}}</h3>
+          <p>Request date : {{item.createdDate}}</p>
+          <p>{{item.leaveCodeDescription}}</p>
+          <p>Reason :{{item.appliedReason}}</p>
+        </span>
+      </ion-item>
+    </div>
+  </ion-list>
 </ion-content>

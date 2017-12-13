@@ -14,3 +14,114 @@
         </ion-buttons>
     </ion-navbar>
   </ion-header>
+  <ion-content has-header="true" padding="true">
+        <div>
+            <div class='data_list_detail_div'>
+                <div *ngIf='availCompOff.Comp_Info_fullday>0 || availCompOff.Comp_Info_halfday>0'>
+                    <h4 class='detail_title'>Available CompOff</h4>
+                    <ul style="columns: 1 100px; -moz-columns: 1 100px; -webkit-columns: 1 100px;text-align: left;">
+
+                        <li><span >Full day Comp Off</span><span>{{availCompOff.Comp_Info_fullday}}</span></li>
+                        <li><span >Half day Comp Off</span><span>{{availCompOff.Comp_Info_halfday}}</span></li>
+                    </ul>
+                    <h4 class='detail_title'>General Information</h4>
+                    <ul style="columns: 1 100px; -moz-columns: 1 100px; -webkit-columns: 1 100px;text-align: left;">
+
+                        <li><span >*Applied For</span><span>  {{Emp_Info.firstName}}    <!--<autocomplete [(ngModel)]="yourchoice" data="movies" on-type="updateMovies"></autocomplete>--></span></li>
+                        <li><span >Employee Number</span><span>{{Emp_Info.employeeNumber}}</span></li>
+                        <li>
+                            <span >Division</span>
+                            <span>{{Emp_Info.divisionName}}</span>
+                        </li>
+                        <li>
+                            <span >Department</span>
+                            <span>{{Emp_Info.departmentName}}</span>
+                        </li>
+                        <li>
+                            <span >*Full/Half Day</span>
+                            <!-- <span class='result result_radio in_a_row'>
+                                <label style="width: 50%; text-align: right;"><input type="radio" (click)="halforfull(comOffDay.isFullDay)" name="comOffDay" [(ngModel)]="comOffDay.isFullDay" [(ngValue)]="0" />Half Day</label>
+                                <label style="width:50%; text-align: right;"><input type="radio" (click)="halforfull(comOffDay.isFullDay)" name="comOffDay" [(ngModel)]="comOffDay.isFullDay" [(ngValue)]="1" />Full Day</label>
+                            </span> -->
+                            <ion-list radio-group [(ngModel)]="comOffDay.isFullDay">
+                                <ion-item>
+                                  <ion-label>Full day</ion-label>
+                                  <ion-radio value="1" checked></ion-radio>
+                                </ion-item>
+                                <ion-item>
+                                  <ion-label>Half day</ion-label>
+                                  <ion-radio value="0"></ion-radio>
+                                </ion-item>
+                              </ion-list>
+                        </li>
+                        <li *ngIf="comOffDay.isFullDay == 0">
+                            <span >*Morning/Afternoon</span>
+                            <ion-list radio-group [(ngModel)]="comOffDay.isFullDay">
+                                <ion-item>
+                                  <ion-label>Full day</ion-label>
+                                  <ion-radio value="1" checked></ion-radio>
+                                </ion-item>
+                                <ion-item>
+                                  <ion-label>Half day</ion-label>
+                                  <ion-radio value="0"></ion-radio>
+                                </ion-item>
+                              </ion-list>
+                        </li>
+                    </ul>
+                    <ul style="columns: 1 100px; -moz-columns: 1 100px; -webkit-columns: 1 100px;text-align: left;">
+                        <li>
+                            <span >From Date</span>
+                            <span>
+                                <ion-input type='date' [(ngModel)]='from_date' class='from_date' placeholder="yyyy-MM-dd" />
+                            </span>
+                        </li>
+                        <li *ngIf="comOffDay.isFullDay ==1">
+                            <span >To Date</span>
+                            <span>
+                                <ion-input type='date' [(ngModel)]='to_date' class='from_date' placeholder="yyyy-MM-dd" />
+                            </span>
+                        </li>
+                    </ul>
+                    <h4 class='detail_title'>CompOff Date(s)</h4>
+                    <ul style="columns: 1 100px; -moz-columns: 1 100px; -webkit-columns: 1 100px;text-align: left;">
+                        <li>
+                            <span >CompOff Date</span>
+                            <span>
+                                CompOff Available Date
+                            </span>
+                        </li>
+                        <li ng-repeat='item in CompOffAvailableDates'>
+                            <span >{{item.compOffDate | date:'dd-MMM-yyyy'}}</span>
+                            <span>
+                                {{item.compOffAvailableDate | date:'dd-MMM-yyyy'}}
+                            </span>
+                        </li>
+                        <li *ngIf="teamleadershow">
+                            <span >*Team Leader</span><span>
+                                <select [(ngModel)]="tllist.selected" ng-options="item.nameWithNumber for item in tllist track by item.teamLeaderId" (ngModelChange)="changetl(tllist.selected)">
+                                    <option value="" selected>Select here...</option>
+                                </select>
+                            </span>
+                        </li>
+                    </ul>
+                    <div *ngIf='GetCompOffAvailableDatesResult.length==0'>
+                    </div>
+                    <div class='button_action' *ngIf='availCompOff.Comp_Info_fullday>0 || availCompOff.Comp_Info_halfday>0'>
+                        <button on-tap='applyCompOffPlant($event)' class="button icon-left ion-checkmark-round button-small button-balanced">
+                            Apply
+                        </button>
+                    </div>
+
+                </div>
+                <div *ngIf='availCompOff.Comp_Info_fullday==0 &&  availCompOff.Comp_Info_halfday==0'>
+                    <ul style="columns: 1 100px; -moz-columns: 1 100px; -webkit-columns: 1 100px;text-align: left;">
+                        <li>
+                            <span>
+                                CompOff Not Available
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+</ion-content>

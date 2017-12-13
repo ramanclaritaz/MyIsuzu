@@ -14,7 +14,7 @@ export class LoginService {
       localStorage.clear();
   }
 
- public Login(userCredential) {
+ public Login(userCredential):Observable<any> {
     let data:any
     var values = "grant_type=password&username=" + userCredential.userName + "&password=" + userCredential.password;
     return this.http.post('token',values);

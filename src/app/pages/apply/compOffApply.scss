@@ -39,6 +39,7 @@ page-compOffApply{
         margin: 2px 0;
         padding: 8px 0;
         font-weight: 600;
+        // text-align: center !important;
     }
         .title{
           text-align: center;
@@ -52,5 +53,12 @@ page-compOffApply{
         {
           text-decoration: none;
         }
+        .ul
+        {
+         // padding: 2px;
+         line-height: 4;
+         list-style: 0;
+         list-style-type: none;
+     }
      
 }
