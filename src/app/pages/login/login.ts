@@ -20,8 +20,8 @@ export class loginPage {
       console.log(result);
       if(result){
         this.com.auth=result;
-        this.com.getEmployeeInfo();
         localStorage.setItem('token',result.access_token)
+        this.com.getEmployeeInfo();
         this.nav.setRoot('dash');
       }
     });

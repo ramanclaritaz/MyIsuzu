@@ -65,7 +65,7 @@ export interface comOffDay {
 export interface reportingList {
         teamleaderId: string;
         firstName: string;
-        employeeWithNumber: string
+        nameWithNumber: string
 }
 @Injectable()
 export class commonService {
@@ -96,6 +96,13 @@ export class commonService {
         }
         public set LAList(val: reportingList) {
                 this._LAList = val;
+        }
+        private _comOffDay: comOffDay;
+        public get comOffDay(): comOffDay {
+                return this._comOffDay;
+        }
+        public set comOffDay(val: comOffDay) {
+                this._comOffDay = val;
         }
         private _TLList: reportingList;
         public get TLList(): reportingList {

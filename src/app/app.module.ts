@@ -8,6 +8,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { HttpModule } from '@angular/http';
 import { LocalStorageModule } from "angular-2-local-storage";
+
 /**
  * services import
  */
@@ -39,7 +40,8 @@ import { ApprovalPage } from './pages/approval/approvalPage';
     ApprovalList,leaveApply,compOffApply,ApprovalPage
   ],
   imports: [
-    BrowserModule,HttpModule,
+    BrowserModule,
+    HttpModule,
     IonicModule.forRoot(MyApp,null,deepLinkConfig),
     LocalStorageModule.withConfig({
       prefix: 'iManage',
@@ -53,7 +55,8 @@ import { ApprovalPage } from './pages/approval/approvalPage';
     DashboardPage,
     ApprovalList,
     leaveApply,
-    compOffApply,ApprovalPage
+    compOffApply
+    ,ApprovalPage
   ],
   providers: [
     StatusBar,commonService,

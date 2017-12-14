@@ -4,7 +4,6 @@ import { approvalService } from '../services/approvalServices';
 import { iApprovalItem } from '../services/common';
 import { NavParams } from 'ionic-angular/navigation/nav-params';
 import { NavController } from 'ionic-angular/navigation/nav-controller';
-import { AlertController } from 'ionic-angular/components/alert/alert-controller';
 import { showMessage } from '../services/showalert';
 
 @Component({

@@ -48,7 +48,6 @@ confirm(message,confirm) {
         text: 'cancel',
         role: 'cancel',
         handler: ()=>{
-
         }
       },
       {
