@@ -1,0 +1,46 @@
+<ion-header>
+    <ion-navbar>
+        <ion-buttons left>
+            <a ion-button icon-only href="#/dash">
+                <ion-icon name="arrow-back"></ion-icon>
+            </a>
+        </ion-buttons>
+        <ion-title>
+            Time entry
+        </ion-title>
+        <ion-buttons end>
+            <button ion-button icon-only (click)="openModal()">
+                <ion-icon name="log-out"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+<ion-content>
+    <ion-item-divider ion-item light no-lines>
+        General Information
+        <ion-icon item-right></ion-icon>
+    </ion-item-divider>
+    <ion-list>
+        <ion-item>
+            <ion-label>*Applied For :</ion-label>
+            <ion-input disabled="true" [(ngModel)]="Emp_Info.firstName"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label> Employee Number :</ion-label>
+            <ion-input disabled="true" [(ngModel)]="Emp_Info.employeeNumber"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>Division :</ion-label>
+            <ion-input disabled="true" [(ngModel)]="Emp_Info.divisionName"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>Department :</ion-label>
+            <ion-input disabled="true" [(ngModel)]="Emp_Info.departmentName"></ion-input>
+        </ion-item>
+    </ion-list>
+    <div class='button_action'>
+        <button on-tap='getMyLocation()' class="button icon-left ion-checkmark-round button-small button-balanced">
+            {{btnText}}
+        </button>
+    </div>
+</ion-content>

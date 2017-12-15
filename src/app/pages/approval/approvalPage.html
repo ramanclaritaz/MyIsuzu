@@ -16,77 +16,75 @@
   </ion-navbar>
 </ion-header>
 <ion-content has-header="true" padding="true">
-  <div>
+  <ion-item-divider ion-item light no-lines>
+    Approval status
+    <ion-icon item-right></ion-icon>
+  </ion-item-divider>
+  <ion-list>
     <ion-item>
-      <ion-title>
-        <h4 class='detail_title'>Approval status</h4>
-      </ion-title>
-      <ul class="approvallist">
-        <li>
-          <span>Approval </span>
-          <span>
-            <select class='action_select' [(ngModel)]="Item.approvalStatus">
-
-              <option selected="selected" value="0">Pending</option>
-              <option value="1">Approved</option>
-              <option value="2">Disapproved</option>
-            </select>
-
-          </span>
-        </li>
-      </ul>
+      <ion-label>Approval</ion-label>
+      <ion-select class='action_select' [(ngModel)]="Item.approvalStatus">
+        <ion-option selected="selected" value="0">Pending</ion-option>
+        <ion-option value="1">Approved</ion-option>
+        <ion-option value="2">Disapproved</ion-option>
+      </ion-select>
     </ion-item>
-
+  </ion-list>
+  <ion-item-divider ion-item light no-lines>
+    General Information
+    <ion-icon item-right></ion-icon>
+  </ion-item-divider>
+  <ion-list>
     <ion-item>
-      <ion-title>
-        <h4 class='detail_title'>General Information</h4>
-      </ion-title>
-      <ul class="approvallist">
-        <li>
-          <span>Applied for :</span>
-          <span class="result">{{Item.appliedforName}}</span>
-        </li>
-        <li>
-          <span>Employee Number :</span>
-          <span class="result">{{Item.appliedforNumber}}</span>
-        </li>
-        <li>
-          <span>Department :</span>
-          <span class="result">{{Item.appliedforDepartment}}</span>
-        </li>
-        <li>
-          <span>Description :</span>
-          <span class="result"> {{Item.leaveCodeDescription}}</span>
-        </li>
-        <li>
-          <span>From :</span>
-          <span class="result"> {{Item.fromDate | date:'dd-MMM-yyyy'}}</span>
-        </li>
-        <li>
-          <span>To :</span>
-          <span class="result"> {{Item.toDate | date:'dd-MMM-yyyy'}}</span>
-        </li>
-        <li>
-          <span>TotalDays :</span>
-          <span class="result"> {{Item.totaldays}}</span>
-        </li>
-        <li>
-          <span>Applied Reason :</span>
-          <span class="result"> {{Item.appliedReason}}</span>
-        </li>
-      </ul>
-      <div>
-        <textarea class='comments' [(ngModel)]="Item.comments" placeholder='Comments'></textarea>
-      </div>
-      <div class='button_action'>
+      <ion-label>Applied for :</ion-label>
+      <ion-input disabled="true" [value]="Item.appliedforName"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Employee Number :</ion-label>
+      <ion-input disabled="true" [value]="Item.appliedforNumber"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Department :</ion-label>
+      <ion-input disabled="true" [value]="Item.appliedforDepartment"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Description :</ion-label>
+      <ion-input disabled="true" [value]="Item.leaveCodeDescription"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>From :</ion-label>
+      <ion-input disabled="true" [value]="Item.fromDate | date:'dd-MMM-yyyy'"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>To :</ion-label>
+      <ion-input disabled="true" [value]="Item.toDate | date:'dd-MMM-yyyy'"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>TotalDays :</ion-label>
+      <ion-input disabled="true" [value]="Item.totaldays"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Applied Reason :</ion-label>
+      <ion-input disabled="true" [value]="Item.appliedReason"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Comments :</ion-label>
+      <ion-textarea class='comments' [value]="Item.comments" placeholder='Comments'></ion-textarea>
+    </ion-item>
+  </ion-list>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col>
         <button (click)='update($event,Item)' class="button icon-left ion-checkmark-round button-small button-balanced">
           Update
         </button>
+      </ion-col>
+      <ion-col>
         <button (click)="cancel($event)" class="button icon-left ion-close-round button-small button-assertive">
           Cancel
         </button>
-      </div>
-    </ion-item>
-  </div>
-
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

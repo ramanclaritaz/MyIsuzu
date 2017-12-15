@@ -19,8 +19,8 @@ export class compOffApply {
   comOffDay: any;
   TLList: any;
   constructor(private show: showMessage, private globalVar: commonService, private comOffService: compOffServices) {
-    let _date= new Date().toISOString()
-    this.comOffDay = { isFullDay: false, fromDate:_date, toDate: _date };
+    let _date =new Date().toISOString();
+    this.comOffDay = { isFullDay: false, fromDate: _date, toDate: _date };
     this.Oninit();
   }
   Oninit() {
