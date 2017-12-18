@@ -37,6 +37,7 @@ import { leaveApply } from "./pages/apply/leaveApply";
 import { compOffApply } from "./pages/apply/compOffApply";
 import { ApprovalPage } from './pages/approval/approvalPage';
 import { timeEntry } from './pages/timeentry/timeentry';
+import { header } from './pages/header/header';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { timeEntry } from './pages/timeentry/timeentry';
     leaveApply,
     compOffApply,
     ApprovalPage,
-    timeEntry
+    timeEntry,
+    header
   ],
   imports: [
     BrowserModule,
@@ -66,7 +68,8 @@ import { timeEntry } from './pages/timeentry/timeentry';
     leaveApply,
     compOffApply,
     ApprovalPage,
-    timeEntry
+    timeEntry,
+    header
   ],
   providers: [
     StatusBar,

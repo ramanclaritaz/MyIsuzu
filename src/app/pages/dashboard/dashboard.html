@@ -1,165 +1,146 @@
 <ion-header>
-  <ion-navbar>
-    <ion-buttons left>
-      <a ion-button icon-only href="#/login" >
-        <ion-icon name="arrow-back"></ion-icon></a>
-      </ion-buttons>
-      <ion-title>
-        Dashboard
-      </ion-title>
-      <ion-buttons end>
-        <button ion-button icon-only (click)="openModal()">
-          <ion-icon name="log-out"></ion-icon>
-        </button>
-      </ion-buttons>
-  </ion-navbar>
+  <page-header></page-header>
 </ion-header>
-  <ion-content>
-    <ion-infinite-scroll>
-        <ion-grid>
-            <ion-row>
-              <ion-col >
-                <a class="dash" >
-                   <ion-card (click)="loadPage('leave')" >
-                      <ion-card-content>
-                          <ion-icon class="iconCss" name="create"></ion-icon>
-                        <ion-card-title>
-                         Leave
-                        </ion-card-title>
-                       
-                      </ion-card-content>
-                    </ion-card></a>
-              </ion-col>
-              <ion-col >
-                <a class="dash" >
-                   <ion-card (click)="loadPage('compoff')" >
-                      <ion-card-content>
-                          <ion-icon class="iconCss" name="create"></ion-icon>
-                        <ion-card-title>
-                        Comp-Off
-                        </ion-card-title>
-                       
-                      </ion-card-content>
-                    </ion-card></a>
-              </ion-col>
-                <ion-col><a class="dash" >
-                     <ion-card (click)="loadPage('approval')" >
-                        <ion-card-content>
-                            <ion-icon class="iconCss" name="calendar"></ion-icon>
-                          <ion-card-title>
-                            Attendance
-                          </ion-card-title>
-                        </ion-card-content>
-                      </ion-card></a>
-                </ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col><a class="dash" >
-                     <ion-card (click)="loadPage('approval')" >
-                        <ion-card-content>
-                            <ion-icon class="iconCss" name="card"></ion-icon>
-                          <ion-card-title>
-                            Leave approval
-                          </ion-card-title>
-                        </ion-card-content>
-                      </ion-card></a>
-                </ion-col>
-                <ion-col><a class="dash" >
-                     <ion-card (click)="loadPage('approval')" >
-                        <ion-card-content>
-                            <ion-icon class="iconCss" name="card"></ion-icon>
-                          <ion-card-title>
-                            Self pending
-                          </ion-card-title>
-                          
-                        </ion-card-content>
-                      </ion-card></a>
-                </ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col><a class="dash" >
-                     <ion-card (click)="loadPage('approval')" >
-                        <ion-card-content>
-                            <ion-icon class="iconCss" name="card"></ion-icon>
-                          <ion-card-title>
-                            Comp-off approval
-                          </ion-card-title>
-                        </ion-card-content>
-                      </ion-card></a>
-                </ion-col>
-                <ion-col><a class="dash" >
-                     <ion-card (click)="loadPage('approval')" >
-                        <ion-card-content>
-                            <ion-icon class="iconCss" name="card"></ion-icon>
-                          <ion-card-title>
-                            Pre-comp off approval
-                          </ion-card-title>
-                          
-                        </ion-card-content>
-                      </ion-card></a>
-                </ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col >
-                    <a class="dash" >
-                     <ion-card (click)="loadPage('approval')" >
-                      
-                        <ion-card-content>
-                            <ion-icon class="iconCss" name="contact"></ion-icon>
-                          <ion-card-title>
-                            My Profile
-                          </ion-card-title>
-                         
-                        </ion-card-content>
-                      </ion-card></a>
-                </ion-col>
-          
-              <ion-col><a class="dash">
-                  <ion-card (click)="loadPage('timeEntry')" >
-                      <ion-card-content>
-                          <ion-icon class="iconCss" name="time"></ion-icon>
-                        <ion-card-title>
-                         Time entry
-                        </ion-card-title>
-                        
-                      </ion-card-content>
-                    </ion-card></a>
-              </ion-col>
-           
-            <ion-col>
-              <a class="dash" >
-                 <ion-card (click)="loadPage('approval')" >
-                    <ion-card-content>
-                        <ion-icon class="iconCss" name="log-out"></ion-icon>
-                      <ion-card-title>
-                        Log out
-                      </ion-card-title>
-                     
-                    </ion-card-content>
-                  </ion-card></a>
-            </ion-col>
-            </ion-row>
-        </ion-grid>
+<ion-content>
+  <ion-infinite-scroll>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <a class="dash">
+            <ion-card (click)="loadPage('leave')">
+              <ion-card-content>
+                <ion-icon class="iconCss" name="create"></ion-icon>
+                <ion-card-title>
+                  Leave
+                </ion-card-title>
+              </ion-card-content>
+            </ion-card>
+          </a>
+        </ion-col>
+        <ion-col>
+          <a class="dash">
+            <ion-card (click)="loadPage('compoff')">
+              <ion-card-content>
+                <ion-icon class="iconCss" name="create"></ion-icon>
+                <ion-card-title>
+                  Comp-Off
+                </ion-card-title>
+
+              </ion-card-content>
+            </ion-card>
+          </a>
+        </ion-col>
+        <ion-col>
+          <a class="dash">
+            <ion-card (click)="loadPage('approval')">
+              <ion-card-content>
+                <ion-icon class="iconCss" name="calendar"></ion-icon>
+                <ion-card-title>
+                  Attendance
+                </ion-card-title>
+              </ion-card-content>
+            </ion-card>
+          </a>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <a class="dash">
+            <ion-card (click)="loadPage('approval')">
+              <ion-card-content>
+                <ion-icon class="iconCss" name="card"></ion-icon>
+                <ion-card-title>
+                  Leave approval
+                </ion-card-title>
+              </ion-card-content>
+            </ion-card>
+          </a>
+        </ion-col>
+        <ion-col>
+          <a class="dash">
+            <ion-card (click)="loadPage('approval')">
+              <ion-card-content>
+                <ion-icon class="iconCss" name="card"></ion-icon>
+                <ion-card-title>
+                  Self pending
+                </ion-card-title>
+
+              </ion-card-content>
+            </ion-card>
+          </a>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <a class="dash">
+            <ion-card (click)="loadPage('approval')">
+              <ion-card-content>
+                <ion-icon class="iconCss" name="card"></ion-icon>
+                <ion-card-title>
+                  Comp-off approval
+                </ion-card-title>
+              </ion-card-content>
+            </ion-card>
+          </a>
+        </ion-col>
+        <ion-col>
+          <a class="dash">
+            <ion-card (click)="loadPage('approval')">
+              <ion-card-content>
+                <ion-icon class="iconCss" name="card"></ion-icon>
+                <ion-card-title>
+                  Pre-comp off approval
+                </ion-card-title>
+
+              </ion-card-content>
+            </ion-card>
+          </a>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <a class="dash">
+            <ion-card (click)="loadPage('approval')">
+
+              <ion-card-content>
+                <ion-icon class="iconCss" name="contact"></ion-icon>
+                <ion-card-title>
+                  My Profile
+                </ion-card-title>
+
+              </ion-card-content>
+            </ion-card>
+          </a>
+        </ion-col>
+
+        <ion-col>
+          <a class="dash">
+            <ion-card (click)="loadPage('timeEntry')">
+              <ion-card-content>
+                <ion-icon class="iconCss" name="time"></ion-icon>
+                <ion-card-title>
+                  Time entry
+                </ion-card-title>
+
+              </ion-card-content>
+            </ion-card>
+          </a>
+        </ion-col>
+
+        <ion-col>
+          <a class="dash">
+            <ion-card (click)="logOut()">
+              <ion-card-content>
+                <ion-icon class="iconCss" name="log-out"></ion-icon>
+                <ion-card-title>
+                  Log out
+                </ion-card-title>
+
+              </ion-card-content>
+            </ion-card>
+          </a>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </ion-infinite-scroll>
-  </ion-content>
-  <!-- <ion-footer>
-      
-        <ion-navbar>
-            <ion-buttons left>
-                <a ion-button icon-only href="#/login" >
-                  <ion-icon name="arrow-back"></ion-icon>
-                </a>
-              </ion-buttons>
-      
-          <ion-title>
-            Dashboard
-          </ion-title>
-      
-          <ion-buttons end>
-            <button ion-button icon-only (click)="openModal()">
-              <ion-icon name="log-out"></ion-icon>
-            </button>
-          </ion-buttons>
-        </ion-navbar>
-      
-  </ion-footer> -->
+</ion-content>

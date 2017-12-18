@@ -20,12 +20,16 @@ export class compOffServices {
 
     getCompOffAvailableDates(data, isPlant): Observable<any> {
         this.url = this.updateURL(isPlant);
-        return this.http.post(this.url + 'GetCompOffAvailableDates', data);
+        return this.http.get(this.url + 'GetCompOffAvailableDates', data);
     }
     ClubbedComOFF(data,isPlant)
     {
         this.url = this.updateURL(isPlant);
         return this.http.get(this.url + 'ClubbedComOFF', data)
+    }
+    GetTotalDaysExceptAnyLeaves(data,isPlant){
+        this.url = this.updateURL(isPlant);
+        return this.http.get(this.url + 'GetTotalDaysExceptAnyLeaves', data)
     }
     saveCompOff(data: any, isPlant): Observable<any> {
         this.url = this.updateURL(isPlant);

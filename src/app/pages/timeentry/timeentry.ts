@@ -1,11 +1,9 @@
 import { Component } from '@angular/core';
 import { timeEntryService } from "../services/timeEntryServices";
 import { NavController } from 'ionic-angular/navigation/nav-controller';
-import { commonService } from '../services/common';
-import { ReturnStatement } from '@angular/compiler/src/output/output_ast';
+import { commonService, authentication } from '../services/common';
 import { Geolocation } from '@ionic-native/geolocation';
 import { showMessage } from '../services/showalert';
-import { dashCaseToCamelCase } from '@angular/compiler/src/util';
 
 @Component({
     selector: 'page-timeentry',
@@ -20,8 +18,13 @@ export class timeEntry {
     locationInfo: any;
     timeEntryLocations: any;
     Emp_Info: any;
+    auth:authentication;
     constructor(private timeService: timeEntryService, private nav: NavController, private globalVar: commonService, private geolocation: Geolocation, private show: showMessage) {
         this.timeEntryLocations = { latitude: '13.050784', longitude: '80.20953' };
+        this.auth = this.globalVar.auth;
+        if (this.auth == undefined) {
+          this.nav.setRoot('login');
+        }
         this.Oninit();
     }
 
@@ -31,7 +34,7 @@ export class timeEntry {
         this.btnText = (this.isPunchIn ? "TimeIn" : "TimeOut");
     }
     getTimeEntry() {
-        this.timeService.getTimeEntry(this.globalVar.auth.userid).subscribe((result) => {
+        this.timeService.getTimeEntry(this.auth.userid).subscribe((result) => {
             this.TimeEntryRequests = result;
             if (this.TimeEntryRequests == undefined || this.TimeEntryRequests == null) {
                 this.isPunchIn = true;
@@ -105,7 +108,7 @@ export class timeEntry {
 
     PunchInOut() {
         let data = {
-            userId: this.globalVar.auth.userid,
+            userId: this.auth.userid,
             IsInTime: this.isPunchIn,
             Location: this.locationInfo
         }

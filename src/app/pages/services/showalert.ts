@@ -1,99 +1,101 @@
 import { AlertController } from 'ionic-angular';
 import { Injectable } from '@angular/core';
+import { Alert } from 'ionic-angular/components/alert/alert';
 
 @Injectable()
-export class showMessage{
+export class showMessage {
 
 
 
-constructor(private alertCtrl: AlertController) {
+  constructor(private alertCtrl: AlertController) {
 
-}
+  }
 
-sucess(subTitle,message) {
-  let alert = this.alertCtrl.create({
-    title: 'sucess',
-    subTitle: subTitle,
-    message:message,
-    buttons: ['Ok']
-  });
-  alert.present();
-}
+  sucess(subTitle, message) {
+    let alert = this.alertCtrl.create({
+      title: 'sucess',
+      subTitle: subTitle,
+      message: message,
+      buttons: ['Ok']
+    });
+    alert.present();
+  }
 
-alert(subTitle,message) {
-  let alert = this.alertCtrl.create({
-    title: 'alert',
-    subTitle: subTitle,
-    message:message,
-    buttons: ['Ok']
-  });
-  alert.present();
-}
+  alert(subTitle, message) {
+    let alert = this.alertCtrl.create({
+      title: 'alert',
+      subTitle: subTitle,
+      message: message,
+      buttons: ['Ok']
+    });
+    alert.present();
+  }
 
-error(title,subTitle,confirmtext) {
-  let alert = this.alertCtrl.create({
-    title: 'error',
-    subTitle: subTitle,
-    buttons: ['Dimiss'],
-  });
-  alert.present();
-}
+  error(subTitle, message) {
+    let alert = this.alertCtrl.create({
+      title: 'error',
+      subTitle: subTitle,
+      message: message,
+      buttons: ['Dimiss'],
+    });
+    alert.present();
+  }
 
-confirm(message,confirm) {
-  let alert = this.alertCtrl.create({
-    title: 'confirm',
-    message: message,
-    buttons: [
-      {
-        text: 'cancel',
-        role: 'cancel',
-        handler: ()=>{
+  confirm(subTitle, message,page) {
+    let alert = this.alertCtrl.create({
+      title: 'Confirmation',
+      subTitle: subTitle,
+      message: message,
+      buttons: [
+        {
+          text: 'cancel',
+          role: 'cancel',
+          handler: (isValid) => { return false; }
+        },
+        {
+          text: 'Confirm',
+          handler: () => { page.confirm(); }
         }
-      },
-      {
-        text: 'confirm',
-        handler: confirm
-      }
-    ]
-  });
-  alert.present();
-}
+      ]
+    });
+    alert.present();
+  }
 
-// presentPrompt() {
-//   let alert = this.alertCtrl.create({
-//     title: 'Login',
-//     inputs: [
-//       {
-//         name: 'username',
-//         placeholder: 'Username'
-//       },
-//       {
-//         name: 'password',
-//         placeholder: 'Password',
-//         type: 'password'
-//       }
-//     ],
-//     buttons: [
-//       {
-//         text: 'Cancel',
-//         role: 'cancel',
-//         handler: data => {
-//           console.log('Cancel clicked');
-//         }
-//       },
-//       {
-//         text: 'Login',
-//         handler: data => {
-//           if (User.isValid(data.username, data.password)) {
-//             // logged in!
-//           } else {
-//             // invalid login
-//             return false;
-//           }
-//         }
-//       }
-//     ]
-//   });
-//   alert.present();
-// }
+  // presentPrompt() {
+  //   let alert = this.alertCtrl.create({
+  //     title: 'Login',
+  //     inputs: [
+  //       {
+  //         name: 'username',
+  //         placeholder: 'Username'
+  //       },
+  //       {
+  //         name: 'password',
+  //         placeholder: 'Password',
+  //         type: 'password'
+  //       }
+  //     ],
+  //     buttons: [
+  //       {
+  //         text: 'Cancel',
+  //         role: 'cancel',
+  //         handler: data => {
+  //           console.log('Cancel clicked');
+  //         }
+  //       },
+  //       {
+  //         text: 'Login',
+  //         handler: data => {
+  //           if (User.isValid(data.username, data.password)) {
+  //             // logged in!
+  //           } else {
+  //             // invalid login
+  //             return false;
+  //           }
+  //         }
+  //       }
+  //     ]
+  //   });
+  //   alert.present();
+  // }
 }

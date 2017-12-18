@@ -12,21 +12,21 @@ export interface searchPagination {
 };
 export interface authentication {
         token: any,
-        isAuth: false,
-        userName: "",
-        role: "",
-        userid: "",
-        userstate: "",
-        companyid: "",
-        userdepartcode: "",
-        designationrole: "",
-        displayname: "",
-        employeenumbertype: "",
-        locationid: "",
-        isplantuser: false,
-        isplantteamleader: false,
-        isdualrole: false,
-        istrainee: false
+        isAuth: boolean,
+        userName: string,
+        role: string,
+        userid: string,
+        userstate: string,
+        companyid: string,
+        userdepartcode: string,
+        designationrole: string,
+        displayname: string,
+        employeenumbertype: string,
+        locationid: string,
+        isplantuser: boolean,
+        isplantteamleader: boolean,
+        isdualrole: boolean,
+        istrainee: boolean
 };
 
 export interface iApprovalItem {
@@ -111,7 +111,23 @@ export class commonService {
         public set TLList(val: reportingList) {
                 this._TLList = val;
         }
-        constructor(@Inject(httpService) private http: httpService) {
+        private _pageTitle: string;
+
+        public get pageTitle(): string {
+            return this._pageTitle;
+        }
+        public set pageTitle(val: string) {
+            this._pageTitle = val;
+        }
+        private _goBack: string;
+    
+        public get goBack(): string {
+            return this._goBack;
+        }
+        public set goBack(val: string) {
+            this._goBack = val;
+        }
+        constructor( @Inject(httpService) private http: httpService) {
         }
 
         getEmployeeInfo() {

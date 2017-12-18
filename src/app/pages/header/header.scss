@@ -1,0 +1,16 @@
+page-header{
+    ion-header {
+        left: 0;
+        top: 0;
+        position: absolute;
+        z-index: 10;
+        display: block;
+        width: 100%;
+        background-color: #d6b1b1 !important;
+    }
+    .iconCss {
+      display: inline-block;
+      font-size: 1.1em;
+      color: whitesmoke;
+    }
+}
