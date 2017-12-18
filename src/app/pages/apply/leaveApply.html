@@ -1,3 +1,184 @@
 <ion-header>
   <page-header></page-header>
 </ion-header>
+
+
+<ion-content>
+  <ion-item-divider ion-item light no-lines>
+    Available Leaves
+    <ion-icon item-right></ion-icon>
+  </ion-item-divider>
+  <ion-list>
+    <ion-item *ngIf="!empInfo.isTrainee">
+      <ion-row>
+        <ion-col width-50>
+          Sick Leave
+        </ion-col>
+        <ion-col width-50 text-right> {{userleave.sickLeave}} </ion-col>
+      </ion-row>
+    </ion-item>
+    <ion-item *ngIf="!empInfo.isTrainee">
+      <ion-row>
+        <ion-col width-50>
+          Casual Leave </ion-col>
+        <ion-col width-50 text-right>{{userleave.casualLeave}}</ion-col>
+      </ion-row>
+    </ion-item>
+
+    <ion-item *ngIf="!empInfo.isTrainee">
+      <ion-row>
+        <ion-col width-50>
+          Privilege Leave </ion-col>
+        <ion-col width-50 text-right>{{userleave.privilegeLeave}}</ion-col>
+      </ion-row>
+    </ion-item>
+
+    <ion-item *ngIf="!empInfo.isTrainee">
+      <ion-row>
+        <ion-col width-50>Condolence Leave </ion-col>
+        <ion-col width-50 text-right> {{userleave.condolenceLeave}}</ion-col>
+      </ion-row>
+    </ion-item>
+
+    <ion-item *ngIf="!empInfo.isTrainee && empInfo.gender==2">
+      <ion-row>
+        <ion-col width-50>Maternity Leave </ion-col>
+        <ion-col width-50 text-right>{{userleave.maternityLeave}}</ion-col>
+      </ion-row>
+    </ion-item>
+
+    <ion-item *ngIf="empInfo.isTrainee">
+      <ion-row>
+        <ion-col width-50>Trainee Leave </ion-col>
+        <ion-col width-50 text-right>{{userleave.traineeLeave}}</ion-col>
+      </ion-row>
+    </ion-item>
+
+    <ion-item *ngIf="!empInfo.isTrainee">
+      <ion-row>
+        <ion-col width-50>Perimission Leave </ion-col>
+        <ion-col width-50 text-right>{{userleave.permission}}</ion-col>
+
+      </ion-row>
+    </ion-item>
+  </ion-list>
+  <ion-item-divider ion-item light no-lines>
+    General Information
+    <ion-icon item-right></ion-icon>
+  </ion-item-divider>
+  <ion-list>
+    <ion-item>
+      <ion-label width-50>Applied For </ion-label>
+      <ion-input disabled="true" [(ngModel)]="empInfo.firstName"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label width-50>Employee Number</ion-label>
+      <ion-input disabled="true" [(ngModel)]="empInfo.employeeNumber"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label width-50>Department </ion-label>
+      <ion-input disabled="true" [(ngModel)]="empInfo.departmentName"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label width-50>Division </ion-label>
+      <ion-input disabled="true" [(ngModel)]="empInfo.divisionName"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        <span>Type Of Leave </span>
+      </ion-label>
+      <ion-select [(ngModel)]="selectedTypeOfLeave" (ionChange)="onLeaveTypeChange()">
+        <ion-option *ngFor="let objType of leaveType" [value]="objType">{{objType.leaveTypeName}}
+        </ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>Attendance Code </ion-label>
+      <ion-select [(ngModel)]="selectedLeaveCode" (ionChange)="OnLeaveCodeChange()">
+        <ion-option *ngFor="let objCode of leaveCode" [value]="objCode">{{objCode.acronymsName}}
+        </ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label *ngIf="!items.toDatevisiblity">*Date</ion-label>
+      <ion-label *ngIf="items.toDatevisiblity">*From Date</ion-label>
+      <ion-datetime displayFormat="DD/MM/YYYY" name="dpDate"></ion-datetime>
+    </ion-item>
+    <ion-item *ngIf="items.fromFulldayvisiblity">
+      <ion-label>
+        *Full/Half Day 1
+      </ion-label>
+      <ion-select [(ngModel)]="items.fromfullorhalfday">
+        <ion-option value="1">
+          Full day
+        </ion-option>
+        <ion-option value="0">
+          Half day
+        </ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item *ngIf="items.fromMorningVisiblity">
+      <ion-label>
+        *Full/Half Day 2
+      </ion-label>
+      <ion-select>
+        <ion-option value="1">
+          Morning
+        </ion-option>
+        <ion-option value="0">
+          Afternoon
+        </ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item *ngIf="items.toDatevisiblity">
+      <ion-label>*To Date</ion-label>
+      <ion-datetime displayFormat="DD/MM/YYYY" name="dpDate"></ion-datetime>
+    </ion-item>
+    <ion-item *ngIf="items.toFulldayVisibilty">
+      <ion-label>*Full/Half Day</ion-label>
+      <ion-select>
+        <ion-option value="1">
+          Full day
+        </ion-option>
+        <ion-option value="0">
+          Half day
+        </ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item *ngIf="items.toMorningVisiblity">
+      <ion-label>
+        *Morning/Afternoon 2
+      </ion-label>
+      <ion-select [(ngModel)]="items.toFullorHalf">
+        <ion-option value="1">
+          Morning
+        </ion-option>
+        <ion-option value="0">
+          Afternoon
+        </ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item *ngIf="selectedTypeOfLeave.id == 5">
+      <ion-label text-center>{{selectedLeaveCode.fromTime}}+{{selectedLeaveCode.toTime}}</ion-label>
+    </ion-item>
+    <ion-item *ngIf="selectedTypeOfLeave.id == 5">
+      <ion-row>
+        <ion-col text-center>{{selectedLeaveCode.acronymsDescription}}</ion-col>
+      </ion-row>
+    </ion-item>
+    <ion-item *ngIf="selectedTypeOfLeave.id == 5">
+      <ion-label>In Time</ion-label>
+      <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="inn"></ion-datetime>
+    </ion-item>
+    <ion-item *ngIf="selectedTypeOfLeave.id == 5">
+      <ion-label>out Time</ion-label>
+      <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" name="ji" [(ngModel)]="out"></ion-datetime>
+    </ion-item>
+    <ion-item *ngIf="selectedTypeOfLeave.id == 5">
+      <ion-label>On Duty Location</ion-label>
+      <ion-input type="text" name="txtLoc"></ion-input>
+    </ion-item>
+
+  </ion-list>
+</ion-content>

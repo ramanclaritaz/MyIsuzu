@@ -1,0 +1,120 @@
+<ion-header>
+    <page-header>
+    </page-header>
+</ion-header>
+<ion-content has-header="true" padding="true">
+    <ion-refresher pulling-text="Pull to refresh..." on-refresh="doRefresh()">
+    </ion-refresher>
+    <ion-list>
+        <ion-item>
+            <div class="control-btn">
+                <div class="btn-group" role="group" aria-label="...">
+                    <button type="button" class="btn btn-default pre-btn lft-btn" ng-click="prevYear()">Previous Year</button>
+                    <button type="button" class="btn btn-default mid-btn" ng-click="currentYear()">Current Month</button>
+                    <button type="button" class="btn btn-default  pre-btn rgt-btn" ng-click="nextYear()">Next Year</button>
+                    <!--<button type="button" class="btn btn-default  pre-btn rgt-btn" ng-click="getallTask()">TFS</button>-->
+                </div>
+            </div>
+            <br>
+            <div class="year-block">
+                <ul class="year-link" *ngFor="let displayyears of displayYears">
+                    <li>
+                        <a style="padding: 30px,30px,30px,30px; font-size: 18px" ng-class="{slectedYear: displayyears==selectedYearValue}" ng-click="selectedYear(displayyears,this)">{{displayyears}}</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="month-block">
+                <ul class="month-link" *ngFor="let allmonths of allMonths">
+                    <li>
+                        <a href="javascript:void(0)" ng-class="{slectedYear: MonthName==allmonths}" ng-click="getDaysArray(this.$index,allmonths,true)"
+                            style="font-size: 16px">{{allmonths}}</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="week-block">
+                <ul class="week-link" *ngFor="let weekcounts of WeekCount">
+                    <li>
+                        <a href="javascript:void(0)" ng-click="getDaysFromWeek(this.$index,weekcounts.weekName,true)" ng-class="{slectedYear: weekcounts.weekName==SelectedWeekName}"
+                            style="padding: 30px,30px,30px,30px; font-size: 14px">{{weekcounts.weekName}}</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="demo-one">
+                <div class="control-group">
+                    <div class="controls">
+                        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
+                            <label class="control-label">No of working days</label>
+                            <!--</div>
+                            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">-->
+                            <label class="control-label">{{working}}</label>
+                        </div>
+                    </div>
+                    <div class="controls">
+                        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
+                            <label class="control-label">No of Worked days</label>
+                            <!--</div>
+                            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">-->
+                            <label class="control-label">{{worked}}</label>
+                        </div>
+                        <!--</div>
+                        <div class="controls">-->
+                        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
+                            <label class="control-label">Loss of Pay</label>
+                            <!-- </div>
+                             <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">-->
+                            <label class="control-label">{{LOP}}</label>
+                        </div>
+                    </div>
+                    <br />
+                </div>
+                <div>
+                    <label class="control-label">{{monthYearDisplay}}</label>
+                </div>
+                <table ng-show="IsWeekSelected" class="demo-one-table">
+                    <tbody>
+                        <tr>
+                            <th *ngFor="let daysname of daysName">{{daysname}}</th>
+                        </tr>
+                        <tr *ngFor="let dummyObj of wkCountArray" class="table-striped">
+                            <td ng-class="DayStyle.SundayDate">
+                                {{SundayDate[$index].Date}}
+                                <br />
+                                <div ng-style="{'background-color': SundayDate[$index].ColorCode}">{{SundayDate[$index].Code}}</div>
+                            </td>
+                            <td ng-class="DayStyle.MondayDate">
+                                {{MondayDate[$index].Date}}
+                                <br />
+                                <div ng-style="{'background-color': MondayDate[$index].ColorCode}">{{MondayDate[$index].Code}} </div>
+                            </td>
+                            <td ng-class="DayStyle.TuesDayDate">
+                                {{TuesDayDate[$index].Date}}
+                                <br />
+                                <div ng-style="{'background-color': TuesDayDate[$index].ColorCode}">{{TuesDayDate[$index].Code}}</div>
+                            </td>
+                            <td ng-class="DayStyle.WednesDayDate">
+                                {{WednesDayDate[$index].Date}}
+                                <br />
+                                <div ng-style="{'background-color': WednesDayDate[$index].ColorCode}">{{WednesDayDate[$index].Code}}</div>
+                            </td>
+                            <td ng-class="DayStyle.ThursDayDate">
+                                {{ThursDayDate[$index].Date}}
+                                <br />
+                                <div ng-style="{'background-color': ThursDayDate[$index].ColorCode}">{{ThursDayDate[$index].Code}}</div>
+                            </td>
+                            <td ng-class="DayStyle.FirDayDate">
+                                {{FirDayDate[$index].Date}}
+                                <br />
+                                <div ng-style="{'background-color': FirDayDate[$index].ColorCode}">{{FirDayDate[$index].Code}}</div>
+                            </td>
+                            <td ng-class="DayStyle.SaturDayDate">
+                                {{SaturDayDate[$index].Date}}
+                                <br />
+                                <div ng-style="{'background-color': SaturDayDate[$index].ColorCode}">{{SaturDayDate[$index].Code}}</div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </ion-item>
+    </ion-list>
+</ion-content>

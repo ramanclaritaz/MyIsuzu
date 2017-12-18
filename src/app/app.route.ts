@@ -9,6 +9,7 @@ import { leaveApply } from "./pages/apply/leaveApply";
 import { compOffApply } from "./pages/apply/compOffApply";
 import { ApprovalPage } from './pages/approval/approvalPage';
 import { timeEntry } from './pages/timeentry/timeentry';
+import { attendance } from './pages/attendance/attendance';
 
 export  const deepLinkConfig: DeepLinkConfig = {
   links: [
@@ -18,6 +19,7 @@ export  const deepLinkConfig: DeepLinkConfig = {
       { component: compOffApply, name: "compoff", segment: "compoff"},
       { component: DashboardPage, name: "dash", segment: "dash" },
       { component: ApprovalPage, name: "approvalpage", segment: "approvalpage" },
-      { component: timeEntry, name: "timeEntry", segment: "timeEntry" }
+      { component: timeEntry, name: "timeEntry", segment: "timeEntry" },
+      { component: attendance, name: "attendance", segment: "attendance" }
   ]
 };

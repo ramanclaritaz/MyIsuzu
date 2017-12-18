@@ -38,6 +38,9 @@ import { compOffApply } from "./pages/apply/compOffApply";
 import { ApprovalPage } from './pages/approval/approvalPage';
 import { timeEntry } from './pages/timeentry/timeentry';
 import { header } from './pages/header/header';
+import { attendance } from './pages/attendance/attendance';
+import { attendanceService } from './pages/services/attendanceServices';
+import { leaveService } from './pages/services/leaveServices';
 
 @NgModule({
   declarations: [
@@ -48,7 +51,8 @@ import { header } from './pages/header/header';
     compOffApply,
     ApprovalPage,
     timeEntry,
-    header
+    header,
+    attendance
   ],
   imports: [
     BrowserModule,
@@ -69,7 +73,8 @@ import { header } from './pages/header/header';
     compOffApply,
     ApprovalPage,
     timeEntry,
-    header
+    header,
+    attendance
   ],
   providers: [
     StatusBar,
@@ -81,6 +86,7 @@ import { header } from './pages/header/header';
     compOffServices,
     showMessage,
     timeEntryService,
+    attendanceService,leaveService,
     Geolocation,
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
