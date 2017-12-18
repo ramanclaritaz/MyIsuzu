@@ -3,7 +3,7 @@
 </ion-header>
 
 
-<ion-content>
+<ion-content has-header="true" padding="true">
   <ion-item-divider ion-item light no-lines>
     Available Leaves
     <ion-icon item-right></ion-icon>
@@ -99,7 +99,10 @@
         </ion-option>
       </ion-select>
     </ion-item>
-
+    <ion-item>
+      <ion-label>Leave descriptions</ion-label>
+      <ion-textarea disabled="true" [(ngModel)]="selectedLeaveCode.acronymsDescription"></ion-textarea>
+    </ion-item>
     <ion-item>
       <ion-label *ngIf="!items.toDatevisiblity">*Date</ion-label>
       <ion-label *ngIf="items.toDatevisiblity">*From Date</ion-label>
@@ -109,7 +112,7 @@
       <ion-label>
         *Full/Half Day 1
       </ion-label>
-      <ion-select [(ngModel)]="items.fromfullorhalfday">
+      <ion-select [disabled]="items.fromFulldayDisabled" [(ngModel)]="items.fromfullorhalfday" (ionChange)="changed()">
         <ion-option value="1">
           Full day
         </ion-option>
@@ -120,9 +123,9 @@
     </ion-item>
     <ion-item *ngIf="items.fromMorningVisiblity">
       <ion-label>
-        *Full/Half Day 2
+        *Morning/Afternoon
       </ion-label>
-      <ion-select>
+      <ion-select [disabled]="items.fromMorningDisabled" [(ngModel)]="items.fromMorningorAfternoon" (ionChange)="changed()">
         <ion-option value="1">
           Morning
         </ion-option>
@@ -137,7 +140,7 @@
     </ion-item>
     <ion-item *ngIf="items.toFulldayVisibilty">
       <ion-label>*Full/Half Day</ion-label>
-      <ion-select>
+      <ion-select [disabled]="items.toFulldayDisabled" [(ngModel)]="items.toFullorHalf" (ionChange)="changed()">
         <ion-option value="1">
           Full day
         </ion-option>
@@ -148,9 +151,9 @@
     </ion-item>
     <ion-item *ngIf="items.toMorningVisiblity">
       <ion-label>
-        *Morning/Afternoon 2
+        *Morning/Afternoon
       </ion-label>
-      <ion-select [(ngModel)]="items.toFullorHalf">
+      <ion-select [disabled]="items.toMorningDisabled" [(ngModel)]="items.toMorningorAfternoon" (ionChange)="changed()">
         <ion-option value="1">
           Morning
         </ion-option>
@@ -160,13 +163,10 @@
       </ion-select>
     </ion-item>
     <ion-item *ngIf="selectedTypeOfLeave.id == 5">
-      <ion-label text-center>{{selectedLeaveCode.fromTime}}+{{selectedLeaveCode.toTime}}</ion-label>
+      <ion-label>shift time</ion-label>
+      <ion-input disabled="true">{{selectedLeaveCode.fromTime+' to '+selectedLeaveCode.toTime}}</ion-input>
     </ion-item>
-    <ion-item *ngIf="selectedTypeOfLeave.id == 5">
-      <ion-row>
-        <ion-col text-center>{{selectedLeaveCode.acronymsDescription}}</ion-col>
-      </ion-row>
-    </ion-item>
+
     <ion-item *ngIf="selectedTypeOfLeave.id == 5">
       <ion-label>In Time</ion-label>
       <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="inn"></ion-datetime>
