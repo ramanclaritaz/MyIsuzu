@@ -10,6 +10,8 @@ import { HttpModule } from '@angular/http';
 import { LocalStorageModule } from "angular-2-local-storage";
 import { Geolocation } from '@ionic-native/geolocation';
 
+import moment from "moment";
+
 /**
  * services import
  */

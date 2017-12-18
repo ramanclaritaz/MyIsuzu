@@ -22,7 +22,11 @@ export class compOffServices {
         this.url = this.updateURL(isPlant);
         return this.http.post(this.url + 'GetCompOffAvailableDates', data);
     }
-
+    ClubbedComOFF(data,isPlant)
+    {
+        this.url = this.updateURL(isPlant);
+        return this.http.get(this.url + 'ClubbedComOFF', data)
+    }
     saveCompOff(data: any, isPlant): Observable<any> {
         this.url = this.updateURL(isPlant);
         return this.http.post(this.url + 'SaveCompOff', data);//.subscribe(result=>{return result;});

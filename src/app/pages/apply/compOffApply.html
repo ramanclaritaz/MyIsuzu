@@ -59,7 +59,7 @@
                 <ion-option value="0">Half day</ion-option>
             </ion-select>
         </ion-item>
-        <ion-item>
+        <ion-item *ngIf='comOffDay.isFullDay==0'>
             <ion-label>*Morning/Afternoon</ion-label>
             <ion-select [(ngModel)]="comOffDay.isFullDay">
                 <ion-option value="1">Morning</ion-option>
@@ -69,11 +69,11 @@
         <ion-item>
             <ion-label>*From Date</ion-label>
 
-            <ion-datetime displayFormat="DD/MM/YYYY" aria-placeholder="from date" [(ngModel)]="comOffDay.fromDate"></ion-datetime>
+            <ion-datetime displayFormat="DD/MM/YYYY" min="minDate" aria-placeholder="from date" [(ngModel)]="comOffDay.fromDate"></ion-datetime>
         </ion-item>
         <ion-item>
             <ion-label>*To Date</ion-label>
-            <ion-datetime displayFormat="DD/MM/YYYY" aria-placeholder="from date" [(ngModel)]="comOffDay.toDate"></ion-datetime>
+            <ion-datetime displayFormat="DD/MM/YYYY" min="comOffDay.fromDate" aria-placeholder="from date" [(ngModel)]="comOffDay.toDate"></ion-datetime>
         </ion-item>
         <ion-item>
             <ion-label>*Team Leader</ion-label>
@@ -82,18 +82,24 @@
             </ion-select>
         </ion-item>
     </ion-list>
-    <!-- <ion-grid>
-        <ion-title>CompOff Date(s)</ion-title>
+    <ion-grid>
         <ion-row>
-            <ion-col> CompOff Date </ion-col>
-            <ion-col> CompOff Available Date </ion-col>
+            <ion-col>
+                Comoff Date
+            </ion-col>
+            <ion-col>
+                Available date
+            </ion-col>
         </ion-row>
-        <ion-row> -->
-    <!-- <ion-row *ngFor="item of CompOffAvailableDates"> -->
-    <!-- <ion-col> {{item.compOffDate | date:'dd-MMM-yyyy'}} </ion-col>
-            <ion-col> {{item.compOffAvailableDate | date:'dd-MMM-yyyy'}} </ion-col>
+        <ion-row *ngif="AvailableDates.length>0" *ngFor="item of AvailableDates">
+            <ion-col>
+                {{item.comoffDate | date:'DD-MMM-YYYY'}}
+            </ion-col>
+            <ion-col>
+                {{item.availableDate | date:'DD-MMM-YYYY'}}
+            </ion-col>
         </ion-row>
-    </ion-grid> -->
+    </ion-grid>
     <div class='button_action' *ngIf='availCompOff.Comp_Info_fullday>0 || availCompOff.Comp_Info_halfday>0'>
         <button on-tap='applyCompOffPlant($event)' class="button icon-left ion-checkmark-round button-small button-balanced">
             Apply
