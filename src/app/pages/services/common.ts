@@ -1,6 +1,9 @@
 import { DateTime } from "ionic-angular/components/datetime/datetime";
 import { httpService } from "./httpProvider";
 import { Injectable, Inject } from "@angular/core";
+import { Loading } from "ionic-angular/components/loading/loading";
+import { LoadingController } from "ionic-angular/components/loading/loading-controller";
+import { _ParseAST } from "@angular/compiler";
 
 export interface searchPagination {
         page: Int32Array,
@@ -45,6 +48,9 @@ export interface iApprovalItem {
         toDate: DateTime;
         totaldays: any;
         comments: any;
+        la1ApprovedStatus:number;
+        la1ApprovedReason:string;
+        la1ApprovedDate:any;
 
 };
 export interface employeeInfo {
@@ -114,33 +120,54 @@ export class commonService {
         private _pageTitle: string;
 
         public get pageTitle(): string {
-            return this._pageTitle;
+                return this._pageTitle;
         }
         public set pageTitle(val: string) {
-            this._pageTitle = val;
+                this._pageTitle = val;
         }
         private _goBack: string;
-    
+
         public get goBack(): string {
-            return this._goBack;
+                return this._goBack;
         }
         public set goBack(val: string) {
-            this._goBack = val;
+                this._goBack = val;
         }
-        constructor( @Inject(httpService) private http: httpService) {
+        constructor( @Inject(httpService) private http: httpService, private loadingCtrl: LoadingController) {
+
         }
 
         getEmployeeInfo() {
                 this.http.get('/api/Employee/GetEmployeeInfo?userId=' + this.auth.userid).subscribe((result) => {
                         this.employeeInfo = result;
-                });
+                }, (error) => { }
+                );
         }
         getListOfTL() {
                 this.http.get('/api/Employee/ListOfTL?userId=' + this.auth.userid).subscribe((result) => {
                         this.TLList = result;
-                });
+                }, (error) => { });
         }
 
 
+}
+
+@Injectable()
+export class Load {
+        private _loading: Loading;
+
+        constructor(private loadingCtrl: LoadingController) {
+
+        }
+
+        show() {
+                this._loading = this.loadingCtrl.create({
+                        content: 'Please wait...'
+                });
+                this._loading.present();
+        }
+        dismiss() {
+                this._loading.dismiss();
+        }
 }
 

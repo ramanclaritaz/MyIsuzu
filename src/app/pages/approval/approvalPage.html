@@ -55,7 +55,7 @@
     </ion-item>
     <ion-item>
       <ion-label>Comments :</ion-label>
-      <ion-textarea class='comments' [value]="Item.comments" placeholder='Comments'></ion-textarea>
+      <ion-textarea class='comments' [(ngModel)]="Item.comments" placeholder='Comments'></ion-textarea>
     </ion-item>
   </ion-list>
 

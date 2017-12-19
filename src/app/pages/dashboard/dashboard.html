@@ -5,7 +5,7 @@
   <ion-infinite-scroll>
     <ion-grid>
       <ion-row>
-        <ion-col>
+        <ion-col col-md-4>
           <a class="dash">
             <ion-card (click)="loadPage('leave')">
               <ion-card-content>
@@ -17,7 +17,7 @@
             </ion-card>
           </a>
         </ion-col>
-        <ion-col>
+        <ion-col col-md-4>
           <a class="dash">
             <ion-card (click)="loadPage('compoff')">
               <ion-card-content>
@@ -30,7 +30,10 @@
             </ion-card>
           </a>
         </ion-col>
-        <ion-col>
+
+      </ion-row>
+      <ion-row>
+        <ion-col col-md-4>
           <a class="dash">
             <ion-card (click)="loadPage('attendance')">
               <ion-card-content>
@@ -42,11 +45,9 @@
             </ion-card>
           </a>
         </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col>
+        <ion-col col-md-4>
           <a class="dash">
-            <ion-card (click)="loadPage('approval')">
+            <ion-card (click)="loadPage('approval','Leave')">
               <ion-card-content>
                 <ion-icon class="iconCss" name="card"></ion-icon>
                 <ion-card-title>
@@ -56,7 +57,7 @@
             </ion-card>
           </a>
         </ion-col>
-        <ion-col>
+        <!-- <ion-col>
           <a class="dash">
             <ion-card (click)="loadPage('approval')">
               <ion-card-content>
@@ -68,12 +69,12 @@
               </ion-card-content>
             </ion-card>
           </a>
-        </ion-col>
+        </ion-col> -->
       </ion-row>
       <ion-row>
-        <ion-col>
+        <ion-col col-md-4>
           <a class="dash">
-            <ion-card (click)="loadPage('approval')">
+            <ion-card (click)="loadPage('approval','ComOff')">
               <ion-card-content>
                 <ion-icon class="iconCss" name="card"></ion-icon>
                 <ion-card-title>
@@ -83,9 +84,9 @@
             </ion-card>
           </a>
         </ion-col>
-        <ion-col>
+        <ion-col col-md-4>
           <a class="dash">
-            <ion-card (click)="loadPage('approval')">
+            <ion-card (click)="loadPage('approval','Pre-compOff')">
               <ion-card-content>
                 <ion-icon class="iconCss" name="card"></ion-icon>
                 <ion-card-title>
@@ -98,7 +99,7 @@
         </ion-col>
       </ion-row>
       <ion-row>
-        <ion-col>
+        <!-- <ion-col>
           <a class="dash">
             <ion-card (click)="loadPage('approval')">
 
@@ -111,9 +112,9 @@
               </ion-card-content>
             </ion-card>
           </a>
-        </ion-col>
+        </ion-col> -->
 
-        <ion-col>
+        <ion-col col-md-4>
           <a class="dash">
             <ion-card (click)="loadPage('timeEntry')">
               <ion-card-content>
@@ -127,7 +128,7 @@
           </a>
         </ion-col>
 
-        <ion-col>
+        <ion-col col-md-4>
           <a class="dash">
             <ion-card (click)="logOut()">
               <ion-card-content>

@@ -22,7 +22,7 @@ import { timeEntryService } from "./pages/services/timeEntryServices";
 /**
  * common classes import
  */
-import { commonService } from './pages/services/common';
+import { commonService, Load } from './pages/services/common';
 import { showMessage } from './pages/services/showalert';
 import { httpService } from './pages/services/httpProvider'
 import { deepLinkConfig } from './app.route'
@@ -79,6 +79,7 @@ import { leaveService } from './pages/services/leaveServices';
   providers: [
     StatusBar,
     commonService,
+    Load,
     SplashScreen,
     LoginService,
     httpService,
@@ -86,7 +87,7 @@ import { leaveService } from './pages/services/leaveServices';
     compOffServices,
     showMessage,
     timeEntryService,
-    attendanceService,leaveService,
+    attendanceService, leaveService,
     Geolocation,
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]

@@ -9,7 +9,7 @@ import { loginPage } from './pages/login/login';
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any = loginPage;
+  rootPage: any = loginPage;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
     platform.ready().then(() => {
@@ -19,4 +19,4 @@ export class MyApp {
       splashScreen.hide();
     });
   }
-  }
+}

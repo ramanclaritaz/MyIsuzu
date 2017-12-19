@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { commonService, authentication } from '../services/common';
+import { commonService, authentication, Load } from '../services/common';
 import { showMessage } from '../services/showalert';
 import { compOffServices } from '../services/compOffServices';
 import { NavController } from 'ionic-angular/navigation/nav-controller';
@@ -47,16 +47,16 @@ export class attendance {
     ThursDayDate = [];
     FirDayDate = [];
     SaturDayDate = [];
-    constructor(private show: showMessage, private nav: NavController, private globalVar: commonService, private attendanceService: attendanceService) {
-      this.Oninit();
+    constructor(private show: showMessage, private nav: NavController, private globalVar: commonService, private attendanceService: attendanceService, private loading: Load) {
+        this.Oninit();
     }
-    Oninit()
-    {
-        this.globalVar.goBack='dash';
-        this.globalVar.pageTitle='Comoff Apply';
+    Oninit() {
+        this.loading.show();
+        this.globalVar.goBack = 'dash';
+        this.globalVar.pageTitle = 'Comoff Apply';
         this.auth = this.globalVar.auth;
         if (this.auth == undefined || this.auth == null) {
-          this.nav.setRoot('login');
+            this.nav.setRoot('login');
         }
         this.StartDate = moment(new Date()).format("DD-MM-YYYY");
         this.IsWeekSelected = false;
@@ -65,6 +65,7 @@ export class attendance {
         this.auth = this.globalVar.auth;
         this.loadDayandYear();
         this.loadCurrentDate();
+        this.loading.dismiss();
     }
     loadDayandYear() {
         let displayYears = [];
@@ -89,7 +90,7 @@ export class attendance {
     }
     tileOfAbsent(value) {
         var style1 = "Absent";
-        var style2 = "Present";
+        var style2 = "show";
         if (value == "AA") {
             return style1;
         }
@@ -317,7 +318,7 @@ export class attendance {
                 }
                 this.getDaysFromWeek(i, '', true);
             }
-        });
+        }, err => { });
     }
 
 

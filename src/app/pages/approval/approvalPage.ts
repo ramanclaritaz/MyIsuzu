@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 
 import { approvalService } from '../services/approvalServices';
-import { iApprovalItem, commonService, authentication } from '../services/common';
+import { iApprovalItem, commonService, authentication, Load } from '../services/common';
 import { NavParams } from 'ionic-angular/navigation/nav-params';
 import { NavController } from 'ionic-angular/navigation/nav-controller';
 import { showMessage } from '../services/showalert';
+
+import moment from "moment";
 
 @Component({
   selector: 'page-approval',
@@ -13,55 +15,164 @@ import { showMessage } from '../services/showalert';
 
 export class ApprovalPage {
   Item: iApprovalItem;
+  data: any;
   model: any;
   leaveapply: any;
-  auth:authentication;
-  constructor(private approval: approvalService, navParam: NavParams, private nav: NavController,private show:showMessage,private globalVar:commonService) {
-    this.Item = navParam.get('data');
-
-    if (this.Item == undefined) {
-      nav.setRoot('approval');
-    }
+  auth: authentication;
+  constructor(private approval: approvalService, navParam: NavParams, private nav: NavController, private show: showMessage, private globalVar: commonService, private loading: Load) {
+    this.data = navParam.get('data');
     this.Oninit();
+    this.auth.isplantteamleader
   }
   Oninit() {
-    this.approval.getEditLeaveDetail(this.Item.id, false).subscribe((result) => {
-      this.model = result;
-      this.leaveapply = this.model.leaveapply;
-      this.globalVar.goBack = 'dash';
-    this.globalVar.pageTitle = 'Approval Page';
+    this.loading.show();
+    this.globalVar.goBack = 'dash';
+    this.globalVar.pageTitle = this.data.type + ' Approval Page';
     this.auth = this.globalVar.auth;
     if (this.auth == undefined || this.auth == null) {
       this.nav.setRoot('login');
     }
+    this.Item = this.data.item;
+    if (this.Item == undefined) {
+      this.nav.setRoot('approval', { data: this.data.type });
+    }
 
-    })
+    this.getData();
+    this.loading.dismiss();
+  }
+  getData() {
+    switch (this.data.type) {
+      case "Leave":
+        this.approval.getEditLeaveDetail(this.Item.id, this.data.Plant).subscribe((result) => {
+          this.model = result;
+        }, (err) => {
+        });
+        break;
+      case "ComOff":
+        this.approval.getEditCompoffDetail(this.Item.id, this.data.Plant).subscribe((result) => {
+          this.model = result;
+        }, (err) => {
+        });
+        break;
+      case "Pre-compOff":
+        this.approval.getEditPreCompoffDetail(this.Item.id, this.data.Plant).subscribe((result) => {
+          this.model = result;
+        }, (err) => {
+        });
+        break;
+    }
+
+
   }
   update(event, Item: iApprovalItem) {
-
+    this.Item = Item;
     if (Item.approvalStatus == undefined || Item.approvalStatus == null) {
-      this.show.alert('error',"Please select approval status")
+      this.show.alert('error', "Please select approval status")
       return false;
     }
     else if (Item.approvalStatus == 2 && (Item.comments == undefined || Item.comments == null)) {
-      this.show.alert('error',"Please enter comments")
+      this.show.alert('error', "Please enter comments")
       return false;
     }
-    this.leaveapply.la1ApprovedStatus = Item.approvalStatus;
-    this.leaveapply.la1ApprovedReason = Item.comments;
-    this.leaveapply.la1ApprovedDate = Date.now;
-    this.model.leaveapply = this.leaveapply;
-    this.show.confirm('Approval','Do you want to continue...',this)
+    this.Item.la1ApprovedStatus = Item.approvalStatus;
+    this.Item.la1ApprovedReason = this.Item.comments;
+    this.Item.la1ApprovedDate = moment(new Date()).format('MM/DD/YYYY');
+    this.show.confirm('Approval', 'Do you want to continue...', this)
   }
 
-  confirm(){
+  confirm() {
+    switch (this.data.type) {
+      case "Leave":
+        if (this.data.Plant) {
+          this.UpdateLeavePlant();
+        } else {
+          this.UpdateLeave();
+        }
+
+        break;
+      case "ComOff":
+        if (this.data.Plant) {
+          this.UpdateCompOffPlant();
+        } else {
+          this.UpdateCompOff();
+        }
+        break;
+      case "Pre-compOff":
+        this.UpdatePreCompoff();
+        break;
+    }
+  }
+  UpdateLeave() {
+    this.model.leaveapply.la1ApprovedStatus = this.Item.approvalStatus;
+    this.model.leaveapply.la1ApprovedReason = this.Item.comments;
+    this.model.leaveapply.la1ApprovedDate = this.Item.la1ApprovedDate;
+    this.loading.show();
     this.approval.EditLeaveApply(this.model, false).subscribe((result) => {
-      this.show.alert('sucess',"Request has been updated")
-      this.nav.setRoot('approval');
+      this.loading.dismiss();
+      this.show.alert('Approval', "Request has been updated")
+      this.nav.setRoot('approval', { data: this.data.type });
     }, (err) => {
-      this.show.alert('error',"Please enter comments")
-    })
+      this.loading.dismiss();
+      this.show.alert('error', err);
+    });
   }
+  UpdateLeavePlant() {
+    this.model.leaveapplyforplant.la1ApprovedStatus = this.Item.approvalStatus;
+    this.model.leaveapplyforplant.la1ApprovedReason = this.Item.comments;
+    this.model.leaveapplyforplant.la1ApprovedDate = this.Item.la1ApprovedDate;
+    this.loading.show();
+    this.approval.EditLeaveApply(this.model, false).subscribe((result) => {
+      this.loading.dismiss();
+      this.show.alert('Approval', "Request has been updated")
+      this.nav.setRoot('approval', { data: this.data.type });
+    }, (err) => {
+      this.loading.dismiss();
+      this.show.alert('error', err);
+    });
 
-
+  }
+  UpdateCompOff() {
+    this.leaveapply.la1ApprovedStatus = this.Item.approvalStatus;
+    this.leaveapply.la1ApprovedReason = this.Item.comments;
+    this.leaveapply.la1ApprovedDate = this.Item.la1ApprovedDate;
+    this.model.leaveapply = this.leaveapply;
+    this.loading.show();
+    this.approval.EditLeaveApply(this.model, false).subscribe((result) => {
+      this.loading.dismiss();
+      this.show.alert('Approval', "Request has been updated")
+      this.nav.setRoot('approval', { data: this.data.type });
+    }, (err) => {
+      this.loading.dismiss();
+      this.show.alert('error', err);
+    });
+  }
+  UpdateCompOffPlant() {
+    this.model.leaveapplyforplant.la1ApprovedStatus = this.Item.approvalStatus;
+    this.model.leaveapplyforplant.la1ApprovedReason = this.Item.comments;
+    this.model.leaveapplyforplant.la1ApprovedDate = this.Item.la1ApprovedDate;
+    this.loading.show();
+    this.approval.EditLeaveApply(this.model, false).subscribe((result) => {
+      this.loading.dismiss();
+      this.show.alert('Approval', "Request has been updated")
+      this.nav.setRoot('approval', { data: this.data.type });
+    }, (err) => {
+      this.loading.dismiss();
+      this.show.alert('error', err);
+    });
+  }
+  UpdatePreCompoff() {
+    this.leaveapply.la1ApprovedStatus = this.Item.approvalStatus;
+    this.leaveapply.la1ApprovedReason = this.Item.comments;
+    this.leaveapply.la1ApprovedDate = this.Item.la1ApprovedDate;
+    this.model.leaveapply = this.leaveapply;
+    this.loading.show();
+    this.approval.EditLeaveApply(this.model, false).subscribe((result) => {
+      this.loading.dismiss();
+      this.show.alert('Approval', "Request has been updated")
+      this.nav.setRoot('approval', { data: this.data.type });
+    }, (err) => {
+      this.loading.dismiss();
+      this.show.alert('error', err);
+    });
+  }
 }

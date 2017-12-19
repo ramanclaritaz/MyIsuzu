@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { timeEntryService } from "../services/timeEntryServices";
 import { NavController } from 'ionic-angular/navigation/nav-controller';
-import { commonService, authentication } from '../services/common';
+import { commonService, authentication, Load } from '../services/common';
 import { Geolocation } from '@ionic-native/geolocation';
 import { showMessage } from '../services/showalert';
 
@@ -18,20 +18,24 @@ export class timeEntry {
     locationInfo: any;
     timeEntryLocations: any;
     Emp_Info: any;
-    auth:authentication;
-    constructor(private timeService: timeEntryService, private nav: NavController, private globalVar: commonService, private geolocation: Geolocation, private show: showMessage) {
+    auth: authentication;
+    constructor(private timeService: timeEntryService, private nav: NavController, private globalVar: commonService, private geolocation: Geolocation, private show: showMessage,private loading:Load) {
+        this.Oninit();
+
+    }
+    Oninit() {
+        this.loading.show();
+        this.globalVar.goBack = 'dash';
+        this.globalVar.pageTitle = 'Time entry';
         this.timeEntryLocations = { latitude: '13.050784', longitude: '80.20953' };
         this.auth = this.globalVar.auth;
         if (this.auth == undefined) {
-          this.nav.setRoot('login');
+            this.nav.setRoot('login');
         }
-        this.Oninit();
-    }
-
-    Oninit() {
         this.Emp_Info = this.globalVar.employeeInfo;
         this.getTimeEntry();
         this.btnText = (this.isPunchIn ? "TimeIn" : "TimeOut");
+        this.loading.dismiss();
     }
     getTimeEntry() {
         this.timeService.getTimeEntry(this.auth.userid).subscribe((result) => {
@@ -42,7 +46,7 @@ export class timeEntry {
             }
             if (this.TimeEntryRequests != null && this.TimeEntryRequests.isEntryFromMobile == true && this.TimeEntryRequests.isInTime == false) {
                 this.show.alert("Time Entry", "Already entered on this date.");
-				this.nav.setRoot("dash");
+                this.nav.setRoot("dash");
             }
             else if (this.TimeEntryRequests != null && this.TimeEntryRequests.isEntryFromMobile == true && this.TimeEntryRequests.isInTime == true) {
                 this.locationInfo1 = JSON.parse(this.TimeEntryRequests.inTimelocation);
@@ -71,7 +75,9 @@ export class timeEntry {
     rad2deg(rad) { return (rad * 180 / Math.PI); };
 
     getMyLocation() {
+        this.loading.show();
         this.geolocation.getCurrentPosition().then((resp) => {
+            this.loading.dismiss();
             this.locationInfo = { latitude: resp.coords.latitude, longitude: resp.coords.longitude };
             if (this.isPunchIn == true) {
                 this.getDistanceSuccess(true);
@@ -79,7 +85,8 @@ export class timeEntry {
             else if (this.isPunchIn == false) {
                 this.calcDistance(1, this.checkCorporateOffice);
             }
-        }).catch((error) => {
+        },(error) => {
+            this.loading.dismiss();
             console.log('Error getting location', error);
         });
     }
@@ -97,7 +104,6 @@ export class timeEntry {
     }
 
     getDistanceSuccess(result) {
-        console.log(this.locationInfo);
         if (result) {
             this.PunchInOut();
         }
@@ -112,10 +118,13 @@ export class timeEntry {
             IsInTime: this.isPunchIn,
             Location: this.locationInfo
         }
-        this.timeService.timeEntry({params:data}).subscribe((result) => {
+        this.loading.show();
+        this.timeService.timeEntry({ params: data }).subscribe((result) => {
+            this.loading.dismiss();
             this.show.sucess('Time entry', 'Sucessfully saved');
             this.nav.setRoot('dash');
-        }, (error) => {
+        },err => {
+            this.loading.dismiss();
         });
     }
 

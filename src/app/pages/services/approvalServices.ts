@@ -11,7 +11,7 @@ export class approvalService {
     constructor( @Inject(httpService) private http: httpService) {
 
     }
-    getAllLeavePendingApproval(searchDataPagination, isPlant: boolean): Observable<any> {
+    getAllLeavePendingApproval(searchDataPagination, isPlant): Observable<any> {
 
         this.url = this.updateLeaveURL(isPlant);
         if (!isPlant) {
@@ -39,6 +39,11 @@ export class approvalService {
     }
 
     getEditCompoffDetail(Id: any, isPlant): Observable<any> {
+        this.url = this.updateCompoffURL(isPlant);
+        return this.http.get(this.url + 'GetCompOFFDetailsForEdit?modelId=' + Id);
+    }
+
+    getEditPreCompoffDetail(Id: any, isPlant): Observable<any> {
         this.url = this.updateCompoffURL(isPlant);
         return this.http.get(this.url + 'GetCompOFFDetailsForEdit?modelId=' + Id);
     }

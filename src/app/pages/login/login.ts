@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { LoginService } from '../services/getLogin'
-import { commonService } from '../services/common';
+import { commonService, Load } from '../services/common';
 @Component({
   selector: 'page-login',
   templateUrl: '../login/login.html'
@@ -10,21 +10,23 @@ import { commonService } from '../services/common';
 export class loginPage {
 
   registerCredentials = { userName: 'IMI00087', password: 'isuzu123' };
-
-  constructor(private nav: NavController, private loginService: LoginService, private com: commonService) {
+  constructor(private nav: NavController, private loginService: LoginService, private com: commonService,private loading:Load) {
     localStorage.clear();
+    this.com.auth = undefined;
   }
   public login() {
+    this.loading.show();
     this.loginService.Login(this.registerCredentials).subscribe((result) => {
-      console.log("login console");
-      console.log(result);
       if (result) {
+        this.loading.dismiss();
         this.com.auth = result;
         this.AssginData(result);
         localStorage.setItem('token', result.access_token)
         this.com.getEmployeeInfo();
         this.nav.setRoot('dash');
       }
+    }, (error) => {
+      this.loading.dismiss();
     });
   }
   AssginData(result) {

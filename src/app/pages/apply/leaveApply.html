@@ -94,7 +94,7 @@
     </ion-item>
     <ion-item>
       <ion-label>Attendance Code </ion-label>
-      <ion-select [(ngModel)]="selectedLeaveCode" (ionChange)="OnLeaveCodeChange()">
+      <ion-select [(ngModel)]="selectedLeaveCode" (ionChange)="getLeaveTypesAcronyms()">
         <ion-option *ngFor="let objCode of leaveCode" [value]="objCode">{{objCode.acronymsName}}
         </ion-option>
       </ion-select>
@@ -106,13 +106,13 @@
     <ion-item>
       <ion-label *ngIf="!items.toDatevisiblity">*Date</ion-label>
       <ion-label *ngIf="items.toDatevisiblity">*From Date</ion-label>
-      <ion-datetime displayFormat="DD/MM/YYYY" name="dpDate"></ion-datetime>
+      <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="items.fromDate" (ionChange)="fromDateChanged()" name="dpDate"></ion-datetime>
     </ion-item>
     <ion-item *ngIf="items.fromFulldayvisiblity">
       <ion-label>
         *Full/Half Day 1
       </ion-label>
-      <ion-select [disabled]="items.fromFulldayDisabled" [(ngModel)]="items.fromfullorhalfday" (ionChange)="changed()">
+      <ion-select [disabled]="items.fromFulldayDisabled" [(ngModel)]="items.fromFullorHalf" (ionChange)="changed()">
         <ion-option value="1">
           Full day
         </ion-option>
@@ -136,7 +136,7 @@
     </ion-item>
     <ion-item *ngIf="items.toDatevisiblity">
       <ion-label>*To Date</ion-label>
-      <ion-datetime displayFormat="DD/MM/YYYY" name="dpDate"></ion-datetime>
+      <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="items.toDate" (ionChange)="fromDateChanged()" name="dpDate"></ion-datetime>
     </ion-item>
     <ion-item *ngIf="items.toFulldayVisibilty">
       <ion-label>*Full/Half Day</ion-label>
@@ -179,6 +179,14 @@
       <ion-label>On Duty Location</ion-label>
       <ion-input type="text" name="txtLoc"></ion-input>
     </ion-item>
-
+    <ion-item>
+      <ion-label>Comments :</ion-label>
+      <ion-textarea class='comments' [(ngModel)]="items.comments" placeholder='Comments'></ion-textarea>
+    </ion-item>
   </ion-list>
+  <div class='button_action'>
+    <button on-tap='getProb()' class="button icon-left ion-checkmark-round button-small button-balanced">
+        Apply
+    </button>
+</div>
 </ion-content>

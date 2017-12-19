@@ -23,7 +23,6 @@ export class showMessage {
 
   alert(subTitle, message) {
     let alert = this.alertCtrl.create({
-      title: 'alert',
       subTitle: subTitle,
       message: message,
       buttons: ['Ok']
@@ -44,13 +43,16 @@ export class showMessage {
   confirm(subTitle, message,page) {
     let alert = this.alertCtrl.create({
       title: 'Confirmation',
-      subTitle: subTitle,
+      // subTitle: subTitle,
       message: message,
       buttons: [
         {
           text: 'cancel',
           role: 'cancel',
-          handler: (isValid) => { return false; }
+          handler: ()=>
+          {
+            console.log('cancel fired');
+          }
         },
         {
           text: 'Confirm',
