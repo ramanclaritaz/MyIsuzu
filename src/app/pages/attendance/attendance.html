@@ -18,23 +18,23 @@
                 <ul class="year-link">
 
                     <li *ngFor="let displayyears of displayYears">
-                        <a style="padding: 30px,30px,30px,30px; font-size: 18px" [className]="{slectedYear: displayyears==selectedYearValue}" (click)="selectedYear(displayyears,this)">{{displayyears}}</a>
+                        <a style="padding: 30px,30px,30px,30px; font-size: 18px" [ngClass]="{slectedYear: displayyears==selectedYearValue}" (click)="selectedYear(displayyears,this)">{{displayyears}}</a>
                     </li>
 
                 </ul>
             </div>
             <div class="month-block">
                 <ul class="month-link">
-                    <li *ngIf="isPrev">
-                        <a style="padding: 30px,30px,30px,30px; font-size: 18px" (click)="preMonth(" {{displayMonthList[1]}} ")">
+                    <li>
+                        <a style="padding: 30px,30px,30px,30px; font-size: 18px" (click)="prevMonth()">
                             < Prev </a>
                     </li>
                     <li *ngFor="let allmonths of displayMonthList let i=index">
-                        <a href="javascript:void(0)" [className]="{slectedYear: MonthName==allmonths.monthName}" (click)="getDaysArray(allmonths,true)"
+                        <a href="javascript:void(0)" [ngClass]="{slectedYear: MonthName==allmonths.monthName}" (click)="getDaysArray(allmonths,true)"
                             style="font-size: 16px">{{allmonths.monthName}}</a>
                     </li>
-                    <li *ngIf="isNext">
-                        <a style="padding: 30px,30px,30px,30px; font-size: 18px" (click)="nextMonth(" {{displayMonthList[1]}} ")">
+                    <li>
+                        <a style="padding: 30px,30px,30px,30px; font-size: 18px" (click)="nextMonth()">
                             Next ></a>
                     </li>
                 </ul>
@@ -48,6 +48,38 @@
                     </li>
                 </ul>
             </div> -->
+            <div class="demo-one">
+                <div class="control-group">
+                    <div class="controls">
+                        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
+                            <label class="control-label">No of working days</label>
+                            <!--</div>
+                            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">-->
+                            <label class="control-label">{{working}}</label>
+                        </div>
+                    </div>
+                    <div class="controls">
+                        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
+                            <label class="control-label">No of Worked days</label>
+                            <!--</div>
+                            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">-->
+                            <label class="control-label">{{worked}}</label>
+                        </div>
+                        <!--</div>
+                        <div class="controls">-->
+                        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">
+                            <label class="control-label">Loss of Pay</label>
+                            <!-- </div>
+                             <div class="col-lg-2 col-md-2 col-sm-4 col-xs-12">-->
+                            <label class="control-label">{{LOP}}</label>
+                        </div>
+                    </div>
+                    <br />
+                </div>
+                <div>
+                    <label class="control-label">{{monthYearDisplay}}</label>
+                </div>
+            </div>
             <table *ngIf="attendanceModel.length>0" class="demo-one-table">
                 <tbody>
                     <tr>

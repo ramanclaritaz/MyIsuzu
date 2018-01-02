@@ -71,6 +71,10 @@
       "cordova-plugin-datepicker": {},
       "cordova-plugin-geolocation": {
         "GEOLOCATION_USAGE_DESCRIPTION": "To locate you"
+      },
+      "cordova-plugin-googlemaps": {
+        "API_KEY_FOR_ANDROID": "AIzaSyD2nW48eGiVvFkWzElZAwYFaekzh7Wbkok",
+        "API_KEY_FOR_IOS": "AIzaSyDio6nFNEKRTxt9uGQbz_xeuC7FyW5l-OI"
       }
     },
     "platforms": [

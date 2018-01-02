@@ -144,12 +144,24 @@ export class attendance {
             return style1;
         }
     }
-    prevMonth(val) {
-        this.loadMonth(val - 1);
+    prevMonth() {
+        let val = this.displayMonthList[1].id - 1;
+        if (val == 0) {
+            this.prevYear();
+            val = 11;
+        }
+        let data = { "id": val, "monthName": this.allMonths[val] };
+        this.loadMonth(val);
+        this.getDaysArray(data);
     }
-    nextMonth(val) {
-        this.loadMonth(val + 1);
-        let data = { "id": val + 1,"monthName":this.displayMonthList[val+1] };
+    nextMonth() {
+        let val = this.displayMonthList[1].id + 1;
+        if (val == 11) {
+            this.nextYear();
+            val = 0;
+        }
+        let data = { "id": val, "monthName": this.allMonths[val] };
+        this.loadMonth(val);
         this.getDaysArray(data);
     }
     prevYear() {
@@ -283,7 +295,6 @@ export class attendance {
             this.SaturDayDate = [];
             for (var i = 0; i < this.DayAndDate.length; i++) {
                 var currentDay = res.attendanceModel.filter(val => {
-                    console.log(val);
                     if (val.attendanceDay == this.DayAndDate[i].Date) {
                         return val;
                     }
@@ -347,13 +358,6 @@ export class attendance {
                 this.getDaysFromWeek(i, '', true);
             }
             this.attendanceModel = res.attendanceModel;
-            // console.log("sunday :"+ this.SundayDate);
-            // console.log("mon :"+this.MondayDate);
-            // console.log("tue :"+this.TuesDayDate);
-            // console.log("wed :"+this.WednesDayDate);
-            // console.log("thu :"+this.ThursDayDate);
-            // console.log("fri :"+this.FirDayDate);
-            // console.log("sat :"+this.SaturDayDate);
 
         }, err => { console.log(err); this.loading.dismiss(); });
     }
@@ -364,52 +368,8 @@ export class attendance {
         this.selectedYearValue = curdate.getFullYear();
         this.MonthName = this.allMonths[curdate.getMonth()];
         let data = { "id": curdate.getMonth(), "monthName": this.allMonths[curdate.getMonth()] }
+        this.loadMonth(curdate.getMonth());
         this.getDaysArray(data);
-        // let weekindex = [0];
-
-        // if (this.DayAndDate[curdate.getDate() - 1].Day == "SUN") {
-        //     weekindex = this.SundayDate.map(function (obj, index) {
-        //         if (obj.Date == this.curdate.getDate())
-
-        //             return index;
-        //     }).filter(isFinite);
-        // }
-        // else if (this.DayAndDate[curdate.getDate() - 1].Day == "MON") {
-        //     weekindex = this.MondayDate.map(function (obj, index) {
-        //         if (obj.Date == this.curdate.getDate())
-        //             return index;
-        //     }).filter(isFinite);
-        // }
-        // else if (this.DayAndDate[curdate.getDate() - 1].Day == "TUE") {
-        //     weekindex = this.TuesDayDate.map(function (obj, index) {
-        //         if (obj.Date == this.curdate.getDate())
-        //             return index;
-        //     }).filter(isFinite);
-        // }
-        // else if (this.DayAndDate[curdate.getDate() - 1].Day == "WED") {
-        //     weekindex = this.WednesDayDate.map(function (obj, index) {
-        //         if (obj.Date == this.curdate.getDate())
-        //             return index;
-        //     }).filter(isFinite);
-        // }
-        // else if (this.DayAndDate[curdate.getDate() - 1].Day == "THR") {
-        //     weekindex = this.ThursDayDate.map(function (obj, index) {
-        //         if (obj.Date == this.curdate.getDate())
-        //             return index;
-        //     }).filter(isFinite);
-        // }
-        // else if (this.DayAndDate[curdate.getDate() - 1].Day == "FRI") {
-        //     weekindex = this.FirDayDate.map(function (obj, index) {
-        //         if (obj.Date == this.curdate.getDate())
-        //             return index;
-        //     }).filter(isFinite);
-        // }
-        // else if (this.DayAndDate[curdate.getDate() - 1].Day == "SAT") {
-        //     weekindex = this.SaturDayDate.map(function (obj, index) {
-        //         if (obj.Date == this.curdate.getDate())
-        //             return index;
-        //     }).filter(isFinite);
-        // }
 
     }
 }
