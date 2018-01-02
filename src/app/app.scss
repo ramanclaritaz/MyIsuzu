@@ -15,10 +15,224 @@
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
 
-.no-padding{
-    padding: 0px;
+table tr td{
+padding: 6px;
 }
 
-.no-margin{
-    margin: 0px;
+table tr th{
+    padding: 6px;
+    }
+    // ul {
+    //     list-style-type: none;
+    //     margin: 0;
+    //     padding: 0;
+    //     overflow: hidden;
+    //     background-color: #333333;
+    // }
+    
+    // li {
+    //     float: left;
+    // }
+    
+    // li a {
+    //     display: block;
+    //     color: white;
+    //     text-align: center;
+    //     padding: 16px;
+    //     text-decoration: none;
+    // }
+    
+    // li a:hover {
+    //     background-color: #111111;
+    // }
+.year-block ul.year-link li {
+    text-align: center;
+    display: inline-block;
+    font-size: 18px;
 }
+
+.year-block ul.year-link li a {
+    color: #ffffff;
+    margin: 0px 10px;
+}
+
+.year-block ul.year-link li a:hover {
+    color: #F9B4B4;
+    text-decoration: underline;
+    border-bottom: 1px solid white;
+}
+
+.year-block ul.year-link li a:active {
+    font-size: 18px;
+}
+
+.year-block {
+    background: #1F1F1F;
+    padding: 10px 20px;
+    text-align: center;
+}
+            
+.year-block ul.year-link {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-align: center;
+    display: inline-block;
+}
+            
+                  
+.month-block ul.month-link {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-align: center;
+    display: inline-block;
+}
+            
+.month-block ul.month-link li {
+    text-align: center;
+    display: inline-block;
+    font-size: 14px;
+}
+            
+.month-block ul.month-link li a {
+    color: #ffffff;
+    margin: 0px 10px;
+}
+            
+.month-block ul.month-link li a:hover {
+    color: #F9B4B4;
+    text-decoration: underline;
+    border-bottom: 1px solid white;
+}
+            
+.month-block ul.month-link li a:active {
+    font-size: 14px;
+}
+.month-block {
+    background: #3F433F;
+    padding: 8px 20px;
+    text-align: center;
+}
+.button_action
+     {
+       text-align: center;
+     }
+     
+     .button_action button
+     {
+     margin: 10px 10px;
+     padding: 5px;
+     font-weight: bold;
+     }
+
+     .week-block {
+        background: #616261;
+        padding: 4px 10px;
+        text-align: center;
+      }
+    
+      .week-block ul.week-link {
+          margin: 0;
+          padding: 0;
+          list-style: none;
+          text-align: center;
+          display: inline-block;
+      }
+    
+      .week-block ul.week-link li {
+          text-align: center;
+          display: inline-block;
+          font-size: 11px;
+      }
+      .title{
+        text-align: center;
+        
+      }
+      .week-block ul.week-link li a {
+          color: #ffffff;
+          margin: 0px 8px;
+      }
+    
+      .week-block ul.week-link li a:hover {
+          color: #F9B4B4;
+          text-decoration: underline;
+          border-bottom: 1px solid white;
+      }
+    
+      .week-block ul.week-link li a:active {
+          font-size: 11px;
+      }
+    
+      .calender-block {
+        /*margin: 10px;*/
+        color: #17232c;
+      }
+      table.demo-one-table {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 11px;
+        color: #17232c;
+        /*margin-left: 5%;*/
+    }
+    
+    
+    table.demo-one-table tr th {
+        color: #000;
+        background-color: #7C7F7D;
+        font-weight: normal;
+        padding: 6px !important;
+        text-align: center;
+        height: 30px;
+        border: 1px solid #000000;
+        color: #17232c;
+    }
+    
+    
+    
+    
+    table.demo-one-table tr td {
+        /*background-color: #D3D7D3;*/
+        color: #17232c;
+        font-weight: normal;
+        padding: 6px !important;
+        text-align: center;
+        width: 90px;
+        height: 80px;
+        vertical-align: middle !important;
+        border: 1px solid black;
+        color: black;
+    }
+    
+    table.demo-one-table tr td:hover {
+        background-color: #17232c;
+        cursor: pointer;
+    }
+    
+    .control-btn {
+        width: 100%;
+        margin: 0 auto 15px auto;
+        text-align: center;
+    }
+    // ul {
+    //     list-style-type: none;
+    //     margin: 0;
+    //     padding: 0;
+    //     overflow: hidden;
+    //     background-color: #333333;
+    // }
+    
+    // li {
+    //     float: left;
+    // }
+    
+    // li a {
+    //     display: block;
+    //     color: white;
+    //     text-align: center;
+    //     padding: 16px;
+    //     text-decoration: none;
+    // }
+    
+    // li a:hover {
+    //     background-color: #111111;
+    // }

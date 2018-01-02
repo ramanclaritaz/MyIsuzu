@@ -12,13 +12,13 @@ export class attendanceService {
 
     }
     getAttendance(data, isPlant): Observable<any> {
-        this.url = this.updateURL(isPlant);
+        this.url = this.updateURL(false);
         return this.http.get(this.url + 'FilderAttendanceByDate', data);
     }
 
 
     private updateURL(isPlant: boolean): string {
-        return this.url = '/api' + ((isPlant) ? '/AttendancePlant/' : '/Attendance/');
+        return this.url = '/api' + ((isPlant) ? '/PlantAttendance/' : '/Attendance/');
     }
 
 }

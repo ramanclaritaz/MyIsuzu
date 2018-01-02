@@ -5,14 +5,16 @@ import { showMessage } from '../services/showalert';
 import { compOffServices } from '../services/compOffServices';
 import { NavController } from 'ionic-angular/navigation/nav-controller';
 import moment from "moment";
-import { Loading } from 'ionic-angular/components/loading/loading';
-import { LoadingController } from 'ionic-angular/components/loading/loading-controller';
 
 
 @Component({
   selector: 'page-compOffApply',
   templateUrl: '../apply/compOffApply.html'
 })
+
+
+
+
 
 export class compOffApply {
   formGroup: any;

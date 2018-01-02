@@ -80,7 +80,7 @@ export class timeEntry {
             this.loading.dismiss();
             this.locationInfo = { latitude: resp.coords.latitude, longitude: resp.coords.longitude };
             if (this.isPunchIn == true) {
-                this.getDistanceSuccess(true);
+                this.getDistanceSuccess(true,this);
             }
             else if (this.isPunchIn == false) {
                 this.calcDistance(1, this.checkCorporateOffice);
@@ -95,20 +95,20 @@ export class timeEntry {
         let distanceKm = this.distance(this.locationInfo1, this.timeEntryLocations);
         if (distanceKm <= km) {
             res = true;
-            callback(res);
+            callback(res,this);
         }
         else {
             res = false;
-            callback(res);
+            callback(res,this);
         }
     }
 
-    getDistanceSuccess(result) {
+    getDistanceSuccess(result,val) {
         if (result) {
-            this.PunchInOut();
+            val.PunchInOut();
         }
         else {
-            this.show.alert("Time Entry", "Out-Time location mis-match with In-Time location!");
+            val.show.alert("Time Entry", "Out-Time location mis-match with In-Time location!");
         }
     }
 
@@ -128,10 +128,10 @@ export class timeEntry {
         });
     }
 
-    checkCorporateOffice(result) {
-        if (result = false) {
-            this.show.alert("Time Entry", "Time entry not allowed in corporate office!");
-            this.nav.setRoot('dash');
+    checkCorporateOffice(result,val) {
+        if (result == false) {
+            val.show.alert("Time Entry", "Time entry not allowed in corporate office!");
+            val.nav.setRoot('dash');
         }
         else {
             var issite = false;
@@ -141,18 +141,18 @@ export class timeEntry {
 
                     issite = true;
                     if (this.isPunchIn == true) {
-                        this.PunchInOut();
+                        val.PunchInOut();
                     }
                     else if (this.isPunchIn == false) {
-                        this.calcDistance(1, this.getDistanceSuccess);
+                        val.calcDistance(1, this.getDistanceSuccess);
                     }
                     // break;
                     return false;
                 }
             }
             if (!issite) {
-                this.show.alert("Time Entry", "Time entry not allowed in this location");
-                this.nav.setRoot('dash');
+                val.show.alert("Time Entry", "Time entry not allowed in this location");
+                val.nav.setRoot('dash');
             }
 
         }

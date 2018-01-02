@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { leaveService } from '../services/leaveServices'
 import { employeeInfo, commonService, authentication, Load } from '../services/common';
 import { NavController } from 'ionic-angular/navigation/nav-controller';
@@ -188,9 +188,9 @@ export class leaveApply {
         var d = new Date();
         var e = new Date();
         e.setDate(d.getDate() + 180);
-        var diff_date = moment(d).diff(e);
-        var years = Math.floor(diff_date / 31536000000);
-        var months = Math.floor((diff_date % 31536000000) / 2628000000);
+        // var diff_date = moment(d).diff(e);
+        // var years = Math.floor(diff_date / 31536000000);
+        // var months = Math.floor((diff_date % 31536000000) / 2628000000);
         this.items.toDate = moment(e).format("YYYY-MM-DD");
         this.items.fromDate = moment(d).format("YYYY-MM-DD");
       }
@@ -345,7 +345,7 @@ export class leaveApply {
   }
   applyLeave(ProbabilityOfLeave) {
     var fromDate, toDate, fromTime, toTime;
-    let currentDate = moment(new Date()).format("MM/DD/YYYY");
+    // let currentDate = moment(new Date()).format("MM/DD/YYYY");
     fromDate = moment(this.items.fromDate).format('MM/DD/YYYY');
     if ((this.selectedTypeOfLeave.id == 5 || this.selectedTypeOfLeave.id == 6 || this.selectedTypeOfLeave.id == 7 || this.selectedTypeOfLeave.id == 8 || this.selectedTypeOfLeave.id == 9) && this.items.toDate != undefined)
       toDate = moment(this.items.fromDate).format('MM/DD/YYYY');

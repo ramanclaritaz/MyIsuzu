@@ -1,14 +1,12 @@
 import { Injectable, Inject } from '@angular/core';
-import { Http, RequestOptions, Response, Headers } from '@angular/http';
 import { Observable } from "rxjs/Observable";
 import 'rxjs/Rx';
-import { environment } from "./app.environment";
 import { httpService } from './httpProvider';
 
 
 @Injectable()
 export class leaveService {
-    constructor(private _http: httpService) {
+    constructor( @Inject(httpService) private _http: httpService) {
 
     }
     getAvailableLeaves(data, isplant): Observable<any> {
@@ -29,7 +27,7 @@ export class leaveService {
         let url = this.updateUrl(isplant);
         return this._http.get(url + 'GetTotalDaysExceptAnyLeaves', data);
     }
-    SaveAppliedLeave(data,isplant){
+    SaveAppliedLeave(data, isplant) {
         let url = this.updateUrl(isplant);
         return this._http.post(url + 'SaveAppliedLeave', data);
     }

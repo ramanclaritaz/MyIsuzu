@@ -1,6 +1,5 @@
 import { AlertController } from 'ionic-angular';
 import { Injectable } from '@angular/core';
-import { Alert } from 'ionic-angular/components/alert/alert';
 
 @Injectable()
 export class showMessage {

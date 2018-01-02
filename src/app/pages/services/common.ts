@@ -3,7 +3,6 @@ import { httpService } from "./httpProvider";
 import { Injectable, Inject } from "@angular/core";
 import { Loading } from "ionic-angular/components/loading/loading";
 import { LoadingController } from "ionic-angular/components/loading/loading-controller";
-import { _ParseAST } from "@angular/compiler";
 
 export interface searchPagination {
         page: Int32Array,
@@ -133,7 +132,7 @@ export class commonService {
         public set goBack(val: string) {
                 this._goBack = val;
         }
-        constructor( @Inject(httpService) private http: httpService, private loadingCtrl: LoadingController) {
+        constructor( @Inject(httpService) private http: httpService) {
 
         }
 
