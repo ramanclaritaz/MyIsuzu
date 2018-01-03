@@ -65,7 +65,7 @@ export class ApprovalList {
 
   getPreComOffPending() {
     this.loading.show();
-    this.approval.getAllLeavePendingApproval(this.searchDataPagination, ((this.segmentVal == 0) ? false : true)).subscribe(
+    this.approval.getAllPreCompoffPendingApproval(this.searchDataPagination, ((this.segmentVal == 0) ? false : true)).subscribe(
       (result) => {
         this.searchDataPagination = result;
         this.pendingList = result.items;

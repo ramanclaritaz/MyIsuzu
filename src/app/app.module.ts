@@ -16,6 +16,9 @@ import { approvalService } from "./pages/services/approvalServices";
 import { LoginService } from './pages/services/getLogin'
 import { compOffServices } from './pages/services/compOffServices';
 import { timeEntryService } from "./pages/services/timeEntryServices";
+import { attendanceService } from './pages/services/attendanceServices';
+import { leaveService } from './pages/services/leaveServices';
+import { dashboardService } from './pages/services/dashboardServices';
 /**
  * common classes import
  */
@@ -36,8 +39,7 @@ import { ApprovalPage } from './pages/approval/approvalPage';
 import { timeEntry } from './pages/timeentry/timeentry';
 import { header } from './pages/header/header';
 import { attendance } from './pages/attendance/attendance';
-import { attendanceService } from './pages/services/attendanceServices';
-import { leaveService } from './pages/services/leaveServices';
+
 
 @NgModule({
   declarations: [
@@ -84,7 +86,9 @@ import { leaveService } from './pages/services/leaveServices';
     compOffServices,
     showMessage,
     timeEntryService,
-    attendanceService, leaveService,
+    attendanceService,
+    leaveService,
+    dashboardService,
     Geolocation,
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]

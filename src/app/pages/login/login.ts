@@ -9,8 +9,8 @@ import { commonService, Load } from '../services/common';
 
 export class loginPage {
 
-  registerCredentials = { userName: 'IMI00087', password: 'isuzu123' };
-  constructor(private nav: NavController, private loginService: LoginService, private com: commonService,private loading:Load) {
+  registerCredentials = { userName: undefined, password: undefined };
+  constructor(private nav: NavController, private loginService: LoginService, private com: commonService, private loading: Load) {
     localStorage.clear();
     this.com.auth = undefined;
   }

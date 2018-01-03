@@ -2,7 +2,7 @@
   <page-header></page-header>
 </ion-header>
 <ion-content>
-  <div *ngIf="auth.isplantteamleader">
+  <div *ngIf="(auth.isplantteamleader && Item!='Pre-compOff')">
     <div padding>
       <ion-segment [(ngModel)]="segmentVal" (ionChange)="segmentChange()">
         <ion-segment-button value="1">
@@ -50,7 +50,7 @@
       </ion-list>
     </div>
   </div>
-  <div *ngIf="!auth.isplantteamleader">
+  <div *ngIf="!auth.isplantteamleader || Item=='Pre-compOff'">
     <ion-list>
       <div *ngFor="let item of pendingList;let i=index">
         <ion-item>

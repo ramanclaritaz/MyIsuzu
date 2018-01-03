@@ -107,9 +107,9 @@ export class ApprovalPage {
     this.model.leaveapply.la1ApprovedReason = this.Item.comments;
     this.model.leaveapply.la1ApprovedDate = this.Item.la1ApprovedDate;
     this.loading.show();
-    this.approval.EditLeaveApply(this.model, false).subscribe((result) => {
+    this.approval.EditLeaveApply(this.model, this.auth.isplantuser).subscribe((result) => {
       this.loading.dismiss();
-      this.show.alert('Approval', "Request has been updated")
+      this.show.sucess('Approval', "Request has been updated")
       this.nav.setRoot('approval', { data: this.data.type });
     }, (err) => {
       this.loading.dismiss();
@@ -121,9 +121,9 @@ export class ApprovalPage {
     this.model.leaveapplyforplant.la1ApprovedReason = this.Item.comments;
     this.model.leaveapplyforplant.la1ApprovedDate = this.Item.la1ApprovedDate;
     this.loading.show();
-    this.approval.EditLeaveApply(this.model, false).subscribe((result) => {
+    this.approval.EditLeaveApply(this.model, this.auth.isplantuser).subscribe((result) => {
       this.loading.dismiss();
-      this.show.alert('Approval', "Request has been updated")
+      this.show.sucess('Approval', "Request has been updated")
       this.nav.setRoot('approval', { data: this.data.type });
     }, (err) => {
       this.loading.dismiss();
@@ -132,14 +132,13 @@ export class ApprovalPage {
 
   }
   UpdateCompOff() {
-    this.leaveapply.la1ApprovedStatus = this.Item.approvalStatus;
-    this.leaveapply.la1ApprovedReason = this.Item.comments;
-    this.leaveapply.la1ApprovedDate = this.Item.la1ApprovedDate;
-    this.model.leaveapply = this.leaveapply;
+    this.model.CompOff.la1ApprovedStatus = this.Item.approvalStatus;
+    this.model.CompOff.la1ApprovedReason = this.Item.comments;
+    this.model.CompOff.la1ApprovedDate = this.Item.la1ApprovedDate;
     this.loading.show();
-    this.approval.EditLeaveApply(this.model, false).subscribe((result) => {
+    this.approval.updateCompOff(this.model, this.auth.isplantuser).subscribe((result) => {
       this.loading.dismiss();
-      this.show.alert('Approval', "Request has been updated")
+      this.show.sucess('Approval', "Request has been updated")
       this.nav.setRoot('approval', { data: this.data.type });
     }, (err) => {
       this.loading.dismiss();
@@ -147,32 +146,34 @@ export class ApprovalPage {
     });
   }
   UpdateCompOffPlant() {
-    this.model.leaveapplyforplant.la1ApprovedStatus = this.Item.approvalStatus;
-    this.model.leaveapplyforplant.la1ApprovedReason = this.Item.comments;
-    this.model.leaveapplyforplant.la1ApprovedDate = this.Item.la1ApprovedDate;
+    this.model.plantCompOff.la1ApprovedStatus = this.Item.approvalStatus;
+    this.model.plantCompOff.la1ApprovedReason = this.Item.comments;
+    this.model.plantCompOff.la1ApprovedDate = this.Item.la1ApprovedDate;
     this.loading.show();
-    this.approval.EditLeaveApply(this.model, false).subscribe((result) => {
+    this.approval.updateCompOff(this.model, this.auth.isplantuser).subscribe((result) => {
       this.loading.dismiss();
       this.show.alert('Approval', "Request has been updated")
+      this.nav.setRoot('approval', { data: this.data.type });
+    }, (err) => {
+      this.loading.dismiss();
+      this.show.sucess('error', err);
+    });
+  }
+  UpdatePreCompoff() {
+    this.model.postCompoffModel.departApprovedStatus = this.Item.approvalStatus;
+    this.model.postCompoffModel.departComments = this.Item.comments;
+    this.model.postCompoffModel.departApprovedDate = this.Item.la1ApprovedDate;
+    this.loading.show();
+    this.approval.UpdatePostCompOff(this.model).subscribe((result) => {
+      this.loading.dismiss();
+      this.show.sucess('Approval', "Request has been updated")
       this.nav.setRoot('approval', { data: this.data.type });
     }, (err) => {
       this.loading.dismiss();
       this.show.alert('error', err);
     });
   }
-  UpdatePreCompoff() {
-    this.leaveapply.la1ApprovedStatus = this.Item.approvalStatus;
-    this.leaveapply.la1ApprovedReason = this.Item.comments;
-    this.leaveapply.la1ApprovedDate = this.Item.la1ApprovedDate;
-    this.model.leaveapply = this.leaveapply;
-    this.loading.show();
-    this.approval.EditLeaveApply(this.model, false).subscribe((result) => {
-      this.loading.dismiss();
-      this.show.alert('Approval', "Request has been updated")
-      this.nav.setRoot('approval', { data: this.data.type });
-    }, (err) => {
-      this.loading.dismiss();
-      this.show.alert('error', err);
-    });
+  cancel($event) {
+    this.nav.setRoot('approval', { data: this.data.type });
   }
 }

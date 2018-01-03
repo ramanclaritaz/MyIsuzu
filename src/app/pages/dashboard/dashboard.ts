@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { commonService, authentication } from '../services/common';
+import { commonService, authentication, Load } from '../services/common';
 import { showMessage } from '../services/showalert';
+import { dashboardService } from '../services/dashboardServices';
 
 @Component({
   selector: 'page-dashboard',
@@ -10,9 +11,15 @@ import { showMessage } from '../services/showalert';
 
 
 export class DashboardPage {
+  dashCount: any;
   auth: authentication;
-  constructor(private nav: NavController, private globalVar: commonService, private show: showMessage) {
-
+  constructor(private nav: NavController, private globalVar: commonService, private show: showMessage, private dashService: dashboardService, private loading: Load) {
+    this.dashCount = {
+      precompoffcountformobile: 0,
+      compoffCountL1ForMobile: 0,
+      timeofficeCount: 0,
+      leaveCountL1ForMobile: 0
+    }
     this.Oninit();
   }
   Oninit() {
@@ -22,9 +29,20 @@ export class DashboardPage {
     }
     this.globalVar.goBack = 'login';
     this.globalVar.pageTitle = 'Dashboard';
+    this.getDashboard()
   }
-   loadPage(val,params) {
-    this.nav.setRoot(val,{ data: params });
+  getDashboard() {
+    this.loading.show();
+    this.dashService.getPendingCount(false).subscribe((result) => {
+      this.dashCount = result;
+      this.loading.dismiss();
+    }, (err) => {
+
+    })
+  }
+
+  loadPage(val, params) {
+    this.nav.setRoot(val, { data: params });
   }
   logOut() {
     this.show.confirm("LogOut", "Do you want to Logout?", this);

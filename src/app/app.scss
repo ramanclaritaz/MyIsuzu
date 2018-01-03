@@ -207,7 +207,10 @@ table tr th{
         background-color: #17232c;
         cursor: pointer;
     }
-    
+    .logo{
+        border: 0px;
+        max-width: none !important;
+    }
     .control-btn {
         width: 100%;
         margin: 0 auto 15px auto;

@@ -47,9 +47,9 @@ export interface iApprovalItem {
         toDate: DateTime;
         totaldays: any;
         comments: any;
-        la1ApprovedStatus:number;
-        la1ApprovedReason:string;
-        la1ApprovedDate:any;
+        la1ApprovedStatus: number;
+        la1ApprovedReason: string;
+        la1ApprovedDate: any;
 
 };
 export interface employeeInfo {

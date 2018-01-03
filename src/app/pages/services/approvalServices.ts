@@ -42,12 +42,20 @@ export class approvalService {
         this.url = this.updateCompoffURL(isPlant);
         return this.http.get(this.url + 'GetCompOFFDetailsForEdit?modelId=' + Id);
     }
-
-    getEditPreCompoffDetail(Id: any, isPlant): Observable<any> {
-        this.url = this.updateCompoffURL(isPlant);
-        return this.http.get(this.url + 'GetCompOFFDetailsForEdit?modelId=' + Id);
+    getAllPreCompoffPendingApproval(searchDataPagination, isPlant): Observable<any> {
+        return this.http.post('/api/PostCompensatoryOFFPlant/GetAuthorityRequestForPostCompoff', searchDataPagination);//.subscribe(result=>{return result;});
     }
-
+    getEditPreCompoffDetail(Id: any, isPlant): Observable<any> {
+        return this.http.get('/api/PostCompensatoryOFFPlant/GetPostCompOffEmployees?modelId=' + Id);
+    }
+    updateCompOff(data, isPlant): Observable<any> {
+        this.url = this.updateLeaveURL(isPlant);
+        return this.http.post(this.url + 'UpdateCompOff', data);
+    }
+    UpdatePostCompOff(data):Observable<any>
+    {
+        return this.http.post('/api/PostCompensatoryOFFPlant/UpdatePostCompOff', data);//.subscribe(result=>{return result;});
+    }
     updateMultiApprovalforCompoff(data: any, isPlant): Observable<any> {
         this.url = this.updateCompoffURL(isPlant);
         return this.http.post(this.url + 'UpdateMultiApprovedStatus', data);

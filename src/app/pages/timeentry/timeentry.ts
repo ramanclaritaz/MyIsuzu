@@ -19,7 +19,7 @@ export class timeEntry {
     timeEntryLocations: any;
     Emp_Info: any;
     auth: authentication;
-    constructor(private timeService: timeEntryService, private nav: NavController, private globalVar: commonService, private geolocation: Geolocation, private show: showMessage,private loading:Load) {
+    constructor(private timeService: timeEntryService, private nav: NavController, private globalVar: commonService, private geolocation: Geolocation, private show: showMessage, private loading: Load) {
         this.Oninit();
 
     }
@@ -54,6 +54,10 @@ export class timeEntry {
                 this.isPunchIn = false;
                 this.btnText = "TimeOut";
             }
+            else {
+                this.isPunchIn = true;
+                this.btnText = "TimeIn";
+            }
 
         });
     }
@@ -80,12 +84,16 @@ export class timeEntry {
             this.loading.dismiss();
             this.locationInfo = { latitude: resp.coords.latitude, longitude: resp.coords.longitude };
             if (this.isPunchIn == true) {
-                this.getDistanceSuccess(true,this);
+                this.getDistanceSuccess(true, this);
             }
             else if (this.isPunchIn == false) {
                 this.calcDistance(1, this.checkCorporateOffice);
             }
-        },(error) => {
+            else
+            {
+                this.show.alert("Time Entry", "Time entry option not available.");
+            }
+        }, (error) => {
             this.loading.dismiss();
             console.log('Error getting location', error);
         });
@@ -95,15 +103,15 @@ export class timeEntry {
         let distanceKm = this.distance(this.locationInfo1, this.timeEntryLocations);
         if (distanceKm <= km) {
             res = true;
-            callback(res,this);
+            callback(res, this);
         }
         else {
             res = false;
-            callback(res,this);
+            callback(res, this);
         }
     }
 
-    getDistanceSuccess(result,val) {
+    getDistanceSuccess(result, val) {
         if (result) {
             val.PunchInOut();
         }
@@ -123,12 +131,12 @@ export class timeEntry {
             this.loading.dismiss();
             this.show.sucess('Time entry', 'Sucessfully saved');
             this.nav.setRoot('dash');
-        },err => {
+        }, err => {
             this.loading.dismiss();
         });
     }
 
-    checkCorporateOffice(result,val) {
+    checkCorporateOffice(result, val) {
         if (result == false) {
             val.show.alert("Time Entry", "Time entry not allowed in corporate office!");
             val.nav.setRoot('dash');

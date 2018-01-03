@@ -13,6 +13,7 @@
                 <ion-card-title>
                   Leave
                 </ion-card-title>
+
               </ion-card-content>
             </ion-card>
           </a>
@@ -51,7 +52,7 @@
               <ion-card-content>
                 <ion-icon class="iconCss" name="card"></ion-icon>
                 <ion-card-title>
-                  Leave approval
+                  Leave ( {{dashCount.ondutyCountL1ForMobile + dashCount.leaveCountL1ForMobile}} )
                 </ion-card-title>
               </ion-card-content>
             </ion-card>
@@ -78,21 +79,20 @@
               <ion-card-content>
                 <ion-icon class="iconCss" name="card"></ion-icon>
                 <ion-card-title>
-                  Comp-off approval
+                  Comp-off ( {{dashCount.compoffCountL1ForMobile}} )
                 </ion-card-title>
               </ion-card-content>
             </ion-card>
           </a>
         </ion-col>
-        <ion-col col-md-4>
+        <ion-col col-md-4 *ngIf="auth.isplantteamleader">
           <a class="dash">
             <ion-card (click)="loadPage('approval','Pre-compOff')">
               <ion-card-content>
                 <ion-icon class="iconCss" name="card"></ion-icon>
                 <ion-card-title>
-                  Pre-comp off approval
+                  Pre-comp off ( {{dashCount.precompoffcountformobile}} )
                 </ion-card-title>
-
               </ion-card-content>
             </ion-card>
           </a>
