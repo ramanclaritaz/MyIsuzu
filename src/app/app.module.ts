@@ -40,6 +40,13 @@ import { timeEntry } from './pages/timeentry/timeentry';
 import { header } from './pages/header/header';
 import { attendance } from './pages/attendance/attendance';
 
+// import { CloudSettings, CloudModule } from '@ionic/cloud-angular';
+
+// const cloudSettings: CloudSettings = {
+//   'core': {
+//     'app_id': 'ee198964'
+//   }
+// };
 
 @NgModule({
   declarations: [

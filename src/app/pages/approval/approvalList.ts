@@ -17,7 +17,7 @@ export class ApprovalList {
   Item: any;
   constructor(private approval: approvalService, navParam: NavParams, private nav: NavController, private globalVar: commonService, private loading: Load) {
     this.searchDataPagination = { page: null, reverse: false, itemsPerPage: null, sortBy: null, totalItems: 64 }
-    this.segmentVal = 1;
+    //this.segmentVal = 1;
     this.Item = navParam.get('data');
     this.Oninit();
   }
@@ -28,16 +28,8 @@ export class ApprovalList {
     if (this.auth == undefined || this.auth == null) {
       this.nav.setRoot('login');
     }
-    switch (this.Item) {
-      case "Leave":
-        this.getLeavePending();
-        break;
-      case "ComOff":
-        this.getcomOffPending();
-        break;
-      case "Pre-compOff":
-        this.getPreComOffPending();
-        break;
+    if (this.Item = "Pre-compOff") {
+      this.getPreComOffPending();
     }
   }
   getLeavePending() {
@@ -77,7 +69,17 @@ export class ApprovalList {
 
   segmentChange() {
     this.searchDataPagination = { page: null, reverse: false, itemsPerPage: null, sortBy: null, totalItems: 64 }
-    this.Oninit();
+    switch (this.Item) {
+      case "Leave":
+        this.getLeavePending();
+        break;
+      case "ComOff":
+        this.getcomOffPending();
+        break;
+      // case "Pre-compOff":
+      //   this.getPreComOffPending();
+      //   break;
+    }
   }
   editDetail($event, item) {
     let val = {

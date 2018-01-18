@@ -14,7 +14,12 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
-
+ion-app.ios {
+    font-family: -apple-system, "Helvetica Neue", "Roboto", sans-serif;
+    font-size: 1.4rem;
+    background-color: #fff;
+    margin-top: 15px;
+}
 table tr td{
 padding: 6px;
 }
@@ -22,29 +27,7 @@ padding: 6px;
 table tr th{
     padding: 6px;
     }
-    // ul {
-    //     list-style-type: none;
-    //     margin: 0;
-    //     padding: 0;
-    //     overflow: hidden;
-    //     background-color: #333333;
-    // }
-    
-    // li {
-    //     float: left;
-    // }
-    
-    // li a {
-    //     display: block;
-    //     color: white;
-    //     text-align: center;
-    //     padding: 16px;
-    //     text-decoration: none;
-    // }
-    
-    // li a:hover {
-    //     background-color: #111111;
-    // }
+  
 .year-block ul.year-link li {
     text-align: center;
     display: inline-block;
@@ -114,6 +97,27 @@ table tr th{
     padding: 8px 20px;
     text-align: center;
 }
+
+.comments
+{
+  border: 1px solid gray;
+  border-radius: 5px;
+  margin: 10px auto;
+  padding: 5px;
+  width: 90%;
+  height: 60px;
+}
+.item-divider-md,.item-divider-ios
+     {
+       font-size: 1.5rem;
+       background-color:black
+       ;
+       color: whitesmoke;
+     }
+     .input-wrapper
+     {
+         font-size: 1.4rem;
+     }
 .button_action
      {
        text-align: center;
@@ -224,26 +228,57 @@ table tr th{
         text-decoration: underline;
         border-bottom: 1px solid white;
     }
-    // ul {
-    //     list-style-type: none;
-    //     margin: 0;
-    //     padding: 0;
-    //     overflow: hidden;
-    //     background-color: #333333;
-    // }
+    ion-card {
+        position: relative;
+        text-align: center;
+        font-size: 6px !important;
+        padding: 0px !important;
+        margin: 0px !important;
+        min-height: 127px !important;
+        width: calc(100% - -3px) !important;
+        background-color: rgb(43, 34, 43) !important;
+        }
+        ion-title{
+          font-size:6px !important;
+        }
+        ion-header,.header-ios {
+          left: 0;
+          top: 0;
+          position: absolute;
+          z-index: 10;
+          display: block;
+          width: 100%;
+          background-color: #d6b1b1 !important;
+      }
     
-    // li {
-    //     float: left;
-    // }
-    
-    // li a {
-    //     display: block;
-    //     color: white;
-    //     text-align: center;
-    //     padding: 16px;
-    //     text-decoration: none;
-    // }
-    
-    // li a:hover {
-    //     background-color: #111111;
-    // }
+      .iconCss {
+        display: inline-block;
+        font-size: 1.1em;
+        color: whitesmoke;
+      }
+      .card-content-md, .card-content-ios {
+        padding: 29px 16px;
+        font-size: 1.4rem;
+        line-height: 1.5;
+    }
+      .card-title-md,.card-title-ios {
+        display: block;
+        font-size: 1.4rem;
+        line-height: 1.2;
+        color: whitesmoke;
+        margin: 2px 0;
+        padding: 8px 0;
+        font-weight: 600;
+    }
+        .title{
+          text-align: center;
+          
+        }
+        .logout{
+          text-decoration:white;
+          color: black;
+        }
+        .dash
+        {
+          text-decoration: none;
+        }

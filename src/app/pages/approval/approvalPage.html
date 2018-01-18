@@ -59,18 +59,11 @@
     </ion-item>
   </ion-list>
 
-  <ion-grid>
-    <ion-row>
-      <ion-col>
-        <button (click)='update($event,Item)' class="button icon-left ion-checkmark-round button-small button-balanced">
-          Update
-        </button>
-      </ion-col>
-      <ion-col>
-        <button (click)="cancel($event)" class="button icon-left ion-close-round button-small button-assertive">
-          Cancel
-        </button>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-</ion-content>
+  <div class='button_action' >
+    <button (click)='update($event,Item)' class="button icon-left ion-checkmark-round button-small button-balanced">
+      Update
+    </button>
+    <button (click)="cancel($event)" class="button icon-left ion-close-round button-small button-assertive">
+      Cancel
+    </button>
+  </div>
