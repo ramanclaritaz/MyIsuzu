@@ -1,98 +1,82 @@
 <ion-header>
-    <page-header></page-header>
+  <page-header [headerData]="headerData"></page-header>
 </ion-header>
 <ion-content has-header="true" padding="true">
-    <ion-item-divider ion-item light no-lines>
-        Compoff Details
-        <ion-icon item-right></ion-icon>
-    </ion-item-divider>
-    <ion-list>
-        <ion-item>
-            <ion-label>Full day Comp Off</ion-label>
-            <ion-input disabled="true" [(ngModel)]="availCompOff.compoffFulldaycount"></ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-label> Half day Comp Off</ion-label>
-            <ion-input disabled="true" [(ngModel)]="availCompOff.compoffHalfdaycount"></ion-input>
-        </ion-item>
-    </ion-list>
-    <ion-item-divider ion-item light no-lines>
-        General Information
-        <ion-icon item-right></ion-icon>
-    </ion-item-divider>
-    <ion-list>
-
-        <ion-item>
-            <ion-label>*Applied For :</ion-label>
-            <ion-input disabled="true" [(ngModel)]="Emp_Info.firstName"></ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-label> Employee Number :</ion-label>
-            <ion-input disabled="true" [(ngModel)]="Emp_Info.employeeNumber"></ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-label>Division :</ion-label>
-            <ion-input disabled="true" [(ngModel)]="Emp_Info.divisionName"></ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-label>Department :</ion-label>
-            <ion-input disabled="true" [(ngModel)]="Emp_Info.departmentName"></ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-label>*Full/Half Day :</ion-label>
-            <ion-select [(ngModel)]="comOffDay.isFullDay">
-                <ion-option value="1">Full day</ion-option>
-                <ion-option value="0">Half day</ion-option>
-            </ion-select>
-        </ion-item>
-        <ion-item *ngIf='comOffDay.isFullDay==0'>
-            <ion-label>*Morning/Afternoon</ion-label>
-            <ion-select [(ngModel)]="comOffDay.isFullDay">
-                <ion-option value="1">Morning</ion-option>
-                <ion-option value="0">Afternoon</ion-option>
-            </ion-select>
-        </ion-item>
-        <ion-item>
-            <ion-label *ngIf="comOffDay.isFullDay==1">*From Date</ion-label>
-            <ion-label *ngIf="comOffDay.isFullDay==0">*Date</ion-label>
-            <ion-datetime displayFormat="DD/MM/YYYY" aria-placeholder="from date" [(ngModel)]="comOffDay.fromDate" (ngModelChange)="dateChanged()"></ion-datetime>
-        </ion-item>
-        <ion-item *ngIf="comOffDay.isFullDay==1">
-            <ion-label>*To Date</ion-label>
-            <ion-datetime displayFormat="DD/MM/YYYY" aria-placeholder="to date" [(ngModel)]="comOffDay.toDate" (ngModelChange)="dateChanged()"></ion-datetime>
-        </ion-item>
-        <ion-item>
-            <ion-label>*Team Leader</ion-label>
-            <ion-select [(ngModel)]="teamLeaderId">
-                <ion-option *ngFor="let employee of TLList" [value]="employee.teamleaderId">{{employee.nameWithNumber}}</ion-option>
-            </ion-select>
-        </ion-item>
-    </ion-list>
-    <ion-list>
-        <ion-item *ngFor="let item of AvailableDates">
-            <ion-grid>
-                <ion-row>
-                    <ion-col>
-                        Comoff Date
-                    </ion-col>
-                    <ion-col>
-                        Available date
-                    </ion-col>
-                </ion-row>
-                <ion-row>
-                    <ion-col>
-                        {{item.comoffDate | date:'DD-MMM-YYYY'}}
-                    </ion-col>
-                    <ion-col>
-                        {{item.availableDate | date:'DD-MMM-YYYY'}}
-                    </ion-col>
-                </ion-row>
-            </ion-grid>
-        </ion-item>
-    </ion-list>
-    <div class='button_action' *ngIf="isAvailCompOff">
-        <button on-tap='getClubbedCompOff()' class="button icon-left ion-checkmark-round button-small button-balanced">
-            Apply
-        </button>
-    </div>
+  <ion-item-divider ion-item light no-lines>
+    Compoff Details
+    <ion-icon item-right></ion-icon>
+  </ion-item-divider>
+  <ion-list>
+    <ion-item>
+      <ion-label>Full day Comp Off</ion-label>
+      <ion-input disabled="true" [(ngModel)]="availCompOff.compoffFulldaycount"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label> Half day Comp Off</ion-label>
+      <ion-input disabled="true" [(ngModel)]="availCompOff.compoffHalfdaycount"></ion-input>
+    </ion-item>
+  </ion-list>
+  <ion-item-divider ion-item light no-lines>
+    General Information
+    <ion-icon item-right></ion-icon>
+  </ion-item-divider>
+  <page-empinfo [empInfo]='Emp_Info'></page-empinfo>
+  <ion-list>
+    <ion-item>
+      <ion-label>*Full/Half Day :</ion-label>
+      <ion-select [(ngModel)]="comOffDay.isFullDay">
+        <ion-option value="1">Full day</ion-option>
+        <ion-option value="0">Half day</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item *ngIf='comOffDay.isFullDay==0'>
+      <ion-label>*Morning/Afternoon</ion-label>
+      <ion-select [(ngModel)]="comOffDay.isFullDay">
+        <ion-option value="1">Morning</ion-option>
+        <ion-option value="0">Afternoon</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label *ngIf="comOffDay.isFullDay==1">*From Date</ion-label>
+      <ion-label *ngIf="comOffDay.isFullDay==0">*Date</ion-label>
+      <ion-datetime displayFormat="DD/MM/YYYY" aria-placeholder="from date" [(ngModel)]="comOffDay.fromDate" (ngModelChange)="dateChanged()"></ion-datetime>
+    </ion-item>
+    <ion-item *ngIf="comOffDay.isFullDay==1">
+      <ion-label>*To Date</ion-label>
+      <ion-datetime displayFormat="DD/MM/YYYY" aria-placeholder="to date" [(ngModel)]="comOffDay.toDate" (ngModelChange)="dateChanged()"></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label>*Team Leader</ion-label>
+      <ion-select [(ngModel)]="teamLeaderId">
+        <ion-option *ngFor="let employee of TLList" [value]="employee.teamleaderId">{{employee.nameWithNumber}}</ion-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+  <ion-list>
+    <ion-item *ngFor="let item of AvailableDates">
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            Comoff Date
+          </ion-col>
+          <ion-col>
+            Available date
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            {{item.comoffDate | date:'DD-MMM-YYYY'}}
+          </ion-col>
+          <ion-col>
+            {{item.availableDate | date:'DD-MMM-YYYY'}}
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+  </ion-list>
+  <div class='button_action' *ngIf="isAvailCompOff">
+    <button on-tap='getClubbedCompOff()' class="button icon-left ion-checkmark-round button-small button-balanced">
+      Apply
+    </button>
+  </div>
 </ion-content>

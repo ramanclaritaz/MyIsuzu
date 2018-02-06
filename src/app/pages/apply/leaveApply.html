@@ -1,5 +1,5 @@
 <ion-header>
-  <page-header></page-header>
+  <page-header [headerData]='headerData'></page-header>
 </ion-header>
 
 
@@ -56,7 +56,7 @@
 
     <ion-item *ngIf="!empInfo.isTrainee">
       <ion-row>
-        <ion-col width-50>Perimission Leave </ion-col>
+        <ion-col width-50>Perimission </ion-col>
         <ion-col width-50 text-right>{{userleave.permission}}</ion-col>
 
       </ion-row>
@@ -101,7 +101,7 @@
     </ion-item>
     <ion-item>
       <ion-label>Leave descriptions</ion-label>
-      <ion-textarea disabled="true" [(ngModel)]="selectedLeaveCode.acronymsDescription"></ion-textarea>
+      <ion-textarea [ngStyle]="{'height':'90px'}" disabled="true" [(ngModel)]="selectedLeaveCode.acronymsDescription"></ion-textarea>
     </ion-item>
     <ion-item>
       <ion-label *ngIf="!items.toDatevisiblity">*Date</ion-label>
@@ -169,11 +169,11 @@
 
     <ion-item *ngIf="selectedTypeOfLeave.id == 5">
       <ion-label>In Time</ion-label>
-      <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="inn"></ion-datetime>
+      <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" name="inTime" [(ngModel)]="items.inTime"></ion-datetime>
     </ion-item>
     <ion-item *ngIf="selectedTypeOfLeave.id == 5">
       <ion-label>out Time</ion-label>
-      <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" name="ji" [(ngModel)]="out"></ion-datetime>
+      <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" name="outTime" [(ngModel)]="items.outTime"></ion-datetime>
     </ion-item>
     <ion-item *ngIf="selectedTypeOfLeave.id == 5">
       <ion-label>On Duty Location</ion-label>

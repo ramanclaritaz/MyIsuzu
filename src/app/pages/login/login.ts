@@ -30,6 +30,7 @@ export class loginPage {
     });
   }
   AssginData(result) {
+    console.log(result);
     this.com.auth = result;
     this.com.auth.isAuth = true;
     this.com.auth.isplantuser = (result.isplantuser == "False" ? false : true);

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { approvalService } from "../services/approvalServices";
 import { NavController } from 'ionic-angular/navigation/nav-controller';
-import { commonService, authentication, Load } from '../services/common';
+import { commonService, authentication, Load, headerPage } from '../services/common';
 import { NavParams } from 'ionic-angular/navigation/nav-params';
 
 @Component({
@@ -15,21 +15,22 @@ export class ApprovalList {
   auth: authentication;
   segmentVal: any;
   Item: any;
+  headerData:headerPage;
   constructor(private approval: approvalService, navParam: NavParams, private nav: NavController, private globalVar: commonService, private loading: Load) {
     this.searchDataPagination = { page: null, reverse: false, itemsPerPage: null, sortBy: null, totalItems: 64 }
     //this.segmentVal = 1;
     this.Item = navParam.get('data');
+    this.headerData = { page: 'dash', pageTitle: this.Item + ' Approval List', params: this.Item };
     this.Oninit();
   }
   Oninit() {
-    this.globalVar.goBack = 'dash';
-    this.globalVar.pageTitle = this.Item + ' Approval List';
     this.auth = this.globalVar.auth;
     if (this.auth == undefined || this.auth == null) {
       this.nav.setRoot('login');
     }
-    if (this.Item = "Pre-compOff") {
-      this.getPreComOffPending();
+    console.log(this.Item);
+    if (!this.auth.isplantteamleader || this.Item == 'Pre-compOff') {
+      this.segmentChange();
     }
   }
   getLeavePending() {
@@ -76,9 +77,9 @@ export class ApprovalList {
       case "ComOff":
         this.getcomOffPending();
         break;
-      // case "Pre-compOff":
-      //   this.getPreComOffPending();
-      //   break;
+      case "Pre-compOff":
+        this.getPreComOffPending();
+        break;
     }
   }
   editDetail($event, item) {

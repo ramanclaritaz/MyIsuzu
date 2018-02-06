@@ -1,6 +1,4 @@
 // http://ionicframework.com/docs/theming/
-
-
 // App Global Sass
 // --------------------------------------------------
 // Put style rules here that you want to apply globally. These
@@ -15,91 +13,91 @@
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
 ion-app.ios {
-    font-family: -apple-system, "Helvetica Neue", "Roboto", sans-serif;
-    font-size: 1.4rem;
-    background-color: #fff;
-    margin-top: 15px;
-}
-table tr td{
-padding: 6px;
+  font-family: -apple-system, "Helvetica Neue", "Roboto", sans-serif;
+  font-size: 1.4rem;
+  background-color: #fff;
+  margin-top: 15px;
 }
 
-table tr th{
-    padding: 6px;
-    }
-  
+table tr td {
+  padding: 6px;
+}
+
+table tr th {
+  padding: 6px;
+}
+
 .year-block ul.year-link li {
-    text-align: center;
-    display: inline-block;
-    font-size: 18px;
+  text-align: center;
+  display: inline-block;
+  font-size: 18px;
 }
 
 .year-block ul.year-link li a {
-    color: #ffffff;
-    margin: 0px 10px;
+  color: #ffffff;
+  margin: 0px 10px;
 }
 
 .year-block ul.year-link li a:hover {
-    color: #F9B4B4;
-    text-decoration: underline;
-    border-bottom: 1px solid white;
+  color: #F9B4B4;
+  text-decoration: underline;
+  border-bottom: 1px solid white;
 }
 
 .year-block ul.year-link li a:active {
-    font-size: 18px;
+  font-size: 18px;
 }
 
 .year-block {
-    background: #1F1F1F;
-    padding: 10px 20px;
-    text-align: center;
-}
-            
-.year-block ul.year-link {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    text-align: center;
-    display: inline-block;
-}
-            
-                  
-.month-block ul.month-link {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    text-align: center;
-    display: inline-block;
-}
-            
-.month-block ul.month-link li {
-    text-align: center;
-    display: inline-block;
-    font-size: 14px;
-}
-            
-.month-block ul.month-link li a {
-    color: #ffffff;
-    margin: 0px 10px;
-}
-            
-.month-block ul.month-link li a:hover {
-    color: #F9B4B4;
-    text-decoration: underline;
-    border-bottom: 1px solid white;
-}
-            
-.month-block ul.month-link li a:active {
-    font-size: 14px;
-}
-.month-block {
-    background: #3F433F;
-    padding: 8px 20px;
-    text-align: center;
+  background: #1F1F1F;
+  padding: 10px 20px;
+  text-align: center;
 }
 
-.comments
-{
+.year-block ul.year-link {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-align: center;
+  display: inline-block;
+}
+
+.month-block ul.month-link {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-align: center;
+  display: inline-block;
+}
+
+.month-block ul.month-link li {
+  text-align: center;
+  display: inline-block;
+  font-size: 14px;
+}
+
+.month-block ul.month-link li a {
+  color: #ffffff;
+  margin: 0px 10px;
+}
+
+.month-block ul.month-link li a:hover {
+  color: #F9B4B4;
+  text-decoration: underline;
+  border-bottom: 1px solid white;
+}
+
+.month-block ul.month-link li a:active {
+  font-size: 14px;
+}
+
+.month-block {
+  background: #3F433F;
+  padding: 8px 20px;
+  text-align: center;
+}
+
+.comments {
   border: 1px solid gray;
   border-radius: 5px;
   margin: 10px auto;
@@ -107,178 +105,192 @@ table tr th{
   width: 90%;
   height: 60px;
 }
-.item-divider-md,.item-divider-ios
-     {
-       font-size: 1.5rem;
-       background-color:black
-       ;
-       color: whitesmoke;
-     }
-     .input-wrapper
-     {
-         font-size: 1.4rem;
-     }
-.button_action
-     {
-       text-align: center;
-     }
-     
-     .button_action button
-     {
-     margin: 10px 10px;
-     padding: 5px;
-     font-weight: bold;
-     }
 
-     .week-block {
-        background: #616261;
-        padding: 4px 10px;
-        text-align: center;
-      }
-    
-      .week-block ul.week-link {
-          margin: 0;
-          padding: 0;
-          list-style: none;
-          text-align: center;
-          display: inline-block;
-      }
-    
-      .week-block ul.week-link li {
-          text-align: center;
-          display: inline-block;
-          font-size: 11px;
-      }
-      .title{
-        text-align: center;
-        
-      }
-      .week-block ul.week-link li a {
-          color: #ffffff;
-          margin: 0px 8px;
-      }
-    
-      .week-block ul.week-link li a:hover {
-          color: #F9B4B4;
-          text-decoration: underline;
-          border-bottom: 1px solid white;
-      }
-    
-      .week-block ul.week-link li a:active {
-          font-size: 11px;
-      }
-    
-      .calender-block {
-        /*margin: 10px;*/
-        color: #17232c;
-      }
-      table.demo-one-table {
-        font-family: Arial, Helvetica, sans-serif;
-        font-size: 11px;
-        color: #17232c;
-        /*margin-left: 5%;*/
-    }
-    
-    
-    table.demo-one-table tr th {
-        color: #000;
-        background-color: #7C7F7D;
-        font-weight: normal;
-        padding: 6px !important;
-        text-align: center;
-        height: 30px;
-        border: 1px solid #000000;
-        color: #17232c;
-    }
-    
-    
-    
-    
-    table.demo-one-table tr td {
-        /*background-color: #D3D7D3;*/
-        color: #17232c;
-        font-weight: normal;
-        padding: 6px !important;
-        text-align: center;
-        width: 90px;
-        height: 80px;
-        vertical-align: middle !important;
-        border: 1px solid black;
-        color: black;
-    }
-    
-    table.demo-one-table tr td:hover {
-        background-color: #17232c;
-        cursor: pointer;
-    }
-    .logo{
-        border: 0px;
-        max-width: none !important;
-    }
-    .control-btn {
-        width: 100%;
-        margin: 0 auto 15px auto;
-        text-align: center;
-    }
-    .slectedYear {
-        color: #C4C2C2 !important;
-        font-size: larger;
-        font-style: italic;
-        font-weight: bolder;
-        text-decoration: underline;
-        border-bottom: 1px solid white;
-    }
-    ion-card {
-        position: relative;
-        text-align: center;
-        font-size: 6px !important;
-        padding: 0px !important;
-        margin: 0px !important;
-        min-height: 127px !important;
-        width: calc(100% - -3px) !important;
-        background-color: rgb(43, 34, 43) !important;
-        }
-        ion-title{
-          font-size:6px !important;
-        }
-        ion-header,.header-ios {
-          left: 0;
-          top: 0;
-          position: absolute;
-          z-index: 10;
-          display: block;
-          width: 100%;
-          background-color: #d6b1b1 !important;
-      }
-    
-      .iconCss {
-        display: inline-block;
-        font-size: 1.1em;
-        color: whitesmoke;
-      }
-      .card-content-md, .card-content-ios {
-        padding: 29px 16px;
-        font-size: 1.4rem;
-        line-height: 1.5;
-    }
-      .card-title-md,.card-title-ios {
-        display: block;
-        font-size: 1.4rem;
-        line-height: 1.2;
-        color: whitesmoke;
-        margin: 2px 0;
-        padding: 8px 0;
-        font-weight: 600;
-    }
-        .title{
-          text-align: center;
-          
-        }
-        .logout{
-          text-decoration:white;
-          color: black;
-        }
-        .dash
-        {
-          text-decoration: none;
-        }
+.item-divider-md,
+.item-divider-ios {
+  font-size: 1.5rem;
+  background-color: #F14038;
+  color: whitesmoke;
+}
+
+.input-wrapper {
+  font-size: 1.4rem;
+}
+
+.button_action {
+  text-align: center;
+}
+
+.button_action button {
+  margin: 10px 10px;
+  padding: 12px;
+  font-weight: bold;
+  border-radius: 6px;
+  background-color: #343434;
+  color: white;
+}
+
+.week-block {
+  background: #616261;
+  padding: 4px 10px;
+  text-align: center;
+}
+
+.week-block ul.week-link {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-align: center;
+  display: inline-block;
+}
+
+.week-block ul.week-link li {
+  text-align: center;
+  display: inline-block;
+  font-size: 11px;
+}
+
+.title {
+  text-align: center;
+}
+
+.week-block ul.week-link li a {
+  color: #ffffff;
+  margin: 0px 8px;
+}
+
+.week-block ul.week-link li a:hover {
+  color: #F9B4B4;
+  text-decoration: underline;
+  border-bottom: 1px solid white;
+}
+
+.week-block ul.week-link li a:active {
+  font-size: 11px;
+}
+
+.calender-block {
+  /*margin: 10px;*/
+  color: #17232c;
+}
+
+table.demo-one-table {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  color: #17232c;
+  /*margin-left: 5%;*/
+}
+
+table.demo-one-table tr th {
+  color: #000;
+  background-color: #7C7F7D;
+  font-weight: normal;
+  padding: 6px !important;
+  text-align: center;
+  height: 30px;
+  border: 1px solid #000000;
+  color: #17232c;
+}
+
+table.demo-one-table tr td {
+  /*background-color: #D3D7D3;*/
+  color: #17232c;
+  font-weight: normal;
+  padding: 6px !important;
+  text-align: center;
+  width: 90px;
+  height: 80px;
+  vertical-align: middle !important;
+  border: 1px solid black;
+  color: black;
+}
+
+table.demo-one-table tr td:hover {
+  background-color: #17232c;
+  cursor: pointer;
+}
+
+.logo {
+  border: 0px;
+  max-width: none !important;
+}
+
+.control-btn {
+  width: 100%;
+  margin: 0 auto 15px auto;
+  text-align: center;
+}
+
+.slectedYear {
+  color: #C4C2C2 !important;
+  font-size: larger;
+  font-style: italic;
+  font-weight: bolder;
+  text-decoration: underline;
+  border-bottom: 1px solid white;
+}
+
+ion-card {
+  position: relative;
+  text-align: center;
+  font-size: 6px !important;
+  padding: 0px !important;
+  margin: 0px !important;
+  min-height: 127px !important;
+  width: calc(100% - -3px) !important;
+  background-color: rgb(43, 34, 43) !important;
+  border-radius: 5px !important;
+}
+
+ion-title {
+  font-size: 6px !important;
+}
+
+ion-header,
+.header-ios {
+  left: 0;
+  top: 0;
+  position: absolute;
+  z-index: 10;
+  display: block;
+  width: 100%;
+  background-color: #d6b1b1 !important;
+}
+
+.iconCss {
+  display: inline-block;
+  font-size: 3.1em;
+  color: whitesmoke;
+}
+
+.card-content-md,
+.card-content-ios {
+  padding: 29px 16px;
+  font-size: 1.4rem;
+  line-height: 1.5;
+}
+
+.card-title-md,
+.card-title-ios {
+  display: block;
+  font-size: 1.4rem;
+  line-height: 1.2;
+  color: whitesmoke;
+  margin: 2px 0;
+  padding: 8px 0;
+  font-weight: 600;
+}
+
+.title {
+  text-align: center;
+}
+
+.logout {
+  text-decoration: white;
+  color: black;
+}
+
+.dash {
+  text-decoration: none;
+
+}

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 import { approvalService } from '../services/approvalServices';
-import { iApprovalItem, commonService, authentication, Load } from '../services/common';
+import { iApprovalItem, commonService, authentication, Load, headerPage } from '../services/common';
 import { NavParams } from 'ionic-angular/navigation/nav-params';
 import { NavController } from 'ionic-angular/navigation/nav-controller';
 import { showMessage } from '../services/showalert';
@@ -19,20 +19,20 @@ export class ApprovalPage {
   model: any;
   leaveapply: any;
   auth: authentication;
+  headerData:headerPage;
   constructor(private approval: approvalService, navParam: NavParams, private nav: NavController, private show: showMessage, private globalVar: commonService, private loading: Load) {
     this.data = navParam.get('data');
+    this.Item = this.data.item;
+    this.headerData = { page: 'approval', pageTitle: this.data.type + ' Approval Page', params: this.data.type };
     this.Oninit();
-    this.auth.isplantteamleader
   }
   Oninit() {
     this.loading.show();
-    this.globalVar.goBack = 'dash';
-    this.globalVar.pageTitle = this.data.type + ' Approval Page';
     this.auth = this.globalVar.auth;
     if (this.auth == undefined || this.auth == null) {
       this.nav.setRoot('login');
     }
-    this.Item = this.data.item;
+
     if (this.Item == undefined) {
       this.nav.setRoot('approval', { data: this.data.type });
     }

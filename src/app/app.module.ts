@@ -39,14 +39,9 @@ import { ApprovalPage } from './pages/approval/approvalPage';
 import { timeEntry } from './pages/timeentry/timeentry';
 import { header } from './pages/header/header';
 import { attendance } from './pages/attendance/attendance';
+import { empInfo } from './pages/shared/employeeInfo';
 
-// import { CloudSettings, CloudModule } from '@ionic/cloud-angular';
 
-// const cloudSettings: CloudSettings = {
-//   'core': {
-//     'app_id': 'ee198964'
-//   }
-// };
 
 @NgModule({
   declarations: [
@@ -57,7 +52,7 @@ import { attendance } from './pages/attendance/attendance';
     compOffApply,
     ApprovalPage,
     timeEntry,
-    header,
+    header, empInfo,
     attendance
   ],
   imports: [

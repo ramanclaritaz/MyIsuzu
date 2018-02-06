@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { timeEntryService } from "../services/timeEntryServices";
 import { NavController } from 'ionic-angular/navigation/nav-controller';
-import { commonService, authentication, Load } from '../services/common';
+import { commonService, authentication, Load, headerPage } from '../services/common';
 import { Geolocation } from '@ionic-native/geolocation';
 import { showMessage } from '../services/showalert';
 
@@ -19,14 +19,14 @@ export class timeEntry {
     timeEntryLocations: any;
     Emp_Info: any;
     auth: authentication;
+    headerData:headerPage;
     constructor(private timeService: timeEntryService, private nav: NavController, private globalVar: commonService, private geolocation: Geolocation, private show: showMessage, private loading: Load) {
-        this.Oninit();
+      this.headerData = { page: 'dash', pageTitle: 'Time entry' };
+      this.Oninit();
 
     }
     Oninit() {
         this.loading.show();
-        this.globalVar.goBack = 'dash';
-        this.globalVar.pageTitle = 'Time entry';
         this.timeEntryLocations = { latitude: '13.050784', longitude: '80.20953' };
         this.auth = this.globalVar.auth;
         if (this.auth == undefined) {
@@ -42,7 +42,7 @@ export class timeEntry {
             this.TimeEntryRequests = result;
             if (this.TimeEntryRequests == undefined || this.TimeEntryRequests == null) {
                 this.isPunchIn = true;
-                this.btnText = "TimeIn";
+                this.btnText = "Time In";
             }
             if (this.TimeEntryRequests != null && this.TimeEntryRequests.isEntryFromMobile == true && this.TimeEntryRequests.isInTime == false) {
                 this.show.alert("Time Entry", "Already entered on this date.");
@@ -52,11 +52,11 @@ export class timeEntry {
                 this.locationInfo1 = JSON.parse(this.TimeEntryRequests.inTimelocation);
                 this.locationInfo1 = { latitude: this.locationInfo1.latitude, longitude: this.locationInfo1.longitude, address: this.locationInfo1.address };
                 this.isPunchIn = false;
-                this.btnText = "TimeOut";
+                this.btnText = "Time Out";
             }
             else {
                 this.isPunchIn = true;
-                this.btnText = "TimeIn";
+                this.btnText = "Time In";
             }
 
         });

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { commonService, authentication, Load } from '../services/common';
+import { commonService, authentication, Load, headerPage } from '../services/common';
 import { showMessage } from '../services/showalert';
 import { dashboardService } from '../services/dashboardServices';
 
@@ -11,6 +11,7 @@ import { dashboardService } from '../services/dashboardServices';
 
 
 export class DashboardPage {
+  headerData:headerPage;
   dashCount: any;
   auth: authentication;
   constructor(private nav: NavController, private globalVar: commonService, private show: showMessage, private dashService: dashboardService, private loading: Load) {
@@ -20,6 +21,7 @@ export class DashboardPage {
       timeofficeCount: 0,
       leaveCountL1ForMobile: 0
     }
+    this.headerData={page:'login',pageTitle:'Dashboard'}
     this.Oninit();
   }
   Oninit() {
@@ -27,8 +29,6 @@ export class DashboardPage {
     if (this.auth == undefined || this.auth == null) {
       this.nav.setRoot('login');
     }
-    this.globalVar.goBack = 'login';
-    this.globalVar.pageTitle = 'Dashboard';
     this.getDashboard()
   }
   getDashboard() {

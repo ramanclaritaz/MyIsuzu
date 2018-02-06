@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { commonService, authentication, Load } from '../services/common';
+import { commonService, authentication, Load, headerPage } from '../services/common';
 import { showMessage } from '../services/showalert';
 import { compOffServices } from '../services/compOffServices';
 import { NavController } from 'ionic-angular/navigation/nav-controller';
@@ -21,7 +21,7 @@ export class compOffApply {
   availCompOff = {
     compoffFulldaycount: 0, compoffHalfdaycount: 0
   }
-
+  headerData: headerPage;
   Emp_Info: any;
   comOffDay: any;
   TLList: any;
@@ -31,13 +31,12 @@ export class compOffApply {
   auth: authentication;
   isMornorAftervisable: boolean;
   isAvailCompOff: boolean;
-  constructor(private show: showMessage, private globalVar: commonService, private comOffService: compOffServices, private nav: NavController,private loading: Load) {
+  constructor(private show: showMessage, private globalVar: commonService, private comOffService: compOffServices, private nav: NavController, private loading: Load) {
+    this.headerData = { page: 'dash', pageTitle: 'Comoff Apply' };
     this.Oninit();
   }
   Oninit() {
     this.loading.show();
-    this.globalVar.goBack = 'dash';
-    this.globalVar.pageTitle = 'Comoff Apply';
     this.auth = this.globalVar.auth;
     if (this.auth == undefined || this.auth == null) {
       this.nav.setRoot('login');

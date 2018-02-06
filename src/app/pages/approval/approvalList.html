@@ -1,8 +1,8 @@
 <ion-header>
-  <page-header></page-header>
+  <page-header [headerData]='headerData'></page-header>
 </ion-header>
 <ion-content>
-  <div *ngIf="(auth.isplantteamleader && Item!='Pre-compOff')">
+  <div *ngIf="(auth.isplantteamleader && Item !='Pre-compOff')">
     <div padding>
       <ion-segment [(ngModel)]="segmentVal" (ionChange)="segmentChange()">
         <ion-segment-button value="1">
@@ -50,13 +50,13 @@
       </ion-list>
     </div>
   </div>
-  <div *ngIf="(!auth.isplantteamleader || Item=='Pre-compOff')">
+  <div *ngIf="(!auth.isplantteamleader || Item == 'Pre-compOff')">
     <ion-list>
       <div *ngFor="let item of pendingList;let i=index">
         <ion-item>
           <span (click)="editDetail($event, item)">
             <h3>{{item.appliedforName}} - {{item.appliedforNumber}}</h3>
-            <p>Request date : {{item.createdDate}}</p>
+            <p>Request date : {{item.createdDate | date:'dd-MM-yyyy hh:mm a'}}</p>
             <p>{{item.leaveCodeDescription}}</p>
             <p>Reason :{{item.appliedReason}}</p>
           </span>

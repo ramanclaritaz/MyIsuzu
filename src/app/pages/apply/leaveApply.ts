@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { leaveService } from '../services/leaveServices'
-import { employeeInfo, commonService, authentication, Load } from '../services/common';
+import { employeeInfo, commonService, authentication, Load, headerPage } from '../services/common';
 import { NavController } from 'ionic-angular/navigation/nav-controller';
 import { showMessage } from '../services/showalert';
 import moment from "moment";
@@ -17,6 +17,7 @@ export class leaveApply {
   userleave = {
     sickLeave: "", casualLeave: "", privilegeLeave: "", condolenceLeave: "", maternityLeave: "", traineeLeave: "", permission: ""
   }
+  headerData: headerPage;
   leaveType: any[];
   leaveCode: any[];
   selectedTypeOfLeave: any;
@@ -30,9 +31,10 @@ export class leaveApply {
   in = "1990-03-19";
   out = "1990-02-19";
   leaveCodeObj: any;
-  constructor(private leaveService: leaveService, private nav: NavController, private globalVar: commonService, private show: showMessage,private loading:Load) {
+  constructor(private leaveService: leaveService, private nav: NavController, private globalVar: commonService, private show: showMessage, private loading: Load) {
     this.onLeaveTypeChange = this.OnLeaveTypeChange.bind(this);
     this.onLeaveCodeChange = this.OnLeaveCodeChange.bind(this);
+    this.headerData = { page: 'dash', pageTitle: 'Leave Apply' };
     this.OnInit();
   }
 
@@ -43,13 +45,11 @@ export class leaveApply {
     if (this.auth == undefined || this.auth == null) {
       this.nav.setRoot('login');
     }
-    this.globalVar.pageTitle = 'Leave apply';
-    this.globalVar.goBack = 'dash';
     this.getAvailableLeave();
     this.getTypeOFLeave();
     this.items = {};
-    this.selectedTypeOfLeave = { };
-    this.selectedLeaveCode = { };
+    this.selectedTypeOfLeave = {};
+    this.selectedLeaveCode = {};
     this.loading.dismiss();
 
   }
@@ -101,7 +101,7 @@ export class leaveApply {
           this.items.toFulldayVisibilty = this.items.fromFulldayvisiblity = this.items.fromMorningVisiblity = this.items.toMorningVisiblity = false;
           this.items.toDatevisiblity = true;
         }
-      },(err) => {
+      }, (err) => {
         this.loading.dismiss();
       });
   }
@@ -147,8 +147,39 @@ export class leaveApply {
         this.selectedTypeOfLeave.isFulldaydisable = false;
         this.selectedTypeOfLeave.isToFulldaydisable = false;
       }
+      else if (this.selectedLeaveCode.id == 5) {
+        if (this.auth.isplantuser) {
+          this.getShiftData();
+        }
+        else {
+
+        }
+      }
     }
   }
+
+  getShiftData() {
+    this.leaveService.getAvailableLeaves
+    let data = { params: { userid: this.auth.userid } }
+    this.leaveService.getshiftDetails(data, this.auth.isplantuser).subscribe((val) => {
+      var usercurrentshift = val.data;
+      var ss = moment(new Date()).format("MM/DD/YYYY") + " " + moment(usercurrentshift.startTime).format("hh:mm a");
+      var tt = new Date(ss);
+      tt.setHours(tt.getHours());
+      tt.setMinutes(tt.getMinutes());
+      // var from_time = moment(($scope.usercurrentshift.startTime)).format("HH:mm");
+      this.items.inTime = tt;
+
+      var ss = moment(new Date()).format("MM/DD/YYYY") + " " + moment(usercurrentshift.endTime).format("hh:mm a");
+      var te = new Date(ss);
+      te.setHours(te.getHours());
+      te.setMinutes(te.getMinutes());
+      // var from_time = moment(($scope.usercurrentshift.startTime)).format("HH:mm");
+      this.items.outTime = te;
+
+    })
+  }
+
   changed() {
 
     if (this.selectedTypeOfLeave.id == 8 || this.selectedTypeOfLeave.id == 9 || this.selectedTypeOfLeave.id == 6) {
@@ -339,7 +370,7 @@ export class leaveApply {
       else {
         this.show.alert("Leave Apply", "Leave Not Available!");
       }
-    },(err) => {
+    }, (err) => {
       this.loading.dismiss();
     });
   }
@@ -353,8 +384,8 @@ export class leaveApply {
       toDate = moment(this.items.toDate).format('MM/DD/YYYY');
     else
       toDate = moment(this.items.fromDate).format('MM/DD/YYYY');
-    fromTime = moment(new Date(this.items.inTime), 'HH:mm a');
-    toTime = moment(new Date(this.items.outTime), 'HH:mm a');
+    fromTime = moment(new Date('1900-01-01 ' +this.items.inTime)).format('HH:mm a');
+    toTime = moment(new Date('1900-01-01 ' +this.items.outTime)).format('HH:mm a');
     if (fromDate && this.selectedTypeOfLeave.id == 5) {
       fromDate = fromDate + " " + fromTime;
     }
@@ -380,9 +411,9 @@ export class leaveApply {
     this.loading.show();
     this.leaveService.SaveAppliedLeave(applyLeaveData, this.auth.isplantuser).subscribe((response) => {
       this.loading.dismiss();
-      this.show.alert("Leave Apply", response.message);
+      this.show.alert("Leave Apply", this.selectedTypeOfLeave.leaveTypeName + "has applied");
       this.nav.setRoot("dash");
-    },(err) => {
+    }, (err) => {
       this.loading.dismiss();
     });
   };
@@ -418,7 +449,7 @@ export class leaveApply {
       if (this.selectedLeaveCode.id == 17) {
         this.items.TotalDays = response.totalDays;
       }
-    },(err) => {
+    }, (err) => {
       this.loading.dismiss();
     })
   };
