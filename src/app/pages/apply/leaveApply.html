@@ -164,16 +164,16 @@
     </ion-item>
     <ion-item *ngIf="selectedTypeOfLeave.id == 5">
       <ion-label>shift time</ion-label>
-      <ion-input disabled="true">{{selectedLeaveCode.fromTime+' to '+selectedLeaveCode.toTime}}</ion-input>
+      <ion-input disabled="true">{{selectedLeaveCode.fromTime}} to {{selectedLeaveCode.toTime}}</ion-input>
     </ion-item>
 
     <ion-item *ngIf="selectedTypeOfLeave.id == 5">
       <ion-label>In Time</ion-label>
-      <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" name="inTime" [(ngModel)]="items.inTime"></ion-datetime>
+      <ion-datetime displayFormat="hh:mm A" pickerFormat="h mm A" name="inTime" [(ngModel)]="items.inTime"></ion-datetime>
     </ion-item>
     <ion-item *ngIf="selectedTypeOfLeave.id == 5">
       <ion-label>out Time</ion-label>
-      <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" name="outTime" [(ngModel)]="items.outTime"></ion-datetime>
+      <ion-datetime displayFormat="hh:mm A" pickerFormat="h mm A" name="outTime" [(ngModel)]="items.outTime"></ion-datetime>
     </ion-item>
     <ion-item *ngIf="selectedTypeOfLeave.id == 5">
       <ion-label>On Duty Location</ion-label>
@@ -186,7 +186,7 @@
   </ion-list>
   <div class='button_action'>
     <button on-tap='getProb()' class="button icon-left ion-checkmark-round button-small button-balanced">
-        Apply
+      Apply
     </button>
-</div>
+  </div>
 </ion-content>

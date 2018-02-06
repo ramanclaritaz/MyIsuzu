@@ -100,6 +100,9 @@ export class leaveApply {
           this.selectedLeaveCode = this.leaveCode[0];
           this.items.toFulldayVisibilty = this.items.fromFulldayvisiblity = this.items.fromMorningVisiblity = this.items.toMorningVisiblity = false;
           this.items.toDatevisiblity = true;
+          this.items.inTime = this.selectedLeaveCode.fromTime;
+          this.items.outTime = this.selectedLeaveCode.toTime;
+          this.items.fromDate = this.items.toDate = moment(new Date()).format('dd/MM/yyyy');
         }
       }, (err) => {
         this.loading.dismiss();
@@ -148,11 +151,13 @@ export class leaveApply {
         this.selectedTypeOfLeave.isToFulldaydisable = false;
       }
       else if (this.selectedLeaveCode.id == 5) {
+        this.items.fromDate = this.items.toDate = moment(new Date()).format('dd/MM/yyyy');
         if (this.auth.isplantuser) {
           this.getShiftData();
         }
         else {
-
+          this.items.inTime = this.selectedLeaveCode.fromTime;
+          this.items.outTime = this.selectedLeaveCode.toTime;
         }
       }
     }
@@ -384,8 +389,8 @@ export class leaveApply {
       toDate = moment(this.items.toDate).format('MM/DD/YYYY');
     else
       toDate = moment(this.items.fromDate).format('MM/DD/YYYY');
-    fromTime = moment(new Date('1900-01-01 ' +this.items.inTime)).format('HH:mm a');
-    toTime = moment(new Date('1900-01-01 ' +this.items.outTime)).format('HH:mm a');
+    fromTime = moment(new Date('1900-01-01 ' + this.items.inTime)).format('HH:mm a');
+    toTime = moment(new Date('1900-01-01 ' + this.items.outTime)).format('HH:mm a');
     if (fromDate && this.selectedTypeOfLeave.id == 5) {
       fromDate = fromDate + " " + fromTime;
     }
@@ -411,7 +416,7 @@ export class leaveApply {
     this.loading.show();
     this.leaveService.SaveAppliedLeave(applyLeaveData, this.auth.isplantuser).subscribe((response) => {
       this.loading.dismiss();
-      this.show.alert("Leave Apply", this.selectedTypeOfLeave.leaveTypeName + "has applied");
+      this.show.alert("Leave Apply", response.message);
       this.nav.setRoot("dash");
     }, (err) => {
       this.loading.dismiss();

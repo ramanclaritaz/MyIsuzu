@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { LoginService } from '../services/getLogin'
 import { commonService, Load } from '../services/common';
+import { showMessage } from '../services/showalert';
 @Component({
   selector: 'page-login',
   templateUrl: '../login/login.html'
@@ -10,7 +11,7 @@ import { commonService, Load } from '../services/common';
 export class loginPage {
 
   registerCredentials = { userName: undefined, password: undefined };
-  constructor(private nav: NavController, private loginService: LoginService, private com: commonService, private loading: Load) {
+  constructor(private nav: NavController,private show: showMessage, private loginService: LoginService, private com: commonService, private loading: Load) {
     localStorage.clear();
     this.com.auth = undefined;
   }
@@ -26,6 +27,8 @@ export class loginPage {
         this.nav.setRoot('dash');
       }
     }, (error) => {
+
+      this.show.alert('error','The user name or password is incorrect.');
       this.loading.dismiss();
     });
   }
