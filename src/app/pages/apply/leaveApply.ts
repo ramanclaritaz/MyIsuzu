@@ -14,12 +14,15 @@ import moment from "moment";
 export class leaveApply {
   auth: authentication;
   empInfo: employeeInfo;
+  applyLeaveData:any;
   userleave = {
     sickLeave: "", casualLeave: "", privilegeLeave: "", condolenceLeave: "", maternityLeave: "", traineeLeave: "", permission: ""
   }
   headerData: headerPage;
   leaveType: any[];
   leaveCode: any[];
+  leaveDescriptions: any;
+  shiftTime: any;
   selectedTypeOfLeave: any;
   onLeaveTypeChange: void;
   selectedLeaveCode: any;
@@ -76,6 +79,7 @@ export class leaveApply {
       res => {
         this.loading.dismiss();
         this.leaveCode = res;
+        this.items.fromDate = this.items.toDate = moment(new Date()).format("YYYY-MM-DD");
         if (this.selectedTypeOfLeave.id == 1 || this.selectedTypeOfLeave.id == 2 || this.selectedTypeOfLeave == 3) {
           this.items.toDatevisiblity = this.items.toFulldayVisibilty = this.items.toMorningVisiblity = false;
           this.items.fromFulldayvisiblity = this.items.fromMorningVisiblity = true;
@@ -84,15 +88,15 @@ export class leaveApply {
         }
         else if (this.selectedTypeOfLeave.id == 4) {
           this.items.toDatevisiblity = this.items.toFulldayVisibilty = this.items.toMorningVisiblity = this.items.fromMorningVisiblity = false;
-          this.items.fromFulldayvisiblity = true;
+          this.items.fromFulldayDisabled = this.items.fromFulldayvisiblity = true;
           this.items.fromFullorHalf = 1;
         }
         else if (this.selectedTypeOfLeave.id == 7) {
           this.items.toMorningVisiblity = this.items.fromMorningVisiblity = false;
-          this.items.toDatevisiblity = this.items.toFulldayVisibilty = this.items.fromFulldayvisiblity = true;
+          this.items.fromFulldayDisabled = this.items.toFulldayDisabled = this.items.toDatevisiblity = this.items.toFulldayVisibilty = this.items.fromFulldayvisiblity = true;
           this.items.fromFullorHalf = this.items.toFullorHalf = 1;
         }
-        else if (this.selectedTypeOfLeave.id == 8) {
+        else if (this.selectedTypeOfLeave.id == 8 || this.selectedTypeOfLeave.id == 9 || this.selectedTypeOfLeave.id == 6) {
           this.items.toMorningVisiblity = this.items.fromMorningVisiblity = this.items.toDatevisiblity = this.items.toFulldayVisibilty = this.items.fromFulldayvisiblity = true;
           this.items.fromFullorHalf = this.items.toFullorHalf = this.items.fromMorningorAfternoon = this.items.toMorningorAfternoon = null;
         }
@@ -102,7 +106,7 @@ export class leaveApply {
           this.items.toDatevisiblity = true;
           this.items.inTime = this.selectedLeaveCode.fromTime;
           this.items.outTime = this.selectedLeaveCode.toTime;
-          this.items.fromDate = this.items.toDate = moment(new Date()).format('dd/MM/yyyy');
+          this.items.fromDate = this.items.toDate = moment(new Date()).format("YYYY-MM-DD");
         }
       }, (err) => {
         this.loading.dismiss();
@@ -116,6 +120,7 @@ export class leaveApply {
   }
 
   OnLeaveCodeChange() {
+    this.items.fromDate = this.items.toDate = moment(new Date()).format("YYYY-MM-DD");
     if (this.selectedLeaveCode != undefined && this.selectedLeaveCode != null) {
       let halfday = { afternoon: [6, 8, 27, 33, 35, 37, 23], morning: [5, 26, 31, 32, 34, 36, 22] };
       let isMorning = halfday.morning.filter((val) => {
@@ -129,9 +134,9 @@ export class leaveApply {
       });
       if (isMorning.length > 0 || isAfternoon.length > 0) {
         if (isMorning.length > 0)
-          this.items.fromMorningorAfternoon = 1;
+          this.items.fromMorningorAfternoon = 0; //changed
         else {
-          this.items.fromMorningorAfternoon = 0;
+          this.items.fromMorningorAfternoon = 1; //changed
         }
       }
       else if (this.selectedLeaveCode.id == 24) {
@@ -139,19 +144,16 @@ export class leaveApply {
         this.items.fromFullorHalf = 1;
       }
       else if (this.selectedTypeOfLeave.id == 6 && this.selectedLeaveCode.id == 17) {
-        console.log("1"); console.log(this.selectedLeaveCode);
-        this.items.fromFullorHalf = 1;
-        this.items.toFullorHalf = 1;
-        this.items.isMornorAftervisable = false;
-        this.items.isToMornorAftervisable = false;
-        this.items.isFulldaydisable = true;
-        this.items.isToFulldaydisable = true;
+        this.items.toFullorHalf = this.items.fromFullorHalf = 1;
+        this.items.isToMornorAftervisable = this.items.isMornorAftervisable = false;
+        this.items.isToFulldaydisable = this.items.isFulldaydisable = true;
+        true;
       } else if (this.selectedTypeOfLeave.id == 6) {
         this.selectedTypeOfLeave.isFulldaydisable = false;
         this.selectedTypeOfLeave.isToFulldaydisable = false;
       }
       else if (this.selectedLeaveCode.id == 5) {
-        this.items.fromDate = this.items.toDate = moment(new Date()).format('dd/MM/yyyy');
+        this.items.fromDate = this.items.toDate = moment(new Date()).format("YYYY-MM-DD");
         if (this.auth.isplantuser) {
           this.getShiftData();
         }
@@ -168,14 +170,14 @@ export class leaveApply {
     let data = { params: { userid: this.auth.userid } }
     this.leaveService.getshiftDetails(data, this.auth.isplantuser).subscribe((val) => {
       var usercurrentshift = val.data;
-      var ss = moment(new Date()).format("MM/DD/YYYY") + " " + moment(usercurrentshift.startTime).format("hh:mm a");
+      var ss = moment(new Date()).format("YYYY-MM-DD") + " " + moment(usercurrentshift.startTime).format("hh:mm a");
       var tt = new Date(ss);
       tt.setHours(tt.getHours());
       tt.setMinutes(tt.getMinutes());
       // var from_time = moment(($scope.usercurrentshift.startTime)).format("HH:mm");
       this.items.inTime = tt;
 
-      var ss = moment(new Date()).format("MM/DD/YYYY") + " " + moment(usercurrentshift.endTime).format("hh:mm a");
+      var ss = moment(new Date()).format("YYYY-MM-DD") + " " + moment(usercurrentshift.endTime).format("hh:mm a");
       var te = new Date(ss);
       te.setHours(te.getHours());
       te.setMinutes(te.getMinutes());
@@ -185,29 +187,49 @@ export class leaveApply {
     })
   }
 
-  changed() {
-
-    if (this.selectedTypeOfLeave.id == 8 || this.selectedTypeOfLeave.id == 9 || this.selectedTypeOfLeave.id == 6) {
+  changed(event) {
+    if (this.selectedTypeOfLeave.id == 8 || this.selectedTypeOfLeave.id == 9) {
       if (this.items.fromFullorHalf == 1) {
         this.items.toFullorHalf = 0;
-        this.items.toMorningorAfternoon = 1;
+        this.items.toMorningorAfternoon = 0; //changed
         this.items.fromMorningorAfternoon = undefined;
         this.items.fromMorningVisiblity = false;
         this.items.toFulldayDisabled = this.items.toMorningDisabled = this.items.toMorningVisiblity = true;
+
       }
       else {
         {
           this.items.toFullorHalf = 1;
           this.items.toMorningorAfternoon = undefined;
           this.items.toMorningVisiblity = false;
-          this.items.fromMorningorAfternoon = 0;
-          this.items.toFulldayDisabled = this.items.toMorningDisabled = this.items.fromMorningVisiblity = true;
+          this.items.fromMorningorAfternoon = 1; //changed
+          this.items.fromMorningDisabled = this.items.toFulldayDisabled = this.items.toMorningDisabled = this.items.fromMorningVisiblity = true;
         }
       }
     }
-    this.fromDateChanged();
+    else if (this.selectedTypeOfLeave.id == 6) {
+      if (this.items.fromFullorHalf == 1) {
+        this.items.fromMorningorAfternoon = undefined;
+        this.items.fromMorningVisiblity = false;
+      }
+      else {
+        this.items.fromMorningorAfternoon = 1;//changed
+        this.items.fromMorningDisabled = this.items.fromMorningVisiblity = true;
+      }
+      if (this.items.toFullorHalf == 1) {
+        this.items.toMorningorAfternoon = undefined;
+        this.items.toMorningVisiblity = false;
+      }
+      else {
+        this.items.toMorningorAfternoon = 0; //changed
+        this.items.toMorningDisabled = this.items.toMorningVisiblity = true;
+      }
+    }
   }
+
   getLeaveTypesAcronyms() {
+    this.shiftTime = this.selectedLeaveCode.fromTime + ' to ' + this.selectedLeaveCode.toTime
+    this.leaveDescriptions = this.selectedLeaveCode.acronymsName + ' ' + this.selectedTypeOfLeave.leaveTypeName;
     if (this.selectedTypeOfLeave.id == 6 && this.selectedLeaveCode.id == 17) {
       this.items.fromFullorHalf = 1;
       this.items.toFullorHalf = 1;
@@ -235,29 +257,27 @@ export class leaveApply {
       this.selectedLeaveCode.id == 27 || this.selectedLeaveCode.id == 33
       || this.selectedLeaveCode.id == 35
       || this.selectedLeaveCode.id == 37) {
-      this.items.fromMorningorAfternoon = 1; this.items.TotalDays = 0.5;
+      this.items.fromMorningorAfternoon = 1; this.items.TotalDays = 0.5;//changed
     } else if (this.selectedLeaveCode.id == 5 || this.selectedLeaveCode.id == 26 ||
       this.selectedLeaveCode.id == 31 ||
       this.selectedLeaveCode.id == 34 || this.selectedLeaveCode.id == 32
       || this.selectedLeaveCode.id == 36) {
-      this.items.fromMorningorAfternoon = 0; this.items.TotalDays = 0.5;
-    } else if (this.selectedLeaveCode.id == 12) {
-      this.items.fromMorningorAfternoon = 0; this.items.TotalDays = 0.5;
-    } else if (this.selectedLeaveCode.id == 13) {
-      this.items.fromMorningorAfternoon = 1; this.items.TotalDays = 0.5;
+      this.items.fromMorningorAfternoon = 0; this.items.TotalDays = 0.5; //changed
     }
-    else if (this.selectedLeaveCode.id == 22) {
-      this.items.fromMorningorAfternoon = 0; this.items.TotalDays = 0.5;
-      this.items.fromMorningVisiblity = true;
+    else if (this.selectedLeaveCode.id == 23 || this.selectedLeaveCode.id == 13) {
+      this.items.fromMorningorAfternoon = 1; this.items.TotalDays = 0.5; //changed
+      this.items.fromMorningDisabled = this.items.fromMorningVisiblity = true;
       this.items.fromFullorHalf = 0;
-    } else if (this.selectedLeaveCode.id == 23) {
-      this.items.fromMorningorAfternoon = 1; this.items.TotalDays = 0.5;
-      this.items.fromMorningVisiblity = true;
+    } else if (this.selectedLeaveCode.id == 22 || this.selectedLeaveCode.id == 12) {
+      this.items.fromMorningorAfternoon = 0; this.items.TotalDays = 0.5; //changed
+      this.items.fromMorningDisabled = this.items.fromMorningVisiblity = true;
       this.items.fromFullorHalf = 0;
     }
     else if (this.selectedLeaveCode.id == 24) {
       this.items.fromMorningVisiblity = false;
-      this.items.fromFullorHalf = 1; this.items.TotalDays = 0.5;
+      this.items.fromFullorHalf = 1;
+      this.items.fromFulldayDisabled = this.items.fromFulldayvisiblity = true;
+      this.items.TotalDays = 1;
     }
     if ((this.selectedTypeOfLeave.id == 5 || this.selectedTypeOfLeave.id == 6 || this.selectedTypeOfLeave.id == 7 || this.selectedTypeOfLeave.id == 8 || this.selectedTypeOfLeave.id == 9)) {
       this.items.TotalDays = undefined;
@@ -276,11 +296,11 @@ export class leaveApply {
       this.show.alert('Required', 'Please select the date');
       return false;
     }
-    else if ((this.selectedTypeOfLeave.id == 1 || this.selectedTypeOfLeave.id == 2 || (this.selectedTypeOfLeave.id == 3 && (this.selectedLeaveCode.id.id == 22 || this.selectedLeaveCode.id.id == 23))) && this.items.fromFullorHalf == undefined) {
+    else if ((this.selectedTypeOfLeave.id == 1 || this.selectedTypeOfLeave.id == 2 || (this.selectedTypeOfLeave.id == 3 && (this.selectedLeaveCode.id == 22 || this.selectedLeaveCode.id == 23))) && this.items.fromFullorHalf == undefined) {
       this.show.alert('Required', 'Please Select from full day or half day');
       return false;
     }
-    else if ((this.selectedTypeOfLeave.id == 1 || this.selectedTypeOfLeave.id == 2 || (this.selectedTypeOfLeave.id == 3 && (this.selectedLeaveCode.id.id == 22 || this.selectedLeaveCode.id.id == 23))) && this.items.fromMorningorAfternoon == undefined) {
+    else if ((this.selectedTypeOfLeave.id == 1 || this.selectedTypeOfLeave.id == 2 || (this.selectedTypeOfLeave.id == 3 && (this.selectedLeaveCode.id == 22 || this.selectedLeaveCode.id == 23))) && this.items.fromMorningorAfternoon == undefined) {
       this.show.alert('Required', 'Please Select from morning or afternoon');
       return false;
     }
@@ -299,25 +319,25 @@ export class leaveApply {
     else if (this.auth.istrainee == true) {
       if (this.selectedLeaveCode.id != 25 && this.selectedLeaveCode.id != 26 &&
         this.selectedLeaveCode.id != 27 && this.selectedLeaveCode.id != 22
-        && this.selectedLeaveCode.id.id != 23 && this.selectedLeaveCode.id.id != 24
-        && this.selectedLeaveCode.id.id != 12 && this.selectedLeaveCode.id.id != 13) {
-        this.show.alert("Leave Apply", "You can't take this leave, Please take trainee leave");
+        && this.selectedLeaveCode.id != 23 && this.selectedLeaveCode.id != 24
+        && this.selectedLeaveCode.id != 12 && this.selectedLeaveCode.id != 13) {
+        this.show.alert("Leave validation", "You can't take this leave, Please take trainee leave");
         return false;
       }
     }
     else if (this.auth.istrainee) {
-      if (this.selectedLeaveCode.id.id == 25 || this.selectedLeaveCode.id.id == 26 || this.selectedLeaveCode.id.id == 27) {
-        this.show.alert("Leave Apply", "You can't take Trainee leave, Please take Other leave");
+      if (this.selectedLeaveCode.id == 25 || this.selectedLeaveCode.id == 26 || this.selectedLeaveCode.id == 27) {
+        this.show.alert("Leave validation", "You can't take Trainee leave, Please take Other leave");
         return false;
       }
     }
     var fromDate, toDate;
-    fromDate = moment(this.items.fromDate).format('MM/DD/YYYY')
+    fromDate = moment(this.items.fromDate).format('YYYY-MM-DD')
     if (this.items.toDate == undefined) {
-      toDate = moment(this.items.fromDate).format('MM/DD/YYYY')
+      toDate = moment(this.items.fromDate).format('YYYY-MM-DD')
     }
     else {
-      toDate = moment(this.items.toDate).format('MM/DD/YYYY')
+      toDate = moment(this.items.toDate).format('YYYY-MM-DD')
     }
     if ((this.selectedTypeOfLeave.id == 5 || this.selectedTypeOfLeave.id == 6 || this.selectedTypeOfLeave.id == 7 || this.selectedTypeOfLeave.id == 8 || this.selectedTypeOfLeave.id == 9) && this.items.toDate != undefined) {
       if (fromDate > toDate) {
@@ -325,70 +345,94 @@ export class leaveApply {
         return false;
       }
     }
-    if ((this.selectedTypeOfLeave.id == 5 || this.selectedTypeOfLeave.id == 6 || this.selectedTypeOfLeave.id == 7 || this.selectedTypeOfLeave.id == 8 || this.selectedTypeOfLeave.id == 9))
-      toDate = moment(this.items.fromDate).format('MM/DD/YYYY')
+    if (this.items.toDate == undefined && (this.selectedTypeOfLeave.id == 5 || this.selectedTypeOfLeave.id == 6 || this.selectedTypeOfLeave.id == 7 || this.selectedTypeOfLeave.id == 8 || this.selectedTypeOfLeave.id == 9))
+      toDate = moment(this.items.fromDate).format('YYYY-MM-DD')
     else
-      toDate = moment(this.items.toDate).format('MM/DD/YYYY')
-    if (((this.selectedTypeOfLeave.id == 6 && this.items.TotalDays > 3 && this.items.attachments) || (this.selectedTypeOfLeave.id == 7 && this.items.TotalDays == 2) ||
-      (this.selectedTypeOfLeave.id != 7 && this.selectedTypeOfLeave.id != 6 && this.selectedTypeOfLeave.id != 8 &&
-        this.selectedTypeOfLeave.id != 9 && this.selectedTypeOfLeave.id == 1 || this.selectedTypeOfLeave.id == 2 && this.items.TotalDays == 1) ||
-      (this.selectedTypeOfLeave.id == 5) ||
-      (this.selectedTypeOfLeave.id == 4 && this.items.TotalDays == 1) ||
-      (this.selectedTypeOfLeave.id == 9 && this.items.TotalDays == 2.5) ||
-      (this.selectedTypeOfLeave.id == 8 && this.items.TotalDays == 1.5) ||
-      (this.selectedLeaveCode.id.id == 24 && this.items.TotalDays == 1) ||
-      (this.selectedLeaveCode.id.id == 17 && this.items.TotalDays >= 80) ||
-      ((this.selectedTypeOfLeave.id == 1 || this.selectedTypeOfLeave.id == 2 || this.selectedTypeOfLeave.id == 3)) ||
-      (this.selectedTypeOfLeave.id == 6 && this.items.TotalDays >= 3) ||
-      (this.selectedLeaveCode.id.id == 29 && this.selectedTypeOfLeave.id == 9 && this.items.TotalDays == 2.5) ||
-      (this.selectedLeaveCode.id.id == 9 && this.selectedTypeOfLeave.id == 6 && this.items.TotalDays >= 3) ||
-      (this.selectedLeaveCode.id.id == 16 && this.selectedTypeOfLeave.id == 6 && this.items.TotalDays >= 3) ||
-      (this.selectedLeaveCode.id.id == 29 && this.selectedTypeOfLeave.id == 6 && this.items.TotalDays >= 3) ||
-      (this.selectedLeaveCode.id.id == 9 && this.selectedTypeOfLeave.id == 6 && this.items.TotalDays >= 3) ||
-      (this.selectedLeaveCode.id.id == 29 && this.selectedTypeOfLeave.id == 7 && this.items.TotalDays == 2) ||
-      (this.selectedLeaveCode.id.id == 9 && this.selectedTypeOfLeave.id == 7 && this.items.TotalDays == 2) ||
-      (this.selectedLeaveCode.id.id == 16 && this.selectedTypeOfLeave.id == 7 && this.items.TotalDays == 2) ||
-      (this.selectedLeaveCode.id.id == 29 && this.selectedTypeOfLeave.id == 8 && this.items.TotalDays == 1.5) ||
-      (this.selectedLeaveCode.id.id == 29 && this.selectedTypeOfLeave.id == 9 && this.items.TotalDays == 2.5) ||
-      //(this.selectedLeaveCode.id.id == 8 && this.selectedTypeOfLeave.id == 16 && this.items.TotalDays== 2) ||
-      (this.selectedLeaveCode.id.id == 9 && this.selectedTypeOfLeave.id == 8 && this.items.TotalDays == 1.5) ||
-      (this.selectedLeaveCode.id.id == 16 && this.selectedTypeOfLeave.id == 8 && this.items.TotalDays == 1.5) ||
-      (this.selectedLeaveCode.id.id == 9 && this.selectedTypeOfLeave.id == 9 && this.items.TotalDays == 2.5) ||
-      (this.selectedLeaveCode.id.id == 16 && this.selectedTypeOfLeave.id == 9 && this.items.TotalDays == 2.5)
-    )) {
-      //this.show.alert("Leave Apply","Please check days!");
-    }
-    else {
-      this.show.alert("Leave Apply", "Please select valid date ");
-      return false;
-    }
-    var data = {
-      params:
-        { typeId: this.selectedTypeOfLeave.id, typeCodeId: this.selectedLeaveCode.id }
-    }
-    this.loading.show();
-    this.leaveService.GetProbabilityOfLeave(data, this.auth.isplantuser).subscribe((result) => {
+      toDate = moment(this.items.toDate).format('YYYY-MM-DD')
+
+    let params = { params: { userId: this.auth.userid, fromDate: fromDate, toDate: toDate } };
+    this.leaveService.GetTotalDaysExceptAnyLeaves(params, this.auth.isplantuser).subscribe((response) => {
       this.loading.dismiss();
-      if (result != 0) {
-        this.applyLeave(result);
+      this.items.isanyholiday = response.isAnyHoliday;
+      this.items.totalHolidays = response.totalHolidays;
+      this.items.TotalDays = response.totalDaysExceptHolidays;
+      if (this.items.fromFullorHalf == 0) {
+        this.items.TotalDays = this.items.TotalDays - 0.5;
+      }
+      if (this.items.toFullorHalf == 0) {
+        this.items.TotalDays = this.items.TotalDays - 0.5;
+      }
+      if (this.selectedTypeOfLeave.id == 5) {
+        this.items.TotalDays = response.totalDays;
+      }
+      if (this.selectedLeaveCode.id == 17) {
+        this.items.TotalDays = response.totalDays;
+      }
+      if (((this.selectedTypeOfLeave.id == 6 && this.items.TotalDays > 3 && this.items.attachments) || (this.selectedTypeOfLeave.id == 7 && this.items.TotalDays == 2) ||
+        (this.selectedTypeOfLeave.id != 7 && this.selectedTypeOfLeave.id != 6 && this.selectedTypeOfLeave.id != 8 &&
+          this.selectedTypeOfLeave.id != 9 && this.selectedTypeOfLeave.id == 1 || this.selectedTypeOfLeave.id == 2 && this.items.TotalDays == 1) ||
+        (this.selectedTypeOfLeave.id == 5) ||
+        (this.selectedTypeOfLeave.id == 4 && this.items.TotalDays == 1) ||
+        (this.selectedTypeOfLeave.id == 9 && this.items.TotalDays == 2.5) ||
+        (this.selectedTypeOfLeave.id == 8 && this.items.TotalDays == 1.5) ||
+        (this.selectedLeaveCode.id == 24 && this.items.TotalDays == 1) ||
+        (this.selectedLeaveCode.id == 17 && this.items.TotalDays >= 80) ||
+        ((this.selectedTypeOfLeave.id == 1 || this.selectedTypeOfLeave.id == 2 || this.selectedTypeOfLeave.id == 3)) ||
+        (this.selectedTypeOfLeave.id == 6 && this.items.TotalDays >= 3) ||
+        (this.selectedLeaveCode.id == 29 && this.selectedTypeOfLeave.id == 9 && this.items.TotalDays == 2.5) ||
+        (this.selectedLeaveCode.id == 9 && this.selectedTypeOfLeave.id == 6 && this.items.TotalDays >= 3) ||
+        (this.selectedLeaveCode.id == 16 && this.selectedTypeOfLeave.id == 6 && this.items.TotalDays >= 3) ||
+        (this.selectedLeaveCode.id == 29 && this.selectedTypeOfLeave.id == 6 && this.items.TotalDays >= 3) ||
+        (this.selectedLeaveCode.id == 9 && this.selectedTypeOfLeave.id == 6 && this.items.TotalDays >= 3) ||
+        (this.selectedLeaveCode.id == 29 && this.selectedTypeOfLeave.id == 7 && this.items.TotalDays == 2) ||
+        (this.selectedLeaveCode.id == 9 && this.selectedTypeOfLeave.id == 7 && this.items.TotalDays == 2) ||
+        (this.selectedLeaveCode.id == 16 && this.selectedTypeOfLeave.id == 7 && this.items.TotalDays == 2) ||
+        (this.selectedLeaveCode.id == 29 && this.selectedTypeOfLeave.id == 8 && this.items.TotalDays == 1.5) ||
+        (this.selectedLeaveCode.id == 29 && this.selectedTypeOfLeave.id == 9 && this.items.TotalDays == 2.5) ||
+        //(this.selectedLeaveCode.id == 8 && this.selectedTypeOfLeave.id == 16 && this.items.TotalDays== 2) ||
+        (this.selectedLeaveCode.id == 9 && this.selectedTypeOfLeave.id == 8 && this.items.TotalDays == 1.5) ||
+        (this.selectedLeaveCode.id == 16 && this.selectedTypeOfLeave.id == 8 && this.items.TotalDays == 1.5) ||
+        (this.selectedLeaveCode.id == 9 && this.selectedTypeOfLeave.id == 9 && this.items.TotalDays == 2.5) ||
+        (this.selectedLeaveCode.id == 16 && this.selectedTypeOfLeave.id == 9 && this.items.TotalDays == 2.5)
+      )) {
+        //this.show.alert("Leave Apply","Please check days!");
       }
       else {
-        this.show.alert("Leave Apply", "Leave Not Available!");
+        this.show.alert("Leave Apply", "Please select valid date ");
+        return false;
       }
+      var data = {
+        params:
+          { typeId: this.selectedTypeOfLeave.id, typeCodeId: this.selectedLeaveCode.id }
+      }
+      this.loading.show();
+      this.leaveService.GetProbabilityOfLeave(data, this.auth.isplantuser).subscribe((result) => {
+        this.loading.dismiss();
+        if (result != 0) {
+          this.applyLeave(result);
+        }
+        else {
+          this.show.alert("Leave Apply", "Leave Not Available!");
+        }
+      }, (err) => {
+        this.loading.dismiss();
+      });
+
     }, (err) => {
       this.loading.dismiss();
     });
+
   }
   applyLeave(ProbabilityOfLeave) {
     var fromDate, toDate, fromTime, toTime;
-    // let currentDate = moment(new Date()).format("MM/DD/YYYY");
-    fromDate = moment(this.items.fromDate).format('MM/DD/YYYY');
-    if ((this.selectedTypeOfLeave.id == 5 || this.selectedTypeOfLeave.id == 6 || this.selectedTypeOfLeave.id == 7 || this.selectedTypeOfLeave.id == 8 || this.selectedTypeOfLeave.id == 9) && this.items.toDate != undefined)
-      toDate = moment(this.items.fromDate).format('MM/DD/YYYY');
+    // let currentDate = moment(new Date()).format("YYYY-MM-DD");
+    fromDate = moment(this.items.fromDate).format('YYYY-MM-DD');
+    if ((this.selectedTypeOfLeave.id == 5 || this.selectedTypeOfLeave.id == 6 || this.selectedTypeOfLeave.id == 7 || this.selectedTypeOfLeave.id == 8 || this.selectedTypeOfLeave.id == 9) && this.items.toDate == undefined)
+      toDate = moment(this.items.fromDate).format('YYYY-MM-DD');
     else if (this.items.toDate != undefined)
-      toDate = moment(this.items.toDate).format('MM/DD/YYYY');
+      toDate = moment(this.items.toDate).format('YYYY-MM-DD');
     else
-      toDate = moment(this.items.fromDate).format('MM/DD/YYYY');
+      toDate = moment(this.items.fromDate).format('YYYY-MM-DD');
     fromTime = moment(new Date('1900-01-01 ' + this.items.inTime)).format('HH:mm a');
     toTime = moment(new Date('1900-01-01 ' + this.items.outTime)).format('HH:mm a');
     if (fromDate && this.selectedTypeOfLeave.id == 5) {
@@ -397,7 +441,7 @@ export class leaveApply {
     if (toDate && this.selectedTypeOfLeave.id == 5) {
       toDate = toDate + " " + toTime;
     }
-    let applyLeaveData = {
+    this.applyLeaveData = {
       "ProbabilityOfLeave": ProbabilityOfLeave,
       "AppliedFor": this.auth.userid,
       "FromDate": fromDate,
@@ -413,29 +457,37 @@ export class leaveApply {
       "ApprovedStatus": 0,
       "CreatedBy": this.auth.userid
     };
+    this.show.confirm("Leave apply", "Do you want to continue...", this);
+
+  };
+
+  confirm() {
     this.loading.show();
-    this.leaveService.SaveAppliedLeave(applyLeaveData, this.auth.isplantuser).subscribe((response) => {
+    this.leaveService.SaveAppliedLeave(this.applyLeaveData, this.auth.isplantuser).subscribe((response) => {
       this.loading.dismiss();
-      this.show.alert("Leave Apply", response.message);
+      this.show.sucess("", response.message);
       this.nav.setRoot("dash");
     }, (err) => {
       this.loading.dismiss();
     });
-  };
+  }
   fromDateChanged() {
     var fromDate, toDate;
     if (this.items.fromDate == undefined)
       return false;
     if (this.items.toDate == undefined)
-      toDate = moment(new Date(this.items.fromDate)).format("MM/DD/YYYY");
+      toDate = moment(new Date(this.items.fromDate)).format("YYYY-MM-DD");
     else
-      toDate = moment(new Date(this.items.toDate)).format("MM/DD/YYYY");
-    fromDate = moment(new Date(this.items.fromDate)).format("MM/DD/YYYY");
-    if (this.items.toDate != undefined && moment(this.items.fromDate).format('MM/DD/YYYY') > moment(this.items.toDate).format('MM/DD/YYYY')) {
+      toDate = moment(new Date(this.items.toDate)).format("YYYY-MM-DD");
+    fromDate = moment(new Date(this.items.fromDate)).format("YYYY-MM-DD");
+    if (this.items.toDate != undefined && moment(this.items.fromDate).format('YYYY-MM-DD') > moment(this.items.toDate).format('YYYY-MM-DD')) {
       this.show.alert("Validation", "to date should be greater than from date");
       return false;
     }
     let data = { params: { userId: this.auth.userid, fromDate: fromDate, toDate: toDate } };
+    this.GetTotalDaysExceptAnyLeaves(data);
+  }
+  GetTotalDaysExceptAnyLeaves(data) {
     this.loading.show();
     this.leaveService.GetTotalDaysExceptAnyLeaves(data, this.auth.isplantuser).subscribe((response) => {
       this.loading.dismiss();
@@ -456,6 +508,7 @@ export class leaveApply {
       }
     }, (err) => {
       this.loading.dismiss();
-    })
-  };
+    });
+  }
+
 }

@@ -42,7 +42,7 @@ export class compOffApply {
       this.nav.setRoot('login');
     }
 
-    this.comOffDay = { isFullDay: 0, fromDate: undefined, toDate: undefined, isMorning: undefined };
+    this.comOffDay = { isFullDay: 0, fromDate: moment(new Date()).format('YYYY-MM-DD'), toDate: moment(new Date()).format('YYYY-MM-DD'), isMorning: undefined };
 
     this.Emp_Info = this.globalVar.employeeInfo;
     this.TLList = this.globalVar.getListOfTL();
@@ -111,39 +111,13 @@ export class compOffApply {
       return false;
     }
     var fromDate, toDate;
-    fromDate = moment(this.comOffDay.fromDate).format('MM/DD/YYYY');
-    if (this.comOffDay.isFullDay == 1)
-      toDate = moment(this.comOffDay.fromDate).format('MM/DD/YYYY');
+    fromDate = moment(this.comOffDay.fromDate).format('YYYY-MM-DD');
+    if (this.comOffDay.isFullDay == 0)
+      toDate = moment(this.comOffDay.fromDate).format('YYYY-MM-DD');
     else
-      toDate = moment(this.comOffDay.toDate).format('MM/DD/YYYY');
-    if (this.auth.isplantuser) {
+      toDate = moment(this.comOffDay.toDate).format('YYYY-MM-DD');
+
       this.getCompOffAvailableDates(fromDate, toDate);
-    }
-    else {
-
-
-      let data;
-      data = {
-        params: {
-          fromDate: fromDate,
-          isFullDay: this.comOffDay.isFullDay, toDate: toDate
-        }
-      };
-      this.loading.show();
-      this.comOffService.getCompOffAvailableDates(data, this.auth.isplantuser).subscribe((result) => {
-        this.loading.dismiss();
-        this.AvailableDates = result.compofftaken;
-        if (this.AvailableDates.length > 0) {
-          this.isAvailCompOff = true;
-        }
-        else {
-          this.isAvailCompOff = false;
-        }
-      }, (err) => {
-        this.loading.dismiss();
-      });
-    }
-
   }
   getClubbedCompOff() {
     if (this.comOffDay.fromDate == undefined) {
@@ -167,11 +141,11 @@ export class compOffApply {
   }
   confirm() {
     var fromDate, toDate;
-    fromDate = moment(this.comOffDay.fromDate).format('MM/DD/YYYY');
-    if (this.comOffDay.isFullDay == 1)
-      toDate = moment(this.comOffDay.fromDate).format('MM/DD/YYYY');
+    fromDate = moment(this.comOffDay.fromDate).format('YYYY-MM-DD');
+    if (this.comOffDay.isFullDay == 0)
+      toDate = moment(this.comOffDay.fromDate).format('YYYY-MM-DD');
     else
-      toDate = moment(this.comOffDay.toDate).format('MM/DD/YYYY');
+      toDate = moment(this.comOffDay.toDate).format('YYYY-MM-DD');
     var data = { params: { compofffromDate: fromDate, compofftoDate: toDate, userId: this.globalVar.auth.userid } }
     if (this.comOffDay.isFullDay == 1 || this.comOffDay.isFullDay == 0) {
       this.loading.show();
@@ -190,9 +164,9 @@ export class compOffApply {
     }
   }
   applyCompOff() {
-    var totalDaysCompOff = moment(this.comOffDay.fromDate).diff(moment(this.comOffDay.toDate).format('MM/dd/yyyy'), 'days');
-    var fromDate = moment(this.comOffDay.fromDate).format('MM/dd/yyyy');
-    var toDate = moment(this.comOffDay.toDate).format('MM/dd/yyyy');
+    var totalDaysCompOff = moment(this.comOffDay.fromDate).diff(moment(this.comOffDay.toDate).format('YYYY-MM-DD'), 'days');
+    var fromDate = moment(this.comOffDay.fromDate).format('YYYY-MM-DD');
+    var toDate = moment(this.comOffDay.toDate).format('YYYY-MM-DD');
     if (this.comOffDay.isFullDay == 0) {
       totalDaysCompOff = 0.5;
     }
@@ -205,9 +179,9 @@ export class compOffApply {
     let applyCompOffTaken = [];
     this.AvailableDates.forEach(element => {
       var applyCompOffTakenSet = {
-        "compOffDate": moment(element.compOffDate).format('MM/dd/yyyy'),
-        "compOffAvailableDate": moment(element.compOffAvailableDate).format('MM/dd/yyyy'),
-        "status": 0
+        "compOffDate": moment(element.compOffDate).format('YYYY-MM-DD'),
+        "compOffAvailableDate": moment(element.compOffAvailableDate).format('YYYY-MM-DD'),
+        "status": 0, "days": element.days
       };
       applyCompOffTaken.push(applyCompOffTakenSet);
     });
@@ -219,7 +193,7 @@ export class compOffApply {
     this.loading.show();
     this.comOffService.saveCompOff(data, this.globalVar.auth.isplantuser).subscribe((result) => {
       this.loading.dismiss();
-      this.show.sucess("Comoff", "sucessfully saved");
+      this.show.sucess("Comoff", result.message);
       this.nav.setRoot('dash');
     }, (err) => {
       this.loading.dismiss();

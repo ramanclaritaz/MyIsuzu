@@ -11,7 +11,7 @@ import { showMessage } from '../services/showalert';
 export class loginPage {
 
   registerCredentials = { userName: undefined, password: undefined };
-  constructor(private nav: NavController,private show: showMessage, private loginService: LoginService, private com: commonService, private loading: Load) {
+  constructor(private nav: NavController, private show: showMessage, private loginService: LoginService, private com: commonService, private loading: Load) {
     localStorage.clear();
     this.com.auth = undefined;
   }
@@ -28,7 +28,7 @@ export class loginPage {
       }
     }, (error) => {
 
-      this.show.alert('error','The user name or password is incorrect.');
+      this.show.alert('error', 'The user name or password is incorrect.');
       this.loading.dismiss();
     });
   }
@@ -36,11 +36,10 @@ export class loginPage {
     console.log(result);
     this.com.auth = result;
     this.com.auth.isAuth = true;
-    this.com.auth.isplantuser = (result.isplantuser == "False" ? false : true);
     this.com.auth.isplantteamleader = (result.isplantteamleader == "False" ? false : true);
     this.com.auth.isdualrole = (result.isdualrole == "False" ? false : true);
     this.com.auth.istrainee = (result.istrainee == "False" ? false : true);
-    this.com.auth.isplantuser = (result.isplantuser == "False" ? false : true);
+    this.com.auth.isplantuser = (result.locationid == 1 ? true : false);
   }
 }
 

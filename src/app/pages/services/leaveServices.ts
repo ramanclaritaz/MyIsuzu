@@ -36,7 +36,7 @@ export class leaveService {
     return this._http.post(url + 'SaveAppliedLeave', data);
   }
   private updateUrl(isPlant): string {
-    return "/Api/" + ((isPlant) ? "LeaveApplying/" : "LeaveApplyingPlant/");
+    return "/Api/" + ((!isPlant) ? "LeaveApplying/" : "LeaveApplyingPlant/");
   }
 
 

@@ -5,4 +5,5 @@
 export const environment = {
   production: false,
   origin: 'http://imanage.isuzu.in:5052/'
+  // origin: 'http://localhost:60597/'
 };

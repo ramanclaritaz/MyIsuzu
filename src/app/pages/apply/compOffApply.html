@@ -31,7 +31,7 @@
     </ion-item>
     <ion-item *ngIf='comOffDay.isFullDay==0'>
       <ion-label>*Morning/Afternoon</ion-label>
-      <ion-select [(ngModel)]="comOffDay.isFullDay">
+      <ion-select [(ngModel)]="comOffDay.isMorning">
         <ion-option value="1">Morning</ion-option>
         <ion-option value="0">Afternoon</ion-option>
       </ion-select>
@@ -45,7 +45,7 @@
       <ion-label>*To Date</ion-label>
       <ion-datetime displayFormat="DD/MM/YYYY" aria-placeholder="to date" [(ngModel)]="comOffDay.toDate" (ngModelChange)="dateChanged()"></ion-datetime>
     </ion-item>
-    <ion-item>
+    <ion-item *ngIf='TLList'>
       <ion-label>*Team Leader</ion-label>
       <ion-select [(ngModel)]="teamLeaderId">
         <ion-option *ngFor="let employee of TLList" [value]="employee.teamleaderId">{{employee.nameWithNumber}}</ion-option>
@@ -53,29 +53,35 @@
     </ion-item>
   </ion-list>
   <ion-list>
-    <ion-item *ngFor="let item of AvailableDates">
+    <ion-item>
       <ion-grid>
-        <ion-row>
+        <ion-row class="small-heading">
           <ion-col>
             Comoff Date
           </ion-col>
           <ion-col>
             Available date
           </ion-col>
+
+        </ion-row>
+        <ion-row *ngFor="let item of AvailableDates">
+          <ion-col>
+            {{item.compOffDate | date:'dd-MMM-yyyy'}}
+          </ion-col>
+          <ion-col>
+            {{item.compOffAvailableDate | date:'dd-MMM-yyyy' }}
+          </ion-col>
         </ion-row>
         <ion-row>
           <ion-col>
-            {{item.comoffDate | date:'DD-MMM-YYYY'}}
-          </ion-col>
-          <ion-col>
-            {{item.availableDate | date:'DD-MMM-YYYY'}}
+
           </ion-col>
         </ion-row>
       </ion-grid>
     </ion-item>
   </ion-list>
-  <div class='button_action' *ngIf="isAvailCompOff">
-    <button on-tap='getClubbedCompOff()' class="button icon-left ion-checkmark-round button-small button-balanced">
+  <div class='button_action'>
+    <button [disabled]="isAvailCompOff" on-tap='getClubbedCompOff()' class="button icon-left ion-checkmark-round button-small button-balanced">
       Apply
     </button>
   </div>
