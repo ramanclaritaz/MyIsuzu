@@ -14,7 +14,7 @@ import moment from "moment";
 export class leaveApply {
   auth: authentication;
   empInfo: employeeInfo;
-  applyLeaveData:any;
+  applyLeaveData: any;
   userleave = {
     sickLeave: "", casualLeave: "", privilegeLeave: "", condolenceLeave: "", maternityLeave: "", traineeLeave: "", permission: ""
   }
@@ -433,13 +433,15 @@ export class leaveApply {
       toDate = moment(this.items.toDate).format('YYYY-MM-DD');
     else
       toDate = moment(this.items.fromDate).format('YYYY-MM-DD');
-    fromTime = moment(new Date('1900-01-01 ' + this.items.inTime)).format('HH:mm a');
-    toTime = moment(new Date('1900-01-01 ' + this.items.outTime)).format('HH:mm a');
     if (fromDate && this.selectedTypeOfLeave.id == 5) {
-      fromDate = fromDate + " " + fromTime;
+      fromDate = moment(this.items.fromDate + ' ' + this.items.inTime, 'YYYY-MM-DD HH:mm a');
+      fromDate = fromDate.format('YYYY-MM-DD HH:MM');
+      console.log(fromDate);
     }
     if (toDate && this.selectedTypeOfLeave.id == 5) {
-      toDate = toDate + " " + toTime;
+      toDate = moment(this.items.toDate + ' ' + this.items.outTime, 'YYYY-MM-DD HH:mm a');
+      toDate = toDate.format('YYYY-MM-DD HH:MM');
+      console.log(toDate)
     }
     this.applyLeaveData = {
       "ProbabilityOfLeave": ProbabilityOfLeave,
@@ -475,12 +477,12 @@ export class leaveApply {
     var fromDate, toDate;
     if (this.items.fromDate == undefined)
       return false;
-    if (this.items.toDate == undefined)
+    if (this.items.toDate == undefined || this.items.toDatevisiblity == false)
       toDate = moment(new Date(this.items.fromDate)).format("YYYY-MM-DD");
     else
       toDate = moment(new Date(this.items.toDate)).format("YYYY-MM-DD");
     fromDate = moment(new Date(this.items.fromDate)).format("YYYY-MM-DD");
-    if (this.items.toDate != undefined && moment(this.items.fromDate).format('YYYY-MM-DD') > moment(this.items.toDate).format('YYYY-MM-DD')) {
+    if (moment(fromDate).format('YYYY-MM-DD') > moment(toDate).format('YYYY-MM-DD')) {
       this.show.alert("Validation", "to date should be greater than from date");
       return false;
     }
