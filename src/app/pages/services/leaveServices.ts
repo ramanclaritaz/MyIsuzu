@@ -38,7 +38,4 @@ export class leaveService {
   private updateUrl(isPlant): string {
     return "/Api/" + ((!isPlant) ? "LeaveApplying/" : "LeaveApplyingPlant/");
   }
-
-
-
 }

@@ -19,7 +19,7 @@ export class ApprovalPage {
   model: any;
   leaveapply: any;
   auth: authentication;
-  headerData:headerPage;
+  headerData: headerPage;
   constructor(private approval: approvalService, navParam: NavParams, private nav: NavController, private show: showMessage, private globalVar: commonService, private loading: Load) {
     this.data = navParam.get('data');
     this.Item = this.data.item;
@@ -43,19 +43,25 @@ export class ApprovalPage {
   getData() {
     switch (this.data.type) {
       case "Leave":
-        this.approval.getEditLeaveDetail(this.Item.id, this.data.Plant).subscribe((result) => {
+        this.approval.getEditLeaveDetail(this.Item.id, this.data.plant).subscribe((result) => {
           this.model = result;
+          var data = (this.data.plant ? result.leaveapplyforplant : result.leaveapply);
+          this.Item.appliedReason = data.appliedReason;
+          this.Item.totaldays = data.totalDays;
         }, (err) => {
         });
         break;
       case "ComOff":
-        this.approval.getEditCompoffDetail(this.Item.id, this.data.Plant).subscribe((result) => {
+        this.approval.getEditCompoffDetail(this.Item.id, this.data.plant).subscribe((result) => {
           this.model = result;
+          var data = (this.data.plant ? result.plantCompOff : result.compOff);
+          this.Item.appliedReason = data.compOffReason;
+          this.Item.totaldays = data.totalCompOFF;
         }, (err) => {
         });
         break;
       case "Pre-compOff":
-        this.approval.getEditPreCompoffDetail(this.Item.id, this.data.Plant).subscribe((result) => {
+        this.approval.getEditPreCompoffDetail(this.Item.id, this.data.plant).subscribe((result) => {
           this.model = result;
         }, (err) => {
         });
@@ -83,7 +89,7 @@ export class ApprovalPage {
   confirm() {
     switch (this.data.type) {
       case "Leave":
-        if (this.data.Plant) {
+        if (this.data.plant) {
           this.UpdateLeavePlant();
         } else {
           this.UpdateLeave();
@@ -91,7 +97,7 @@ export class ApprovalPage {
 
         break;
       case "ComOff":
-        if (this.data.Plant) {
+        if (this.data.plant) {
           this.UpdateCompOffPlant();
         } else {
           this.UpdateCompOff();
@@ -107,7 +113,7 @@ export class ApprovalPage {
     this.model.leaveapply.la1ApprovedReason = this.Item.comments;
     this.model.leaveapply.la1ApprovedDate = this.Item.la1ApprovedDate;
     this.loading.show();
-    this.approval.EditLeaveApply(this.model, this.auth.isplantuser).subscribe((result) => {
+    this.approval.EditLeaveApply(this.model, this.data.plant).subscribe((result) => {
       this.loading.dismiss();
       this.show.sucess('Approval', "Request has been updated")
       this.nav.setRoot('approval', { data: this.data.type });
@@ -121,7 +127,7 @@ export class ApprovalPage {
     this.model.leaveapplyforplant.la1ApprovedReason = this.Item.comments;
     this.model.leaveapplyforplant.la1ApprovedDate = this.Item.la1ApprovedDate;
     this.loading.show();
-    this.approval.EditLeaveApply(this.model, this.auth.isplantuser).subscribe((result) => {
+    this.approval.EditLeaveApply(this.model, this.data.plant).subscribe((result) => {
       this.loading.dismiss();
       this.show.sucess('Approval', "Request has been updated")
       this.nav.setRoot('approval', { data: this.data.type });
@@ -132,11 +138,11 @@ export class ApprovalPage {
 
   }
   UpdateCompOff() {
-    this.model.CompOff.la1ApprovedStatus = this.Item.approvalStatus;
-    this.model.CompOff.la1ApprovedReason = this.Item.comments;
-    this.model.CompOff.la1ApprovedDate = this.Item.la1ApprovedDate;
+    this.model.compOff.la1ApprovedStatus = this.Item.approvalStatus;
+    this.model.compOff.la1ApprovedReason = this.Item.comments;
+    this.model.compOff.la1ApprovedDate = this.Item.la1ApprovedDate;
     this.loading.show();
-    this.approval.updateCompOff(this.model, this.auth.isplantuser).subscribe((result) => {
+    this.approval.updateCompOff(this.model, this.data.plant).subscribe((result) => {
       this.loading.dismiss();
       this.show.sucess('Approval', "Request has been updated")
       this.nav.setRoot('approval', { data: this.data.type });
@@ -150,7 +156,7 @@ export class ApprovalPage {
     this.model.plantCompOff.la1ApprovedReason = this.Item.comments;
     this.model.plantCompOff.la1ApprovedDate = this.Item.la1ApprovedDate;
     this.loading.show();
-    this.approval.updateCompOff(this.model, this.auth.isplantuser).subscribe((result) => {
+    this.approval.updateCompOff(this.model, this.data.plant).subscribe((result) => {
       this.loading.dismiss();
       this.show.alert('Approval', "Request has been updated")
       this.nav.setRoot('approval', { data: this.data.type });

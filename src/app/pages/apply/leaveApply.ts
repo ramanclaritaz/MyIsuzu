@@ -425,7 +425,6 @@ export class leaveApply {
   }
   applyLeave(ProbabilityOfLeave) {
     var fromDate, toDate, fromTime, toTime;
-    // let currentDate = moment(new Date()).format("YYYY-MM-DD");
     fromDate = moment(this.items.fromDate).format('YYYY-MM-DD');
     if ((this.selectedTypeOfLeave.id == 5 || this.selectedTypeOfLeave.id == 6 || this.selectedTypeOfLeave.id == 7 || this.selectedTypeOfLeave.id == 8 || this.selectedTypeOfLeave.id == 9) && this.items.toDate == undefined)
       toDate = moment(this.items.fromDate).format('YYYY-MM-DD');
@@ -478,9 +477,8 @@ export class leaveApply {
     if (this.items.fromDate == undefined)
       return false;
     if (this.items.toDate == undefined || this.items.toDatevisiblity == false)
-      toDate = moment(new Date(this.items.fromDate)).format("YYYY-MM-DD");
-    else
-      toDate = moment(new Date(this.items.toDate)).format("YYYY-MM-DD");
+      this.items.toDate = this.items.fromDate;
+    toDate = moment(new Date(this.items.toDate)).format("YYYY-MM-DD");
     fromDate = moment(new Date(this.items.fromDate)).format("YYYY-MM-DD");
     if (moment(fromDate).format('YYYY-MM-DD') > moment(toDate).format('YYYY-MM-DD')) {
       this.show.alert("Validation", "to date should be greater than from date");

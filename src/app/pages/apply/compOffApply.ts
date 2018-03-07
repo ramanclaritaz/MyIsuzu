@@ -117,7 +117,7 @@ export class compOffApply {
     else
       toDate = moment(this.comOffDay.toDate).format('YYYY-MM-DD');
 
-      this.getCompOffAvailableDates(fromDate, toDate);
+    this.getCompOffAvailableDates(fromDate, toDate);
   }
   getClubbedCompOff() {
     if (this.comOffDay.fromDate == undefined) {
@@ -155,7 +155,7 @@ export class compOffApply {
           this.applyCompOff();
         }
         else {
-          this.show.alert("CompOff", "CompOff can't be clubbed with this date!");
+          this.show.alert("CompOff", "CompOff can't be clubbed with this date");
         }
 
       }, (err) => {
@@ -185,11 +185,11 @@ export class compOffApply {
       };
       applyCompOffTaken.push(applyCompOffTakenSet);
     });
-
-    let data = {
-      CompOff: applyCompOffData,
-      CompOffTakens: applyCompOffTaken
-    }
+    let data = {};
+    if (this.globalVar.auth.isplantuser)
+      data = { plantCompOff: applyCompOffData, plantCompoffTakens: applyCompOffTaken }
+    else
+      data = { CompOff: applyCompOffData, CompOffTakens: applyCompOffTaken }
     this.loading.show();
     this.comOffService.saveCompOff(data, this.globalVar.auth.isplantuser).subscribe((result) => {
       this.loading.dismiss();

@@ -45,11 +45,11 @@
       <ion-label>To :</ion-label>
       <ion-input disabled="true" [value]="Item.toDate | date:'dd-MMM-yyyy'"></ion-input>
     </ion-item>
-    <ion-item>
+    <ion-item *ngIf="Item.totaldays!=undefined">
       <ion-label>TotalDays :</ion-label>
       <ion-input disabled="true" [value]="Item.totaldays"></ion-input>
     </ion-item>
-    <ion-item>
+    <ion-item *ngIf="Item.appliedReason!=undefined">
       <ion-label>Applied Reason :</ion-label>
       <ion-input disabled="true" [value]="Item.appliedReason"></ion-input>
     </ion-item>
@@ -59,7 +59,7 @@
     </ion-item>
   </ion-list>
 
-  <div class='button_action' >
+  <div class='button_action'>
     <button (click)='update($event,Item)' class="button icon-left ion-checkmark-round button-small button-balanced">
       Update
     </button>
