@@ -225,6 +225,7 @@ export class leaveApply {
         this.items.toMorningDisabled = this.items.toMorningVisiblity = true;
       }
     }
+    this.fromDateChanged();
   }
 
   getLeaveTypesAcronyms() {
