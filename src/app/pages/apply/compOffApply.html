@@ -51,6 +51,10 @@
         <ion-option *ngFor="let employee of TLList" [value]="employee.teamleaderId">{{employee.nameWithNumber}}</ion-option>
       </ion-select>
     </ion-item>
+    <ion-item>
+      <ion-label>Comments :</ion-label>
+      <ion-textarea class='comments' [(ngModel)]="comOffDay.CompOffReason" placeholder='Comments'></ion-textarea>
+    </ion-item>
   </ion-list>
   <ion-list>
     <ion-item>

@@ -128,12 +128,16 @@ export class compOffApply {
       this.show.alert("Required", "Select to date!");
       return false;
     }
+    else if (this.comOffDay.CompOffReason == undefined || this.comOffDay.CompOffReason == null) {
+      this.show.alert("Required", "Enter the comments");
+      return false;
+    }
     else if (this.comOffDay.toDate == undefined && this.comOffDay.isFullDay == 0) {
       this.comOffDay.toDate = this.comOffDay.fromDate;
     }
 
     if (this.comOffDay.toDate > this.comOffDay.toDate) {
-      this.show.alert("Leave Apply", "From Date Should not be Greater than To Date");
+      this.show.alert("Required", "From Date Should not be Greater than To Date");
       return false;
     }
     this.show.confirm("Comoff apply", "Do you want to continue...", this);
@@ -174,7 +178,7 @@ export class compOffApply {
       "AppliedFor": this.Emp_Info.userId, "IsFullDay": this.comOffDay.isFullDay, "TotalCompOFF": totalDaysCompOff,
       "FromDate": fromDate,
       "ToDate": toDate,
-      "CompOffReason": this.comOffDay.comments
+      "CompOffReason": this.comOffDay.CompOffReason
     };
     let applyCompOffTaken = [];
     this.AvailableDates.forEach(element => {

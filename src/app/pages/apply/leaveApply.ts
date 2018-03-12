@@ -177,7 +177,7 @@ export class leaveApply {
       // var from_time = moment(($scope.usercurrentshift.startTime)).format("HH:mm");
       this.items.inTime = tt;
 
-      var ss = moment(new Date()).format("YYYY-MM-DD") + " " + moment(usercurrentshift.endTime).format("hh:mm a");
+      ss = moment(new Date()).format("YYYY-MM-DD") + " " + moment(usercurrentshift.endTime).format("hh:mm a");
       var te = new Date(ss);
       te.setHours(te.getHours());
       te.setMinutes(te.getMinutes());
@@ -425,7 +425,7 @@ export class leaveApply {
 
   }
   applyLeave(ProbabilityOfLeave) {
-    var fromDate, toDate, fromTime, toTime;
+    var fromDate, toDate;
     fromDate = moment(this.items.fromDate).format('YYYY-MM-DD');
     if ((this.selectedTypeOfLeave.id == 5 || this.selectedTypeOfLeave.id == 6 || this.selectedTypeOfLeave.id == 7 || this.selectedTypeOfLeave.id == 8 || this.selectedTypeOfLeave.id == 9) && this.items.toDate == undefined)
       toDate = moment(this.items.fromDate).format('YYYY-MM-DD');
