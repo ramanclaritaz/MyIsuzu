@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { commonService, authentication, Load, headerPage } from '../services/common';
+import { commonService, authentication, Load, headerPage, employeeInfo } from '../services/common';
 import { showMessage } from '../services/showalert';
 import { compOffServices } from '../services/compOffServices';
 import { NavController } from 'ionic-angular/navigation/nav-controller';
@@ -11,18 +11,13 @@ import moment from "moment";
   selector: 'page-compOffApply',
   templateUrl: '../apply/compOffApply.html'
 })
-
-
-
-
-
 export class compOffApply {
   formGroup: any;
   availCompOff = {
     compoffFulldaycount: 0, compoffHalfdaycount: 0
   }
   headerData: headerPage;
-  Emp_Info: any;
+  Emp_Info: employeeInfo;
   comOffDay: any;
   TLList: any;
   minDate: any;
@@ -36,7 +31,7 @@ export class compOffApply {
     this.Oninit();
   }
   Oninit() {
-    this.loading.show();
+
     this.auth = this.globalVar.auth;
     if (this.auth == undefined || this.auth == null) {
       this.nav.setRoot('login');
@@ -47,13 +42,19 @@ export class compOffApply {
     this.Emp_Info = this.globalVar.employeeInfo;
     this.TLList = this.globalVar.getListOfTL();
     this.getCompOffCount();
-    this.loading.dismiss();
+
   }
 
   getCompOffCount() {
+    this.loading.show();
     this.comOffService.getCompoffCount(this.auth.userid, this.auth.isplantuser).subscribe((result) => {
+      this.loading.dismiss();
       this.availCompOff = result;
-    })
+      this.isAvailCompOff = true;
+      if (this.availCompOff.compoffFulldaycount > 0 || this.availCompOff.compoffHalfdaycount > 0) {
+        this.isAvailCompOff = false;
+      }
+    }, (err) => { this.loading.dismiss(); })
   }
   getCompOffAvailableDates(fromDate, toDate) {
     let data = {
@@ -65,7 +66,7 @@ export class compOffApply {
     this.loading.show();
     this.comOffService.GetTotalDaysExceptAnyLeaves(data, this.auth.isplantuser).subscribe((result) => {
       if (result != undefined) {
-        let dateDiff = result.totalDaysExceptHolidays; // (moment.duration(moment(toCompOffDate).diff(moment(fromCompOffDate))).asDays() + 1); // moment(toCompOffDate).format("DD-MM-YYYY") - moment(fromCompOffDate).format("DD-MM-YYYY")
+        var dateDiff = result.totalDaysExceptHolidays; // (moment.duration(moment(toCompOffDate).diff(moment(fromCompOffDate))).asDays() + 1); // moment(toCompOffDate).format("DD-MM-YYYY") - moment(fromCompOffDate).format("DD-MM-YYYY")
 
         if (dateDiff > 1) {
           this.comOffDay.isFullDay = 1;
@@ -173,6 +174,7 @@ export class compOffApply {
     var toDate = moment(this.comOffDay.toDate).format('YYYY-MM-DD');
     if (this.comOffDay.isFullDay == 0) {
       totalDaysCompOff = 0.5;
+      toDate = moment(this.comOffDay.fromDate).format('YYYY-MM-DD');
     }
     let applyCompOffData = {
       "AppliedFor": this.Emp_Info.userId, "IsFullDay": this.comOffDay.isFullDay, "TotalCompOFF": totalDaysCompOff,

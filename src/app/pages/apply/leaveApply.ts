@@ -15,29 +15,31 @@ export class leaveApply {
   auth: authentication;
   empInfo: employeeInfo;
   applyLeaveData: any;
+  totalDaysVisiblity: boolean;
+  currentDate:Date;
+  minDate:Date;
+  leaveDescriptions:string;
   userleave = {
     sickLeave: "", casualLeave: "", privilegeLeave: "", condolenceLeave: "", maternityLeave: "", traineeLeave: "", permission: ""
   }
   headerData: headerPage;
   leaveType: any[];
   leaveCode: any[];
-  leaveDescriptions: any;
   shiftTime: any;
   selectedTypeOfLeave: any;
   onLeaveTypeChange: void;
   selectedLeaveCode: any;
   onLeaveCodeChange: void;
-  elder_dob: Date;
   items: any;
   inTime: any;
   outTime: any;
-  in = "1990-03-19";
-  out = "1990-02-19";
   leaveCodeObj: any;
   constructor(private leaveService: leaveService, private nav: NavController, private globalVar: commonService, private show: showMessage, private loading: Load) {
     this.onLeaveTypeChange = this.OnLeaveTypeChange.bind(this);
     this.onLeaveCodeChange = this.OnLeaveCodeChange.bind(this);
     this.headerData = { page: 'dash', pageTitle: 'Leave Apply' };
+    this.totalDaysVisiblity = false;
+    this.currentDate=new Date();
     this.OnInit();
   }
 
@@ -107,6 +109,14 @@ export class leaveApply {
           this.items.inTime = this.selectedLeaveCode.fromTime;
           this.items.outTime = this.selectedLeaveCode.toTime;
           this.items.fromDate = this.items.toDate = moment(new Date()).format("YYYY-MM-DD");
+          if (this.auth.isplantuser) {
+            this.getShiftData();
+          }
+          else {
+            this.items.inTime = this.selectedLeaveCode.fromTime;
+            this.items.outTime = this.selectedLeaveCode.toTime;
+            this.shiftTime = this.selectedLeaveCode.fromTime + ' to ' + this.selectedLeaveCode.toTime
+          }
         }
       }, (err) => {
         this.loading.dismiss();
@@ -152,38 +162,30 @@ export class leaveApply {
         this.selectedTypeOfLeave.isFulldaydisable = false;
         this.selectedTypeOfLeave.isToFulldaydisable = false;
       }
-      else if (this.selectedLeaveCode.id == 5) {
+      else if (this.selectedTypeOfLeave.id == 5) {
         this.items.fromDate = this.items.toDate = moment(new Date()).format("YYYY-MM-DD");
+        console.log(this.auth.isplantuser)
         if (this.auth.isplantuser) {
           this.getShiftData();
         }
         else {
           this.items.inTime = this.selectedLeaveCode.fromTime;
           this.items.outTime = this.selectedLeaveCode.toTime;
+          this.shiftTime = this.selectedLeaveCode.fromTime + ' to ' + this.selectedLeaveCode.toTime
         }
+
       }
     }
   }
 
   getShiftData() {
-    this.leaveService.getAvailableLeaves
-    let data = { params: { userid: this.auth.userid } }
+    this.loading.show();
+    let data = { params: { userid: this.auth.userid, fromDate: moment(this.items.fromDate).format('YYYY-MM-DD') } }
     this.leaveService.getshiftDetails(data, this.auth.isplantuser).subscribe((val) => {
-      var usercurrentshift = val.data;
-      var ss = moment(new Date()).format("YYYY-MM-DD") + " " + moment(usercurrentshift.startTime).format("hh:mm a");
-      var tt = new Date(ss);
-      tt.setHours(tt.getHours());
-      tt.setMinutes(tt.getMinutes());
-      // var from_time = moment(($scope.usercurrentshift.startTime)).format("HH:mm");
-      this.items.inTime = tt;
-
-      ss = moment(new Date()).format("YYYY-MM-DD") + " " + moment(usercurrentshift.endTime).format("hh:mm a");
-      var te = new Date(ss);
-      te.setHours(te.getHours());
-      te.setMinutes(te.getMinutes());
-      // var from_time = moment(($scope.usercurrentshift.startTime)).format("HH:mm");
-      this.items.outTime = te;
-
+      this.loading.dismiss();
+      this.items.inTime=val.inTime;
+      this.items.outTime=val.outTime;
+      this.shiftTime = moment(val.startTime).format("hh:mm a") +' to '+ moment(val.endTime).format("hh:mm a")
     })
   }
 
@@ -229,7 +231,7 @@ export class leaveApply {
   }
 
   getLeaveTypesAcronyms() {
-    this.shiftTime = this.selectedLeaveCode.fromTime + ' to ' + this.selectedLeaveCode.toTime
+
     this.leaveDescriptions = this.selectedLeaveCode.acronymsName + ' ' + this.selectedTypeOfLeave.leaveTypeName;
     if (this.selectedTypeOfLeave.id == 6 && this.selectedLeaveCode.id == 17) {
       this.items.fromFullorHalf = 1;
@@ -477,8 +479,9 @@ export class leaveApply {
     var fromDate, toDate;
     if (this.items.fromDate == undefined)
       return false;
-    if (this.items.toDate == undefined || this.items.toDatevisiblity == false)
+    if (this.items.toDate == undefined || this.items.toDatevisiblity == false || (this.selectedTypeOfLeave.id == 3 || this.selectedTypeOfLeave.id == 2 || this.selectedTypeOfLeave.id == 1))
       this.items.toDate = this.items.fromDate;
+
     toDate = moment(new Date(this.items.toDate)).format("YYYY-MM-DD");
     fromDate = moment(new Date(this.items.fromDate)).format("YYYY-MM-DD");
     if (moment(fromDate).format('YYYY-MM-DD') > moment(toDate).format('YYYY-MM-DD')) {
@@ -506,6 +509,16 @@ export class leaveApply {
       }
       if (this.selectedLeaveCode.id == 17) {
         this.items.TotalDays = response.totalDays;
+      }
+      if (this.selectedTypeOfLeave.id == 5) {
+        if (this.auth.isplantuser) {
+          this.getShiftData();
+        }
+        else {
+          this.items.inTime = this.selectedLeaveCode.fromTime;
+          this.items.outTime = this.selectedLeaveCode.toTime;
+          this.shiftTime = this.selectedLeaveCode.fromTime + ' to ' + this.selectedLeaveCode.toTime
+        }
       }
     }, (err) => {
       this.loading.dismiss();

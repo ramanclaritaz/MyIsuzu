@@ -57,6 +57,7 @@ export interface employeeInfo {
   employeeNumber: string;
   divisionName: string;
   departmentName: string;
+  userId:string;
 }
 export interface comOffDay {
   appliedFor: string;

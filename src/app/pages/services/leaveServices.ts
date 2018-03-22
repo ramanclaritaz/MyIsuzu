@@ -11,7 +11,7 @@ export class leaveService {
   }
   getshiftDetails(data, isplant): Observable<any> {
     let url = this.updateUrl(isplant);
-    return this._http.get(url + 'Currentshift', data);
+    return this._http.get(url + 'GetShiftdeails', data);
   }
   getAvailableLeaves(data, isplant): Observable<any> {
     let url = this.updateUrl(isplant);

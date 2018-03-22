@@ -33,7 +33,7 @@
       <ion-label>Department :</ion-label>
       <ion-input disabled="true" [value]="Item.appliedforDepartment"></ion-input>
     </ion-item>
-    <ion-item>
+    <ion-item *ngIf="Item.leaveCodeDescription!=undefined">
       <ion-label>Description :</ion-label>
       <ion-input disabled="true" [value]="Item.leaveCodeDescription"></ion-input>
     </ion-item>

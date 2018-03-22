@@ -12,7 +12,7 @@ export class attendanceService {
 
     }
     getAttendance(data, isPlant): Observable<any> {
-        this.url = this.updateURL(false);
+        this.url = this.updateURL(isPlant);
         return this.http.get(this.url + 'FilderAttendanceByDate', data);
     }
 

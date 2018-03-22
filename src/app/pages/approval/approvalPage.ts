@@ -27,7 +27,7 @@ export class ApprovalPage {
     this.Oninit();
   }
   Oninit() {
-    this.loading.show();
+
     this.auth = this.globalVar.auth;
     if (this.auth == undefined || this.auth == null) {
       this.nav.setRoot('login');
@@ -38,32 +38,42 @@ export class ApprovalPage {
     }
 
     this.getData();
-    this.loading.dismiss();
+
   }
   getData() {
+    this.loading.show();
     switch (this.data.type) {
       case "Leave":
         this.approval.getEditLeaveDetail(this.Item.id, this.data.plant).subscribe((result) => {
+          this.loading.dismiss();
           this.model = result;
           var data = (this.data.plant ? result.leaveapplyforplant : result.leaveapply);
           this.Item.appliedReason = data.appliedReason;
-          this.Item.totaldays = data.totalDays;
+          this.Item.totaldays = (this.data.plant ? data.totalDays : data.totaldays);
         }, (err) => {
+          this.loading.dismiss();
         });
         break;
       case "ComOff":
         this.approval.getEditCompoffDetail(this.Item.id, this.data.plant).subscribe((result) => {
+          this.loading.dismiss();
           this.model = result;
+
           var data = (this.data.plant ? result.plantCompOff : result.compOff);
+          let total = (this.data.plant ? result.plantCompOffTakens.reduce((sum, item) => sum + item.days, 0) : result.compOffTakens.reduce((sum, item) => sum + item.days, 0));
           this.Item.appliedReason = data.compOffReason;
-          this.Item.totaldays = data.totalCompOFF;
+          this.Item.totaldays = total;
+          //this.Item.leaveCodeDescription = "";
         }, (err) => {
+          this.loading.dismiss();
         });
         break;
       case "Pre-compOff":
         this.approval.getEditPreCompoffDetail(this.Item.id, this.data.plant).subscribe((result) => {
+          this.loading.dismiss();
           this.model = result;
         }, (err) => {
+          this.loading.dismiss();
         });
         break;
     }
@@ -94,7 +104,6 @@ export class ApprovalPage {
         } else {
           this.UpdateLeave();
         }
-
         break;
       case "ComOff":
         if (this.data.plant) {

@@ -4,6 +4,7 @@
 // The list of which env maps to which file can be found in `angular-cli.json`.
 export const environment = {
   production: false,
+  // origin: 'https://imanage.isuzu.in:4435/'
   origin: 'http://imanage.isuzu.in:5052/'
   // origin: 'http://localhost:60597/'
 };
