@@ -1,35 +1,39 @@
 <ion-content class="login-content" padding>
-    <ion-row class="logo-row">
-      <ion-col></ion-col>
-      <ion-col>
-        <img class="logo" src="../assets/imgs/logo.png">
-      </ion-col>
-      <ion-col></ion-col>
-    </ion-row>
-    <div class="login-box">
-      <form (ngSubmit)="login()" #registerForm="ngForm">
-        <ion-row>
-          <ion-col>
-            <ion-list inset>
+  <ion-row class="logo-row">
+    <ion-col></ion-col>
+    <ion-col hideWhen="ios">
+      <img class="logo" src="../assets/imgs/logo.png">
+    </ion-col>
+    <ion-col width-67 hideWhen="android">
+      <img class="logo" src="http://imanage.isuzu.in:5051/images/logo.png" />
+    </ion-col>
 
-              <ion-item>
-                <ion-input type="text" placeholder="user name" name="email" [(ngModel)]="registerCredentials.userName" required></ion-input>
-              </ion-item>
+    <ion-col></ion-col>
+  </ion-row>
+  <div class="login-box">
+    <form (ngSubmit)="login()" #registerForm="ngForm">
+      <ion-row>
+        <ion-col>
+          <ion-list inset>
 
-              <ion-item>
-                <ion-input type="password" placeholder="Password" name="password" [(ngModel)]="registerCredentials.password" required></ion-input>
-              </ion-item>
+            <ion-item>
+              <ion-input type="text" placeholder="user name" name="email" [(ngModel)]="registerCredentials.userName" required></ion-input>
+            </ion-item>
 
-            </ion-list>
-          </ion-col>
-        </ion-row>
+            <ion-item>
+              <ion-input type="password" placeholder="Password" name="password" [(ngModel)]="registerCredentials.password" required></ion-input>
+            </ion-item>
 
-        <ion-row>
-          <ion-col class="signup-col">
-            <button ion-button class="submit-btn" full type="submit" [disabled]="!registerForm.form.valid">Login</button>
-          </ion-col>
-        </ion-row>
+          </ion-list>
+        </ion-col>
+      </ion-row>
 
-      </form>
-    </div>
-  </ion-content>
+      <ion-row>
+        <ion-col class="signup-col">
+          <button ion-button class="submit-btn" full type="submit" [disabled]="!registerForm.form.valid">Login</button>
+        </ion-col>
+      </ion-row>
+
+    </form>
+  </div>
+</ion-content>
