@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { leaveService } from '../services/leaveServices'
 import { employeeInfo, commonService, authentication, Load, headerPage } from '../services/common';
 import { NavController } from 'ionic-angular/navigation/nav-controller';
@@ -11,14 +11,14 @@ import moment from "moment";
   templateUrl: '../apply/leaveApply.html'
 })
 
-export class leaveApply {
+export class leaveApply implements OnInit {
   auth: authentication;
   empInfo: employeeInfo;
   applyLeaveData: any;
   totalDaysVisiblity: boolean;
-  currentDate:Date;
-  minDate:Date;
-  leaveDescriptions:string;
+  currentDate: Date;
+  minDate: Date;
+  leaveDescriptions: string;
   userleave = {
     sickLeave: "", casualLeave: "", privilegeLeave: "", condolenceLeave: "", maternityLeave: "", traineeLeave: "", permission: ""
   }
@@ -35,18 +35,18 @@ export class leaveApply {
   outTime: any;
   leaveCodeObj: any;
   constructor(private leaveService: leaveService, private nav: NavController, private globalVar: commonService, private show: showMessage, private loading: Load) {
+  }
+  ngOnInit() {
+    this.loading.show();
     this.onLeaveTypeChange = this.OnLeaveTypeChange.bind(this);
     this.onLeaveCodeChange = this.OnLeaveCodeChange.bind(this);
     this.headerData = { page: 'dash', pageTitle: 'Leave Apply' };
     this.totalDaysVisiblity = false;
-    this.currentDate=new Date();
-    this.OnInit();
-  }
-
-  OnInit() {
-    this.loading.show();
+    this.minDate = this.currentDate = new Date();
+    this.minDate.setDate(this.currentDate.getMonth() - 2);
     this.empInfo = this.globalVar.employeeInfo;
     this.auth = this.globalVar.auth;
+    console.log(this.minDate);
     if (this.auth == undefined || this.auth == null) {
       this.nav.setRoot('login');
     }
@@ -56,8 +56,8 @@ export class leaveApply {
     this.selectedTypeOfLeave = {};
     this.selectedLeaveCode = {};
     this.loading.dismiss();
-
   }
+
 
   private getAvailableLeave() {
     let data = { params: { userid: this.auth.userid } }
@@ -183,9 +183,9 @@ export class leaveApply {
     let data = { params: { userid: this.auth.userid, fromDate: moment(this.items.fromDate).format('YYYY-MM-DD') } }
     this.leaveService.getshiftDetails(data, this.auth.isplantuser).subscribe((val) => {
       this.loading.dismiss();
-      this.items.inTime=val.inTime;
-      this.items.outTime=val.outTime;
-      this.shiftTime = moment(val.startTime).format("hh:mm a") +' to '+ moment(val.endTime).format("hh:mm a")
+      this.items.inTime = val.inTime;
+      this.items.outTime = val.outTime;
+      this.shiftTime = moment(val.startTime).format("hh:mm a") + ' to ' + moment(val.endTime).format("hh:mm a")
     })
   }
 

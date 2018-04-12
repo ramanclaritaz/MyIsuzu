@@ -9,11 +9,12 @@ import { showMessage } from '../services/showalert';
 })
 
 export class loginPage {
-
+  logoPath: any;
   registerCredentials = { userName: undefined, password: undefined };
   constructor(private nav: NavController, private show: showMessage, private loginService: LoginService, private com: commonService, private loading: Load) {
     localStorage.clear();
     this.com.auth = undefined;
+    this.logoPath=this.loginService.logo;
   }
   public login() {
     this.loading.show();

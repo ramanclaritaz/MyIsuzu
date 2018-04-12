@@ -106,8 +106,8 @@
     <ion-item>
       <ion-label *ngIf="!items.toDatevisiblity">*Date</ion-label>
       <ion-label *ngIf="items.toDatevisiblity">*From Date</ion-label>
-      <ion-datetime displayFormat="DD/MM/YYYY" *ngIf="selectedTypeOfLeave.id!=3" [min]="minDate" [(ngModel)]="items.fromDate" (ionChange)="fromDateChanged()" name="dpDate"><ion-icon name="arrow-down"></ion-icon></ion-datetime>
-      <ion-datetime displayFormat="DD/MM/YYYY" *ngIf="selectedTypeOfLeave.id==3" [min]="minDate" [max]="currentDate" [(ngModel)]="items.fromDate" (ionChange)="fromDateChanged()" name="dpDate"><ion-icon name="arrow-down"></ion-icon></ion-datetime>
+      <ion-datetime displayFormat="DD/MM/YYYY" *ngIf="selectedTypeOfLeave.id!=3" [(ngModel)]="items.fromDate" (ionChange)="fromDateChanged()" name="dpDate"><ion-icon name="arrow-down"></ion-icon></ion-datetime>
+      <ion-datetime displayFormat="DD/MM/YYYY" *ngIf="selectedTypeOfLeave.id==3"  [max]="currentDate" [(ngModel)]="items.fromDate" (ionChange)="fromDateChanged()" name="dpDate"><ion-icon name="arrow-down"></ion-icon></ion-datetime>
     </ion-item>
     <ion-item *ngIf="items.fromFulldayvisiblity">
       <ion-label>
